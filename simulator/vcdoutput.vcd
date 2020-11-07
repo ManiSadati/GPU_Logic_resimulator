@@ -1,0 +1,26 @@
+$timescale
+1ps
+$end
+$scope module tbench $end
+$scope module tbench $end
+$var wire 2 %0 t4 [1:0] $end
+$upscope $end
+$upscope $end
+$enddefinitions $end
+$dumpvars
+#0
+bxx %0
+#30
+b1x %0
+#50
+b00 %0
+#69
+b01 %0
+#70
+b11 %0
+#85
+b01 %0
+#90
+b00 %0
+#104
+b01 %0

@@ -1,0 +1,1172 @@
+GEN_AND2_D1
+input a1 
+input a2 
+output z 
+GEN_AND2_D2
+input a1 
+input a2 
+output z 
+GEN_AND2_D4
+input a1 
+input a2 
+output z 
+GEN_AND2_D8
+input a1 
+input a2 
+output z 
+GEN_AND3_D1
+input a1 
+input a2 
+input a3 
+output z 
+GEN_AND3_D2
+input a1 
+input a2 
+input a3 
+output z 
+GEN_AND3_D4
+input a1 
+input a2 
+input a3 
+output z 
+GEN_AND3_D8
+input a1 
+input a2 
+input a3 
+output z 
+GEN_AND4_D1
+input a1 
+input a2 
+input a3 
+input a4 
+output z 
+GEN_AND4_D2
+input a1 
+input a2 
+input a3 
+input a4 
+output z 
+GEN_AND4_D4
+input a1 
+input a2 
+input a3 
+input a4 
+output z 
+GEN_AND4_D8
+input a1 
+input a2 
+input a3 
+input a4 
+output z 
+GEN_AO211_D1
+input a1 
+input a2 
+input b 
+input c 
+output z 
+GEN_AO211_D2
+input a1 
+input a2 
+input b 
+input c 
+output z 
+GEN_AO211_D4
+input a1 
+input a2 
+input b 
+input c 
+output z 
+GEN_AO21_D1
+input a1 
+input a2 
+input b 
+output z 
+GEN_AO21_D2
+input a1 
+input a2 
+input b 
+output z 
+GEN_AO21_D4
+input a1 
+input a2 
+input b 
+output z 
+GEN_AO221_D1
+input a1 
+input a2 
+input b1 
+input b2 
+input c 
+output z 
+GEN_AO221_D2
+input a1 
+input a2 
+input b1 
+input b2 
+input c 
+output z 
+GEN_AO221_D4
+input a1 
+input a2 
+input b1 
+input b2 
+input c 
+output z 
+GEN_AO222_D1
+input a1 
+input a2 
+input b1 
+input b2 
+input c1 
+input c2 
+output z 
+GEN_AO222_D2
+input a1 
+input a2 
+input b1 
+input b2 
+input c1 
+input c2 
+output z 
+GEN_AO222_D4
+input a1 
+input a2 
+input b1 
+input b2 
+input c1 
+input c2 
+output z 
+GEN_AO22_D1
+input a1 
+input a2 
+input b1 
+input b2 
+output z 
+GEN_AO22_D2
+input a1 
+input a2 
+input b1 
+input b2 
+output z 
+GEN_AO22_D4
+input a1 
+input a2 
+input b1 
+input b2 
+output z 
+GEN_AO22_D8
+input a1 
+input a2 
+input b1 
+input b2 
+output z 
+GEN_AO31_D1
+input a1 
+input a2 
+input a3 
+input b 
+output z 
+GEN_AO31_D2
+input a1 
+input a2 
+input a3 
+input b 
+output z 
+GEN_AO31_D4
+input a1 
+input a2 
+input a3 
+input b 
+output z 
+GEN_AO32_D1
+input a1 
+input a2 
+input a3 
+input b1 
+input b2 
+output z 
+GEN_AO32_D2
+input a1 
+input a2 
+input a3 
+input b1 
+input b2 
+output z 
+GEN_AO32_D4
+input a1 
+input a2 
+input a3 
+input b1 
+input b2 
+output z 
+GEN_AO33_D1
+input a1 
+input a2 
+input a3 
+input b1 
+input b2 
+input b3 
+output z 
+GEN_AO33_D2
+input a1 
+input a2 
+input a3 
+input b1 
+input b2 
+input b3 
+output z 
+GEN_AO33_D4
+input a1 
+input a2 
+input a3 
+input b1 
+input b2 
+input b3 
+output z 
+GEN_AOI211_D1
+input a1 
+input a2 
+input b 
+input c 
+output zn 
+GEN_AOI211_D2
+input a1 
+input a2 
+input b 
+input c 
+output zn 
+GEN_AOI211_D4
+input a1 
+input a2 
+input b 
+input c 
+output zn 
+GEN_AOI21_D1
+input a1 
+input a2 
+input b 
+output zn 
+GEN_AOI21_D2
+input a1 
+input a2 
+input b 
+output zn 
+GEN_AOI21_D4
+input a1 
+input a2 
+input b 
+output zn 
+GEN_AOI221_D1
+input a1 
+input a2 
+input b1 
+input b2 
+input c 
+output zn 
+GEN_AOI221_D2
+input a1 
+input a2 
+input b1 
+input b2 
+input c 
+output zn 
+GEN_AOI221_D4
+input a1 
+input a2 
+input b1 
+input b2 
+input c 
+output zn 
+GEN_AOI222_D1
+input a1 
+input a2 
+input b1 
+input b2 
+input c1 
+input c2 
+output zn 
+GEN_AOI222_D2
+input a1 
+input a2 
+input b1 
+input b2 
+input c1 
+input c2 
+output zn 
+GEN_AOI222_D4
+input a1 
+input a2 
+input b1 
+input b2 
+input c1 
+input c2 
+output zn 
+GEN_AOI22_D1
+input a1 
+input a2 
+input b1 
+input b2 
+output zn 
+GEN_AOI22_D2
+input a1 
+input a2 
+input b1 
+input b2 
+output zn 
+GEN_AOI22_D4
+input a1 
+input a2 
+input b1 
+input b2 
+output zn 
+GEN_AOI31_D1
+input a1 
+input a2 
+input a3 
+input b 
+output zn 
+GEN_AOI31_D2
+input a1 
+input a2 
+input a3 
+input b 
+output zn 
+GEN_AOI31_D4
+input a1 
+input a2 
+input a3 
+input b 
+output zn 
+GEN_AOI32_D1
+input a1 
+input a2 
+input a3 
+input b1 
+input b2 
+output zn 
+GEN_AOI32_D2
+input a1 
+input a2 
+input a3 
+input b1 
+input b2 
+output zn 
+GEN_AOI32_D4
+input a1 
+input a2 
+input a3 
+input b1 
+input b2 
+output zn 
+GEN_AOI33_D1
+input a1 
+input a2 
+input a3 
+input b1 
+input b2 
+input b3 
+output zn 
+GEN_AOI33_D2
+input a1 
+input a2 
+input a3 
+input b1 
+input b2 
+input b3 
+output zn 
+GEN_AOI33_D4
+input a1 
+input a2 
+input a3 
+input b1 
+input b2 
+input b3 
+output zn 
+GEN_BUF_D1
+input i 
+output z 
+GEN_BUF_D2
+input i 
+output z 
+GEN_BUF_D4
+input i 
+output z 
+GEN_BUF_D8
+input i 
+output z 
+GEN_FA_D1
+input a 
+input b 
+input ci 
+output s 
+output co 
+GEN_FA_D2
+input a 
+input b 
+input ci 
+output s 
+output co 
+GEN_FA_D4
+input a 
+input b 
+input ci 
+output s 
+output co 
+GEN_HA_D1
+input a 
+input b 
+output s 
+output co 
+GEN_HA_D2
+input a 
+input b 
+output s 
+output co 
+GEN_HA_D4
+input a 
+input b 
+output s 
+output co 
+GEN_INV_D1
+input i 
+output zn 
+GEN_INV_D2
+input i 
+output zn 
+GEN_INV_D4
+input i 
+output zn 
+GEN_INV_D8
+input i 
+output zn 
+GEN_MAJORITYAOI222_D1
+input a 
+input b 
+input c 
+output zn 
+GEN_MAJORITYAOI222_D2
+input a 
+input b 
+input c 
+output zn 
+GEN_MAJORITYAOI222_D4
+input a 
+input b 
+input c 
+output zn 
+GEN_MAJORITYAOI22_D1
+input a1 
+input a2 
+input b1 
+input b2 
+output zn 
+GEN_MAJORITYAOI22_D2
+input a1 
+input a2 
+input b1 
+input b2 
+output zn 
+GEN_MAJORITYAOI22_D4
+input a1 
+input a2 
+input b1 
+input b2 
+output zn 
+GEN_MAJORITYOAI22_D1
+input a1 
+input a2 
+input b1 
+input b2 
+output zn 
+GEN_MAJORITYOAI22_D2
+input a1 
+input a2 
+input b1 
+input b2 
+output zn 
+GEN_MAJORITYOAI22_D4
+input a1 
+input a2 
+input b1 
+input b2 
+output zn 
+GEN_MUX2_D1
+input i0 
+input i1 
+input s 
+output z 
+GEN_MUX2_D2
+input i0 
+input i1 
+input s 
+output z 
+GEN_MUX2_D4
+input i0 
+input i1 
+input s 
+output z 
+GEN_MUX2N_D1
+input i0 
+input i1 
+input s 
+output zn 
+GEN_MUX2N_D2
+input i0 
+input i1 
+input s 
+output zn 
+GEN_MUX2N_D4
+input i0 
+input i1 
+input s 
+output zn 
+GEN_MUX3_D1
+input i0 
+input i1 
+input i2 
+input s0 
+input s1 
+output z 
+GEN_MUX3_D2
+input i0 
+input i1 
+input i2 
+input s0 
+input s1 
+output z 
+GEN_MUX3_D4
+input i0 
+input i1 
+input i2 
+input s0 
+input s1 
+output z 
+GEN_MUX3N_D1
+input i0 
+input i1 
+input i2 
+input s0 
+input s1 
+output zn 
+GEN_MUX3N_D2
+input i0 
+input i1 
+input i2 
+input s0 
+input s1 
+output zn 
+GEN_MUX3N_D4
+input i0 
+input i1 
+input i2 
+input s0 
+input s1 
+output zn 
+GEN_MUX4_D1
+input i0 
+input i1 
+input i2 
+input i3 
+input s0 
+input s1 
+output z 
+GEN_MUX4_D2
+input i0 
+input i1 
+input i2 
+input i3 
+input s0 
+input s1 
+output z 
+GEN_MUX4_D4
+input i0 
+input i1 
+input i2 
+input i3 
+input s0 
+input s1 
+output z 
+GEN_MUX4N_D1
+input i0 
+input i1 
+input i2 
+input i3 
+input s0 
+input s1 
+output zn 
+GEN_MUX4N_D2
+input i0 
+input i1 
+input i2 
+input i3 
+input s0 
+input s1 
+output zn 
+GEN_MUX4N_D4
+input i0 
+input i1 
+input i2 
+input i3 
+input s0 
+input s1 
+output zn 
+GEN_NAND2_D1
+input a1 
+input a2 
+output zn 
+GEN_NAND2_D2
+input a1 
+input a2 
+output zn 
+GEN_NAND2_D4
+input a1 
+input a2 
+output zn 
+GEN_NAND2_D8
+input a1 
+input a2 
+output zn 
+GEN_NAND3_D1
+input a1 
+input a2 
+input a3 
+output zn 
+GEN_NAND3_D2
+input a1 
+input a2 
+input a3 
+output zn 
+GEN_NAND3_D4
+input a1 
+input a2 
+input a3 
+output zn 
+GEN_NAND3_D8
+input a1 
+input a2 
+input a3 
+output zn 
+GEN_NAND4_D1
+input a1 
+input a2 
+input a3 
+input a4 
+output zn 
+GEN_NAND4_D2
+input a1 
+input a2 
+input a3 
+input a4 
+output zn 
+GEN_NAND4_D4
+input a1 
+input a2 
+input a3 
+input a4 
+output zn 
+GEN_NAND4_D8
+input a1 
+input a2 
+input a3 
+input a4 
+output zn 
+GEN_NOR2_D1
+input a1 
+input a2 
+output zn 
+GEN_NOR2_D2
+input a1 
+input a2 
+output zn 
+GEN_NOR2_D4
+input a1 
+input a2 
+output zn 
+GEN_NOR2_D8
+input a1 
+input a2 
+output zn 
+GEN_NOR3_D1
+input a1 
+input a2 
+input a3 
+output zn 
+GEN_NOR3_D2
+input a1 
+input a2 
+input a3 
+output zn 
+GEN_NOR3_D4
+input a1 
+input a2 
+input a3 
+output zn 
+GEN_NOR3_D8
+input a1 
+input a2 
+input a3 
+output zn 
+GEN_NOR4_D1
+input a1 
+input a2 
+input a3 
+input a4 
+output zn 
+GEN_NOR4_D2
+input a1 
+input a2 
+input a3 
+input a4 
+output zn 
+GEN_NOR4_D4
+input a1 
+input a2 
+input a3 
+input a4 
+output zn 
+GEN_NOR4_D8
+input a1 
+input a2 
+input a3 
+input a4 
+output zn 
+GEN_OA211_D1
+input a1 
+input a2 
+input b 
+input c 
+output z 
+GEN_OA211_D2
+input a1 
+input a2 
+input b 
+input c 
+output z 
+GEN_OA211_D4
+input a1 
+input a2 
+input b 
+input c 
+output z 
+GEN_OA21_D1
+input a1 
+input a2 
+input b 
+output z 
+GEN_OA21_D2
+input a1 
+input a2 
+input b 
+output z 
+GEN_OA21_D4
+input a1 
+input a2 
+input b 
+output z 
+GEN_OA221_D1
+input a1 
+input a2 
+input b1 
+input b2 
+input c 
+output z 
+GEN_OA221_D2
+input a1 
+input a2 
+input b1 
+input b2 
+input c 
+output z 
+GEN_OA221_D4
+input a1 
+input a2 
+input b1 
+input b2 
+input c 
+output z 
+GEN_OA222_D1
+input a1 
+input a2 
+input b1 
+input b2 
+input c1 
+input c2 
+output z 
+GEN_OA222_D2
+input a1 
+input a2 
+input b1 
+input b2 
+input c1 
+input c2 
+output z 
+GEN_OA222_D4
+input a1 
+input a2 
+input b1 
+input b2 
+input c1 
+input c2 
+output z 
+GEN_OA22_D1
+input a1 
+input a2 
+input b1 
+input b2 
+output z 
+GEN_OA22_D2
+input a1 
+input a2 
+input b1 
+input b2 
+output z 
+GEN_OA22_D4
+input a1 
+input a2 
+input b1 
+input b2 
+output z 
+GEN_OA31_D1
+input a1 
+input a2 
+input a3 
+input b 
+output z 
+GEN_OA31_D2
+input a1 
+input a2 
+input a3 
+input b 
+output z 
+GEN_OA31_D4
+input a1 
+input a2 
+input a3 
+input b 
+output z 
+GEN_OA32_D1
+input a1 
+input a2 
+input a3 
+input b1 
+input b2 
+output z 
+GEN_OA32_D2
+input a1 
+input a2 
+input a3 
+input b1 
+input b2 
+output z 
+GEN_OA32_D4
+input a1 
+input a2 
+input a3 
+input b1 
+input b2 
+output z 
+GEN_OA33_D1
+input a1 
+input a2 
+input a3 
+input b1 
+input b2 
+input b3 
+output z 
+GEN_OA33_D2
+input a1 
+input a2 
+input a3 
+input b1 
+input b2 
+input b3 
+output z 
+GEN_OA33_D4
+input a1 
+input a2 
+input a3 
+input b1 
+input b2 
+input b3 
+output z 
+GEN_OAI211_D1
+input a1 
+input a2 
+input b 
+input c 
+output zn 
+GEN_OAI211_D2
+input a1 
+input a2 
+input b 
+input c 
+output zn 
+GEN_OAI211_D4
+input a1 
+input a2 
+input b 
+input c 
+output zn 
+GEN_OAI21_D1
+input a1 
+input a2 
+input b 
+output zn 
+GEN_OAI21_D2
+input a1 
+input a2 
+input b 
+output zn 
+GEN_OAI21_D4
+input a1 
+input a2 
+input b 
+output zn 
+GEN_OAI221_D1
+input a1 
+input a2 
+input b1 
+input b2 
+input c 
+output zn 
+GEN_OAI221_D2
+input a1 
+input a2 
+input b1 
+input b2 
+input c 
+output zn 
+GEN_OAI221_D4
+input a1 
+input a2 
+input b1 
+input b2 
+input c 
+output zn 
+GEN_OAI222_D1
+input a1 
+input a2 
+input b1 
+input b2 
+input c1 
+input c2 
+output zn 
+GEN_OAI222_D2
+input a1 
+input a2 
+input b1 
+input b2 
+input c1 
+input c2 
+output zn 
+GEN_OAI222_D4
+input a1 
+input a2 
+input b1 
+input b2 
+input c1 
+input c2 
+output zn 
+GEN_OAI22_D1
+input a1 
+input a2 
+input b1 
+input b2 
+output zn 
+GEN_OAI22_D2
+input a1 
+input a2 
+input b1 
+input b2 
+output zn 
+GEN_OAI22_D4
+input a1 
+input a2 
+input b1 
+input b2 
+output zn 
+GEN_OAI31_D1
+input a1 
+input a2 
+input a3 
+input b 
+output zn 
+GEN_OAI31_D2
+input a1 
+input a2 
+input a3 
+input b 
+output zn 
+GEN_OAI31_D4
+input a1 
+input a2 
+input a3 
+input b 
+output zn 
+GEN_OAI32_D1
+input a1 
+input a2 
+input a3 
+input b1 
+input b2 
+output zn 
+GEN_OAI32_D2
+input a1 
+input a2 
+input a3 
+input b1 
+input b2 
+output zn 
+GEN_OAI32_D4
+input a1 
+input a2 
+input a3 
+input b1 
+input b2 
+output zn 
+GEN_OAI33_D1
+input a1 
+input a2 
+input a3 
+input b1 
+input b2 
+input b3 
+output zn 
+GEN_OAI33_D2
+input a1 
+input a2 
+input a3 
+input b1 
+input b2 
+input b3 
+output zn 
+GEN_OAI33_D4
+input a1 
+input a2 
+input a3 
+input b1 
+input b2 
+input b3 
+output zn 
+GEN_OR2_D1
+input a1 
+input a2 
+output z 
+GEN_OR2_D2
+input a1 
+input a2 
+output z 
+GEN_OR2_D4
+input a1 
+input a2 
+output z 
+GEN_OR2_D8
+input a1 
+input a2 
+output z 
+GEN_OR3_D1
+input a1 
+input a2 
+input a3 
+output z 
+GEN_OR3_D2
+input a1 
+input a2 
+input a3 
+output z 
+GEN_OR3_D4
+input a1 
+input a2 
+input a3 
+output z 
+GEN_OR3_D8
+input a1 
+input a2 
+input a3 
+output z 
+GEN_OR4_D1
+input a1 
+input a2 
+input a3 
+input a4 
+output z 
+GEN_OR4_D2
+input a1 
+input a2 
+input a3 
+input a4 
+output z 
+GEN_OR4_D4
+input a1 
+input a2 
+input a3 
+input a4 
+output z 
+GEN_OR4_D8
+input a1 
+input a2 
+input a3 
+input a4 
+output z 
+GEN_XNOR2_D1
+input a1 
+input a2 
+output zn 
+GEN_XNOR2_D2
+input a1 
+input a2 
+output zn 
+GEN_XNOR2_D4
+input a1 
+input a2 
+output zn 
+GEN_XNOR2_D8
+input a1 
+input a2 
+output zn 
+GEN_XNOR3_D1
+input a1 
+input a2 
+input a3 
+output zn 
+GEN_XNOR3_D2
+input a1 
+input a2 
+input a3 
+output zn 
+GEN_XNOR3_D4
+input a1 
+input a2 
+input a3 
+output zn 
+GEN_XOR2_D1
+input a1 
+input a2 
+output z 
+GEN_XOR2_D2
+input a1 
+input a2 
+output z 
+GEN_XOR2_D4
+input a1 
+input a2 
+output z 
+GEN_XOR2_D8
+input a1 
+input a2 
+output z 
+GEN_XOR3_D1
+input a1 
+input a2 
+input a3 
+output z 
+GEN_XOR3_D2
+input a1 
+input a2 
+input a3 
+output z 
+GEN_XOR3_D4
+input a1 
+input a2 
+input a3 
+output z 

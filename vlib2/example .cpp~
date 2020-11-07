@@ -1,0 +1,118 @@
+module GEN_RAMS_SP_WENABLE8_512x256 (clk,a,we,wce,re,di,dout);
+input clk;
+input [8:0] a;
+input [31:0] we;
+input wce;
+input re;
+input [255:0] di;
+output [255:0] dout;
+
+reg    [255:0] M[511:0];
+
+reg [8:0] ra_d;
+
+always @( posedge clk ) begin
+
+  if ( ( we[0] & wce ) == 1'b1 ) begin
+    M[a][7:0] <= di[7:0];
+  end
+  if ( ( we[1] & wce ) == 1'b1 ) begin
+    M[a][15:8] <= di[15:8];
+  end
+  if ( ( we[2] & wce ) == 1'b1 ) begin
+    M[a][23:16] <= di[23:16];
+  end
+  if ( ( we[3] & wce ) == 1'b1 ) begin
+    M[a][31:24] <= di[31:24];
+  end
+  if ( ( we[4] & wce ) == 1'b1 ) begin
+    M[a][39:32] <= di[39:32];
+  end
+  if ( ( we[5] & wce ) == 1'b1 ) begin
+    M[a][47:40] <= di[47:40];
+  end
+  if ( ( we[6] & wce ) == 1'b1 ) begin
+    M[a][55:48] <= di[55:48];
+  end
+  if ( ( we[7] & wce ) == 1'b1 ) begin
+    M[a][63:56] <= di[63:56];
+  end
+  if ( ( we[8] & wce ) == 1'b1 ) begin
+    M[a][71:64] <= di[71:64];
+  end
+  if ( ( we[9] & wce ) == 1'b1 ) begin
+    M[a][79:72] <= di[79:72];
+  end
+  if ( ( we[10] & wce ) == 1'b1 ) begin
+    M[a][87:80] <= di[87:80];
+  end
+  if ( ( we[11] & wce ) == 1'b1 ) begin
+    M[a][95:88] <= di[95:88];
+  end
+  if ( ( we[12] & wce ) == 1'b1 ) begin
+    M[a][103:96] <= di[103:96];
+  end
+  if ( ( we[13] & wce ) == 1'b1 ) begin
+    M[a][111:104] <= di[111:104];
+  end
+  if ( ( we[14] & wce ) == 1'b1 ) begin
+    M[a][119:112] <= di[119:112];
+  end
+  if ( ( we[15] & wce ) == 1'b1 ) begin
+    M[a][127:120] <= di[127:120];
+  end
+  if ( ( we[16] & wce ) == 1'b1 ) begin
+    M[a][135:128] <= di[135:128];
+  end
+  if ( ( we[17] & wce ) == 1'b1 ) begin
+    M[a][143:136] <= di[143:136];
+  end
+  if ( ( we[18] & wce ) == 1'b1 ) begin
+    M[a][151:144] <= di[151:144];
+  end
+  if ( ( we[19] & wce ) == 1'b1 ) begin
+    M[a][159:152] <= di[159:152];
+  end
+  if ( ( we[20] & wce ) == 1'b1 ) begin
+    M[a][167:160] <= di[167:160];
+  end
+  if ( ( we[21] & wce ) == 1'b1 ) begin
+    M[a][175:168] <= di[175:168];
+  end
+  if ( ( we[22] & wce ) == 1'b1 ) begin
+    M[a][183:176] <= di[183:176];
+  end
+  if ( ( we[23] & wce ) == 1'b1 ) begin
+    M[a][191:184] <= di[191:184];
+  end
+  if ( ( we[24] & wce ) == 1'b1 ) begin
+    M[a][199:192] <= di[199:192];
+  end
+  if ( ( we[25] & wce ) == 1'b1 ) begin
+    M[a][207:200] <= di[207:200];
+  end
+  if ( ( we[26] & wce ) == 1'b1 ) begin
+    M[a][215:208] <= di[215:208];
+  end
+  if ( ( we[27] & wce ) == 1'b1 ) begin
+    M[a][223:216] <= di[223:216];
+  end
+  if ( ( we[28] & wce ) == 1'b1 ) begin
+    M[a][231:224] <= di[231:224];
+  end
+  if ( ( we[29] & wce ) == 1'b1 ) begin
+    M[a][239:232] <= di[239:232];
+  end
+  if ( ( we[30] & wce ) == 1'b1 ) begin
+    M[a][247:240] <= di[247:240];
+  end
+  if ( ( we[31] & wce ) == 1'b1 ) begin
+    M[a][255:248] <= di[255:248];
+  end
+  if ( re == 1'b1 ) begin
+    ra_d <= a;
+  end
+end
+
+assign dout = M[ra_d];
+endmodule

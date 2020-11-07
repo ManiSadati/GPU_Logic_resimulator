@@ -1,0 +1,37 @@
+
+module NV_nvdla (ti, to);
+
+       input [0:60] ti;
+       output [0:60] to;
+
+       //GEN_DFCLR_D2 g0(.d(ti[0]), .cp(ti[1]), .cdn(ti[2]), .q(to[0]));
+
+       GEN_MUX2_D1 g1(.i0(ti[0]), .i1(ti[1]), .s(ti[2]), .z(to[1]));
+
+       //GEN_OA22_D1 g2(.a1(ti[0]), .a2(ti[1]), .b1(ti[2]), .b2(ti[3]), .z(to[2]));
+
+       //GEN_SCAN_DFCLR_D1 g3(.si(ti[0]), .d(ti[1]), .se(ti[2]), .cp(ti[3]), .cdn(ti[4]), .q(to[3]));
+
+       //GEN_SCAN_DF_D1 g4(.si(ti[0]), .d(ti[1]), .se(ti[2]), .cp(ti[3]), .q(to[4]));
+
+       //GEN_SCAN_DFSET_D1 g5(.si(ti[0]), .d(ti[1]), .se(ti[2]), .cp(ti[3]), .sdn(ti[4]), .q(to[5]));
+
+       //GEN_CLKGATE_D1 g6(.te(ti[0]), .e(ti[1]), .cp(ti[2]), .q(to[6]));
+
+       //GEN_SYNC2C_D1 g7(.clk(ti[0]), .d(ti[1]), .clr_(ti[2]), .q(to[7]));
+
+       //GEN_SYNC3S_D1 g8(.clk(ti[0]), .d(ti[1]), .set_(ti[2]), .q(to[8]));
+
+       //GEN_RAMS_256x7 g9(.clk(ti[0]), .ra(ti[31:38]), .re(ti[9]), .dout(to[9:15]), .wa(ti[40:47]), .we(ti[18]), .di(ti[40:46]));
+
+       GEN_RAMS_OLAT_80x14 g10(.clk(ti[0]), .ra(ti[31:37]), .re(ti[8]), .ore(ti[9]), .dout(to[16:29]), .wa(ti[40:46]), .we(ti[17]), .di(ti[38:51]));
+
+       //GEN_RAMS_WT_IPASS_OLAT_80x9 g11(.clk(ti[0]), .ra(ti[31:37]), .re(ti[8]), .ore(ti[9]), .dout(to[30:38]), .wa(ti[40:46]), .we(ti[17]), .di(ti[48:56]), .byp_sel(ti[27]), .dbyp(ti[38:46]));
+
+       //GEN_SYNC3C_STRICT_D1 g12( .src_d_next(ti[0]), .src_clk(ti[1]), .src_clrn(ti[2]), .dst_clk(ti[3]), .dst_clrn(ti[4]), .src_d(to[31]), .dst_q(to[32]), .atpg_ctl(ti[5]), .test_mode(ti[6]));
+
+       //GEN_RAMS_SP_WENABLE21_64x21 g13(.clk(ti[0]), .a(ti[41:46]), .we(ti[7]), .wce(ti[8]), .re(ti[9]), .di(ti[40:60]), .dout(to[33:53]));
+
+
+
+endmodule

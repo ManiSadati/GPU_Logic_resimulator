@@ -1,0 +1,74 @@
+#include<bits/stdc++.h>
+
+using namespace std;
+
+enum VAL{
+  O=0,
+  I=1,
+  X=2,//unknown
+  IO=3,//N
+  OI=4,//P
+  OX=5,//P
+  XO=6,//N
+  XI=7,//P
+  IX=8//N
+};
+
+//operator ! doros konm
+
+VAL operator & (VAL const &v1,VAL const &v2){
+  int x1=(int)(v1%3);
+  int x2=(int)(v2%3);
+  if(x1==0 || x2==0)
+    return O;
+  if(x1==2 || x2==2)
+    return X;
+  return I;
+}
+
+VAL operator | (VAL const &v1,VAL const &v2){
+  int x1=(int)(v1%3);
+  int x2=(int)(v2%3);
+  if(x1==1 || x2==1)
+    return I;
+  if(x1==2 || x2==2)
+    return X;
+  return O;
+}
+
+
+VAL operator ^ (VAL const &v1,VAL const &v2){
+  int x1=(int)(v1%3);
+  int x2=(int)(v2%3);
+  if(x1==2 || x2==2)
+    return X;
+  if(x1==x2)
+    return O;
+  return I;
+}
+
+
+
+class GATE{
+public:
+  virtual void f() = 0;
+  virtual VAL* array() = 0;
+};
+
+class gate{
+public :
+  VAL v[10];
+  gate(VAL* v1){
+    for(int i=0;i<10;i++)
+      v[i]=v1[i];
+  }
+};
+  
+int main(){
+  VAL v1=OI;
+  VAL v1=IO;
+  VAL v2=IX;
+  cout<<(v1&v2)<<endl;
+  VAL V[10];
+  gate g(V);
+}

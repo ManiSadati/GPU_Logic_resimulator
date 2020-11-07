@@ -1,0 +1,39 @@
+#include<bits/stdc++.h>
+
+using namespace std;
+
+enum value{
+  O=0,
+  I=1,
+  X=2,//unknown
+  b=3,//0 or 1
+  q=4,//? 0 or 1 or x
+  m=5,//- nochange
+  vw=6,//
+  s=7,//*
+  r=8,//
+  f=9,//
+  p=10,//
+  n=11//
+};
+
+class GATE{
+public:
+  virtual void f() = 0;
+};
+
+class gate:public GATE{
+public:
+  int n;
+  void f() override {
+    cout<<"im here with no problem"<<endl;
+  }
+  
+};
+
+
+int main(){
+  gate gg;
+  GATE* g=&gg;
+  g->f();
+}

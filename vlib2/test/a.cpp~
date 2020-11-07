@@ -1,0 +1,11 @@
+#include<bits/stdc++.h>
+#include"vlib.h"
+#include"lib.h"
+
+using namespace std;
+
+int main(){
+  GEN_RAMS_SP_WENABLE32_512x128 g;
+  VAL *v=g.pos();
+  g.function();
+}

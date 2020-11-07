@@ -1,0 +1,52 @@
+module GEN_AO221_D1 (a1,a2,b1,b2,c,z);
+  input a1;
+  input a2;
+  input b1;
+  input b2;
+  input c;
+  output z;
+  wire net0, net1;
+  and (net0, a1, a2);
+  and (net1, b1, b2);
+  or (z, net0, net1, c);
+  specify
+    (a1 => z) = (1, 1);
+    (a2 => z) = (1, 1);
+    (b1 => z) = (1, 1);
+    (b2 => z) = (1, 1);
+    (c => z) = (1, 1);
+  endspecify
+endmodule
+module GEN_AO221_D2 (a1,a2,b1,b2,c,z);
+  input a1;
+  input a2;
+  input b1;
+  input b2;
+  input c;
+  output z;
+  wire net0, net1;
+  and (net0, a1, a2);
+  and (net1, b1, b2);
+  or (z, net0, net1, c);
+  specify
+    (a1 => z) = (1, 1);
+    (a2 => z) = (1, 1);
+    (b1 => z) = (1, 1);
+    (b2 => z) = (1, 1);
+    (c => z) = (1, 1);
+  endspecify
+endmodule
+module GEN_AO21_D4 (a1,a2,b,z);
+  input a1;
+  input a2;
+  input b;
+  output z;
+  wire net0;
+  and (net0, a1, a2);
+  or (z, net0, b);
+  specify
+    (a1 => z) = (1, 1);
+    (a2 => z) = (1, 1);
+    (b => z) = (1, 1);
+  endspecify
+endmodule

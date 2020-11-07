@@ -1,0 +1,312 @@
+#include<bits/stdc++.h>
+using namespace std;
+
+#include "../vlib/type1parser.h"
+#include "../vlib/type1component.h"
+#include "../vlib/libraryparser.h"
+#include "../graph/netlist.h"
+#include "../sdf/sdfparser.h"
+#include "../vcd_translator/vcdparser.h"
+#include "../object.h"
+#include "../vlib2/vlib_files/lib.h"
+#include "../vlib2/vlib_files/vlib.h"
+#include "../vlib/portparser.h"
+
+#define debug 0
+
+vector<pair<int, string> > sim_gv_assigns;
+
+vector< Signal > tmp_vcd_signals;
+
+
+extern vector<Signal> signal_vector;
+
+extern vector<Gate> component_vector;
+
+extern unordered_map<string, int> mpsignal, mpcomp;
+
+extern vector<vector<int> > height;
+
+extern vector<Gate> delays_vec;
+
+extern unordered_map<string, int> vlib_names ;
+
+extern vector<unordered_map<string, string> > vlib_signals;
+
+extern vector<unordered_map<string, int> >vlib_ports ;
+
+extern vector<unordered_map<int ,string> >vlib_ports_revers ;
+
+extern unordered_map<int, int> vlib_size;
+
+long long int mx = 20000;
+
+Wheel wl;
+vcd_struct vs;
+
+void insert_edge(int ind, long long int time, VAL value, GATE* COMPO, bool init = false){
+  Signal& signall = signal_vector[ind];
+  int cnt = signall.vaweform.size();
+  if((cnt && signall.vaweform[cnt-1].value == value)||(cnt && signall.vaweform[cnt-1].time>=time)){
+    return;
+  }
+  Event ev(time, value);
+  signall.vaweform.push_back(ev);
+  for(int i=0;i<signall.gate_edges.size();i++){
+    int g=signal.gate_edges[i];
+    wl.add(g,time);
+  }
+}
+
+void output(){ //////////////////////////?????????????????????
+  for(int i = 0 ; i < signal_vector.size(); i++){
+    Signal& signall = signal_vector[i];
+    cout<<signall.name<<"------------"<<endl;
+    for(int j = 0; j < signall.vaweform.size(); j++){
+      cout<<signall.vaweform[j].time<<" "<<signall.vaweform[j].value<<endl;
+    }
+  }
+}
+
+void log(VAL* var, int cell_id){
+  cout<<"VARS : ";
+  for(int i = 0 ; i < vlib_size[cell_id]; i++){
+    cout<<vlib_ports_revers[cell_id][i]<<" -> "<<var[i]<<"  ";
+  }
+  cout<<endl;
+}
+
+
+void initialization(){
+  cout<<"#1"<<endl;
+  sim_gv_assigns = gvget_assigns();
+  cout<<"#1"<<endl;
+  tmp_vcd_signals = vcd_get_signals();
+  cout<<"#1"<<endl;
+  for(int i = 0 ; i < sim_gv_assigns.size(); i++){//transfering gv assigns to simulation
+    int x = sim_gv_assigns[i].first;
+    string y = sim_gv_assigns[i].second;
+    string z = y.substr(y.size() - 1, 1);
+    Event ev(0, toval(z));
+    signal_vector[x].vaweform.push_back(ev);
+    vs.add(ev.time,ev.value);
+  }
+  cout<<"#1"<<endl;
+  for(int i = 0 ; i < tmp_vcd_signals.size(); i++){//transfering vcd input vaweforms to simulation signals
+    string name = tmp_vcd_signals[i].name;
+    int ind = mpsignal[name];
+    Signal& signal_tmp = tmp_vcd_signals[i];
+    Signal& signall = signal_vector[ind];
+    for(int j = 0; j < signal_tmp.vaweform.size(); j++){
+      Event& ev = signal_tmp.vaweform[j];
+      signal_vector[ind].vaweform.push_back(ev);
+      vs.add(ev.time,ev.value);
+      //insert_edge(ind, ev.time , ev.value, COMPO, true);
+    }
+  }
+  cout<<"#1"<<endl;
+  /*
+  for(int i = 0 ; i < signal_vector.size(); i++){//initializing non input signal vaweforms
+    if(signal_vector[i].vaweform.size() == 0){
+      Event ev(0, X);
+      signal_vector[i].vaweform.push_back(ev);
+    }
+  }
+  */
+  for(int i = 0 ; i < delays_vec.size(); i++){ //transfering information from sdf to simulation
+    Gate& gatee = delays_vec[i];
+    int comp_ind = mpcomp[gatee.name];
+    Gate& compo = component_vector[comp_ind];
+    if(compo.name != gatee.name){
+      //cout<<"IMPOSSIBLE "<<gatee.name<<endl;
+    }
+    else{
+      compo.dl = gatee.dl;//it s not optimized
+    }
+  }
+}
+
+string no_indx(string s){
+  string t = "";
+  int n = s.size();
+  int cnt = 0;
+  while(cnt < n && s[cnt] != '['){
+    t += s[cnt];
+    cnt++;
+  }
+  return t;
+}
+
+void single_gate_initialization(int comp_ind){
+  Gate& compo = component_vector[comp_ind];
+  int cell_id = vlib_names[compo.type];
+  GATE* COMPO = fgate(compo.type);
+  VAL* var = COMPO->pos();
+  compo.CMP = COMPO; //check here
+  compo.id = cell_id;
+  compo.size = vlib_size[cell_id];
+  for(int i = 0 ; i < compo.inputs.size(); i++){
+    portmap& po = compo.inputs[i];
+    string& portname = po.port_name;
+    int& signal_id = po.signal_index;
+    Signal& signall = signal_vector[signal_id];
+    long long int time_ = signall.vaweform[0].time;
+    int port_id = vlib_ports[compo.id][portname];
+    var[port_id] = X;
+  }
+  for(int i = 0 ; i < compo.outputs.size(); i++){
+    portmap& po = compo.outputs[i];
+    string& portname = po.port_name;
+    int& signal_id = po.signal_index;
+    int port_id = vlib_ports[compo.id][portname];
+    Signal& signall = signal_vector[signal_id];
+    var[port_id] = X;
+    compo.stimulis[port_id] = signal_id;
+  }
+  compo.last=0;
+}
+
+void gates_initialization(){
+  for(int i = 0;i < height.size(); i++){
+    for(int j = 0 ; j < height[i].size(); j++){
+      int comp_ind = height[i][j];
+      single_gate_initialization(comp_ind);
+    }
+  }
+}
+
+int delay_time(vector<delay> &dl,int in_edge,int out_edge,string in,string out){
+  if(in_edge==-1 || out_edge==-1)
+    cout<<"how it is possible!"<<endl;
+  for(int i=0;i<dl.size();i++)
+    if(dl[i].in==in && dl[i].out==out){
+      if(dl[i].edge=="non" &&(dl[i].edge=="pos" && in_edge==1)&&(dl[i].edge=="neg" && in_edge==0))
+	if(out_edge==1)
+	  return dl[i].ris;
+	else
+	  return dl[i].fal;
+    }
+	
+}
+
+bool single_gate_simulation(int comp_ind, int time){
+  Gate& compo = component_vector[comp_ind];
+  GATE* COMPO = compo.CMP;
+  VAL* var = COMPO->pos();
+  int cell_id = compo.id;
+  for(int i = 0 ; i < compo.inputs.size(); i++){//synchronizing?
+    portmap& po = compo.inputs[i];
+    int& last=po.last;
+    string& portname = po.port_name;
+    int& signal_id = po.signal_index;
+    Signal& signall = signal_vector[signal_id];
+    int port_id = vlib_ports[compo.id][portname];
+    VAL v1=signall.vaweform[last].value;
+    if(signall.vaweform[last+1].time==time){
+      last++;
+      VAL v2=signall.vaweform[last].value;
+      v1=join(v1,v2);
+    }
+    var[port_id]=v1;
+  }
+  COMPO->function();
+
+  int dl[4400];
+  for(int i=0;i<4400;i++)
+    dl[i]=10000;//infint
+  
+  if(compo.dl.size()!=0){
+    for(int i = 0 ; i < compo.inputs.size(); i++){//synchronizing?
+      portmap& po = compo.inputs[i];
+      int& last=po.last;
+      string& portname = po.port_name;
+      int& signal_id = po.signal_index;
+      Signal& signall = signal_vector[signal_id];
+      int port_id = vlib_ports[compo.id][portname];
+      VAL v1=signall.vaweform[last].value;
+      if(signall.vaweform[last].time==time){
+	VAL v2=signall.vaweform[last-1].value;
+	v1=join(v2,v1);
+	int in_edge=-1;
+	if(p_edge(v1))
+	  in_edge=1;
+	else
+	  in_edge=0;
+	for(int j = 0 ; j < compo.outputs.size(); j++){//synchronizing?
+	  portmap& out_po = compo.outputs[j];
+	  int& out_last=out_po.last;
+	  string& out_portname = out_po.port_name;
+	  int& out_signal_id = out_po.signal_index;
+	  Signal& out_signall = out_signal_vector[out_signal_id];
+	  int out_port_id = vlib_ports[compo.id][out_portname];
+	  VAL v21=var[out_port_id];
+	  VAL v22=X;
+	  if(out_signall.vaweform.size()!=0)
+	    v22=out_signall.vaweform[out_signall.vaweform.size()-1].value;
+	  if(second(v1)!=v22){
+	    int out_edge=-1;
+	    if(p_edge(join(second(v1),v22)))
+	      out_edge=1;
+	    else
+	      out_edge=0;
+	    dl[j]=min(dl[j],delay_time(compo.dl,in_edge,out_edge,portname,out_portname));//initialaize delay array to inf and get it out of this scope
+	  }
+	}
+      }
+    }
+  }
+
+  for(int i = 0 ; i < compo.outputs.size(); i++){//synchronizing?
+    portmap& po = compo.outputs[i];
+    int& last=po.last;
+    string& portname = po.port_name;
+    int& signal_id = po.signal_index;
+    Signal& signall = signal_vector[signal_id];
+    int port_id = vlib_ports[compo.id][portname];
+    VAL v1=var[out_port_id];
+    if(dl[i]!=10000)
+      insert_edge(signal_id,time+dl[i],second(v1),COMPO,true);
+    else
+      insert_edge(signal_id,time,second(v1),COMPO,true);
+  }
+}
+
+
+bool simulation(int counter){
+  for(int j=0;j<(int)mx/wl.maxn;j++){
+    wl.read(vs);
+    for(int i=0;i<wl.maxn;i++)
+      for(int k=0;k<wl.size(i);k++){
+	int id=wl.get(i);//component_ind
+	int time=j*wl.maxn+k;
+	single_gate_simulation(id,time);
+      }
+  }
+}
+
+
+void total_simulation(){
+  gates_initialization();
+  simulation();
+}
+
+int main(int argc, char *argv[]){
+  mx = stoi(argv[4]);
+  cout<<"phase1"<<endl;
+  component_preprocess("../vlib/example.vlib", "../vlib/primitive.vlib");
+  cout<<"phase2"<<endl;
+  process_port_parser("../vlib/pars.txt");
+  cout<<"phase3"<<endl;
+  process_netlist(argv[1]);
+  cout<<"phase4"<<endl;
+  vcd_process(argv[2]);
+  cout<<"phase5"<<endl;
+  sdf_process(argv[3]);
+  cout<<"phase6"<<endl;
+  initialization();
+  cout<<"phase7"<<endl;
+  total_simulation();
+  cout<<"phase8"<<endl;
+  //output();
+  cout<<"SIMUALTION DONE \n\\0\\\n/-/\n\\ \\"<<endl;
+}

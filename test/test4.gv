@@ -1,0 +1,13 @@
+
+
+
+module NV_nvdla (t1, t2, t3, t4, t5);
+       input t1, t2, t3;
+       output t4, t5;
+       wire w1, w2;
+       GEN_INV_D1 tgen1 (.i(w2), .zn(w1));
+       GEN_SYNC2C_D1 tgen2 (.clk(t2), .d(t1), .clr_(t3), .q(w2));
+
+
+
+endmodule

@@ -1,0 +1,36 @@
+#include<bits/stdc++.h>
+#include"lib.h"
+#include"vlib.h"
+
+using namespace std;
+
+VAL* GEN_RAMS_SP_WENABLE32_512x128::pos(){
+  return &clk;
+}
+void GEN_RAMS_SP_WENABLE32_512x128::function(){
+  cout<<sizeof(a)<<endl;
+  if (  OI == clk || OX == clk || XI == clk ) {
+    if ( ( we[0] & wce ) == I ) {
+      for(int i=0;i<=31;i++)
+	M[num(a,sizeof(a))][i]  =  di[i];
+    }
+    if ( ( we[1] & wce ) == I ) {
+      for(int i=32;i<=63;i++)
+	M[num(a,sizeof(a))][i]  =  di[i];
+    }
+    if ( ( we[2] & wce ) == I ) {
+      for(int i=64;i<=95;i++)
+	M[num(a,sizeof(a))][i]  =  di[i];
+    }
+    if ( ( we[3] & wce ) == I ) {
+      for(int i=96;i<=127;i++)
+	M[num(a,sizeof(a))][i]  =  di[i];
+    }
+    if ( re == I ) {
+      for(int i=0;i<sizeof( a);i++)
+	ra_d [i] =  a[i];
+    }
+  }
+  for(int i=0;i<sizeof( M[num(ra_d,sizeof(ra_d))]);i++)
+    dout [i] =  M[num(ra_d,sizeof(ra_d))][i];
+}

@@ -1,0 +1,48 @@
+#include<bits/stdc++.h>
+
+using namespace std;
+
+enum value{
+  O=0,
+  I=1,
+  X=2,//unknown
+  b=3,//0 or 1
+  q=4,//? 0 or 1 or x
+  m=5,//- nochange
+  vw=6,//
+  s=7,//*
+  r=8,//
+  f=9,//
+  p=10,//
+  n=11//
+};
+
+class entity{
+public:
+  value v1;
+  value v2[3];
+  value v3;
+  value* array(){
+    return &v1;
+  }
+};
+
+
+int main(){
+  value vl1=X;
+  value vl2=I;
+  //cout<<(vl1 & vl2)<<endl;
+  if(( vl1 & vl2) == 0){
+    cout<<"here"<<endl;
+  }
+  /*
+  entity en;
+  en.v1=vw;
+  en.v2[2]=p;
+  en.v3=n;
+  en.v2[1]=f;
+  value* vl=en.array();
+  for(int i=0;i<5;i++)
+    cout<<vl[i]<<endl;
+  */
+}

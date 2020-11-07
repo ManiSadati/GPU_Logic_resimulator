@@ -1,0 +1,68 @@
+primitive udp_xbuf (o, i, check_signal);
+  output o;
+  input i, check_signal;
+  table      
+  // i check_signal : o
+      0   1   : 0;
+      1   1   : 1;
+      x   1   : 1;
+   endtable
+endprimitive
+primitive udp_dff (q, d, clk, clr, set, notifier);
+   output q;
+   input  d, clk, clr, set, notifier;
+   reg    q;
+   table
+      ?   ?   0   ?   ? : ? : 0 ;
+      ?   ?   1   0   ? : ? : 1 ;
+      ?   ?   1   x   ? : 0 : x ;
+      0 (01)  ?   1   ? : ? : 0 ;
+      0   *   ?   1   ? : 0 : 0 ;
+      1 (01)  1   ?   ? : ? : 1 ;
+      1   *   1   ?   ? : 1 : 1 ;
+      ? (1?)  1   1   ? : ? : - ;
+      ? (?0)  1   1   ? : ? : - ;
+      ?   ? (?1)  ?   ? : ? : - ;
+      ?   ?   ? (?1)  ? : ? : - ;
+      *   ?   ?   ?   ? : ? : - ;
+      ?   ?   ?   ?   * : ? : x ;
+      x   *   ?   ?   ? : 1 : 1 ;
+      x   *   ?   ?   ? : 0 : 0 ;
+      x   *   ?   ?   ? : x : 0 ;
+      ?   ?   1   1   0 : x : 0 ;
+   endtable
+endprimitive
+primitive udp_tlat (q, d, en, clr, set, notifier);
+   output q;
+   input  d, en, clr, set, notifier;
+   reg    q;
+   table
+   1  1   1   1   ?   : ?  :  1  ;
+   0  1   1   1   ?   : ?  :  0  ;
+   0 (10) 1   1   ?   : ?  :  0  ;
+   1 (10) 1   1   ?   : ?  :  1  ;
+   *  0   ?   ?   ?   : ?  :  -  ;
+   ?  ?   ?   0   ?   : ?  :  1  ;
+   ?  0   1   *   ?   : 1  :  1  ;
+   1  ?   1   *   ?   : 1  :  1  ;
+   1  *   1   ?   ?   : 1  :  1  ;
+   ?  ?   0   1   ?   : ?  :  0  ;
+   ?  0   *   1   ?   : 0  :  0  ;
+   0  ?   *   1   ?   : 0  :  0  ;
+   0  *   ?   1   ?   : 0  :  0  ;
+   ?  ?   ?   ?   *   : ?  :  x  ;
+   endtable
+endprimitive
+primitive udp_mux2 (z, i0, i1, s);
+   output z;
+   input  i0, i1, s;
+   table
+// i0 i1 s :  z
+    1  ?  0 :  1;
+    0  ?  0 :  0;
+    ?  1  1 :  1;
+    ?  0  1 :  0;
+    0  0  x :  0;
+    1  1  x :  1;
+   endtable
+endprimitive

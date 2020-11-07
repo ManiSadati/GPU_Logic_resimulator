@@ -1,0 +1,206 @@
+#include<bits/stdc++.h>
+#include"lib.h"
+
+using namespace std;
+
+VAL operator ! (VAL const &v1){
+  if(v1%3==0)
+    return I;
+  if(v1%3==1)
+    return O;
+  if(v1%3==2)
+    return X;
+}
+
+int num(VAL* v,int n){
+  int x=0;
+  for(int i=n-1;i>=0;i--){
+    x*=2;
+    x+=v[i]%3;
+  }
+  return x;
+}
+
+VAL operator & (VAL const &v1,VAL const &v2){
+  int x1=(int)(v1%3);
+  int x2=(int)(v2%3);
+  if(v1==Z)
+    x1=2;
+  if(v2==Z)
+    x2=2;
+  if(x1==0 || x2==0)
+    return O;
+  if(x1==2 || x2==2)
+    return X;
+  return I;
+}
+
+VAL operator | (VAL const &v1,VAL const &v2){
+  int x1=(int)(v1%3);
+  int x2=(int)(v2%3);
+  if(v1==Z)
+    x1=2;
+  if(v2==Z)
+    x2=2;
+  if(x1==1 || x2==1)
+    return I;
+  if(x1==2 || x2==2)
+    return X;
+  return O;
+}
+
+
+VAL operator ^ (VAL const &v1,VAL const &v2){
+  int x1=(int)(v1%3);
+  int x2=(int)(v2%3);
+  if(v1==Z)
+    x1=2;
+  if(v2==Z)
+    x2=2;
+  if(x1==2 || x2==2)
+    return X;
+  if(x1==x2)
+    return O;
+  return I;
+}
+
+void AND(VAL &z,VAL x1,VAL x2,VAL x3=I,VAL x4=I){
+  z=((x1&x2)&(x3))&x4;
+}
+void OR(VAL &z,VAL x1,VAL x2,VAL x3=O,VAL x4=O){
+  z=((x1|x2)|(x3))|x4;
+}
+void NOR(VAL &z,VAL x1,VAL x2,VAL x3=O,VAL x4=O){
+  z=!(((x1|x2)|(x3))|x4);
+}
+void NAND(VAL &z,VAL x1,VAL x2,VAL x3=I,VAL x4=I){
+  z=!(((x1&x2)&(x3))&x4);
+}
+void NOT(VAL &z,VAL x1){
+  z=!(x1);
+}
+void BUF(VAL &z,VAL x1){
+  if(x1==Z)
+    z=X;
+}
+void XOR(VAL &z,VAL x1,VAL x2,VAL x3=O,VAL x4=O){
+  z=(((x1^x2)^x3)^x4);
+}
+void XNOR(VAL &z,VAL x1,VAL x2,VAL x3=O,VAL x4=O){
+  z=!(((x1^x2)^x3)^x4);
+}
+
+bool part(VAL v,string s){
+  if(s=="0" && (v==O || v==IO || v==XO))
+    return true;
+  if(s=="1" && (v==I || v==XI || v==OI))
+    return true;
+  if(s=="x" && (v==X || v==IX || v==OX))
+    return true;
+  if(s=="?")
+    return true;
+  if(s=="*" && v!=I && v!=X && v!=O)
+    return true;
+  if(s=="b" && (v==I || v==O))
+    return true;
+  if(s=="01" && v==OI)
+    return true;
+  if(s=="10" && v==IO)
+    return true;
+  if(s=="1?" && (v==IO || v==IX))
+    return true;
+  if(s=="0?" && (v==OI || v==OX))
+    return true;
+  if(s=="?0" && (v==IO || v==XO))
+    return true;
+  if(s=="?1" && (v==OI || v==XI))
+    return true;
+  if(s=="?x" && (v==IX || v==OX))
+    return true;
+  if(s=="x?" && (v==XO || v==XI))
+    return true;
+}
+
+
+void udp_dff::function(VAL &qp,VAL d,VAL clk,VAL clr,VAL set,VAL notifier){
+  for(int i=0;i<17;i++){
+    if(part(d,s[i][0]) && part(clk,s[i][1]) && part(clr,s[i][2]) && part(set,s[i][3]) && part(notifier,s[i][4]) && part(q,s[i][5])){
+      if(s[i][6]=="1")
+	qp=I;
+      if(s[i][6]=="0")
+	qp=O;
+      if(s[i][6]=="x")
+	qp=X;
+      if(s[i][6]=="-")
+	qp=q;
+      return;
+    }
+  }
+  qp=X;
+}
+
+
+void udp_tlat::function(VAL &qp,VAL d,VAL clk,VAL clr,VAL set,VAL notifier){
+  for(int i=0;i<13;i++){
+    //cout<<i<<endl;
+    if(part(d,s[i][0]) && part(clk,s[i][1]) && part(clr,s[i][2]) && part(set,s[i][3]) && part(notifier,s[i][4]) && part(q,s[i][5])){
+      cout<<i<<endl;
+      if(s[i][6]=="1")
+	qp=I;
+      if(s[i][6]=="0")
+	qp=O;
+      if(s[i][6]=="x")
+	qp=X;
+      if(s[i][6]=="-")
+	qp=q;
+      return;
+    }
+  }
+  qp=X;
+}
+
+void udp_mux2::function(VAL &z,VAL i0,VAL i1,VAL S){
+  for(int i=0;i<6;i++){
+    if(part(i0,s[i][0]) && part(i1,s[i][1]) && part(S,s[i][2])){
+      if(s[i][3]=="1")
+	z=I;
+      if(s[i][3]=="0")
+	z=O;
+      if(s[i][3]=="x")
+	z=X;
+      return;
+    }
+  }
+  z=X;
+}
+
+void udp_xbuf::function(VAL &o,VAL i0,VAL check_signal){
+  for(int i=0;i<3;i++){
+    if(part(i0,s[i][0]) && part(check_signal,s[i][1])){
+      if(s[i][2]=="1")
+	o=I;
+      if(s[i][2]=="0")
+	o=O;
+      if(s[i][2]=="x")
+	o=X;
+      return;
+    }
+  }
+  o=X;
+}
+/*
+int main(){
+  udp_tlat df;
+  VAL z;
+  VAL a[5];
+  while(true){
+    for(int i=0;i<5;i++){
+      int x;
+      cin>>x;
+      a[i]=(VAL)x;
+    }
+    df.function(z,a[0],a[1],a[2],a[3],a[4]);
+    cout<<z<<endl;
+  }
+}
+*/

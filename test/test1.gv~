@@ -1,0 +1,20 @@
+/////////////////////////////////////////////////////////////
+// Created by: ---
+// Version   : ---
+// Date      : ---
+/////////////////////////////////////////////////////////////
+
+module NV_nvdla ( test_a, test_b, test_c, test_e, test_f, test_g);
+
+  input [4:0] te;
+  input ta, tb;
+  output [1:0] ti;
+  wire wi1;
+  wire wi3;
+
+
+  GEN_AO221_D1 tgen0 ( .a1(tb), .a2(te[0]), .b1(te[2]), .b2(te[3]), .c(te[4]), .z(wi1));
+  //GEN_AO221_D1 tgen1 ( .a1(ta), .a2(te[0]), .b1(te[2]), .b2(te[3]), .c(wi1), .z(ti[0]));
+  //GEN_AO221_D1 tgen2 ( .a1(ta), .a2(te[0]), .b1(te[2]), .b2(te[3]), .c(wi1), .z(wi3));
+  //GEN_AO21_D4 tgen3 ( .a1(wi1), .a2(wi3), .b(ta), .z(ti[1]));
+ endmodule

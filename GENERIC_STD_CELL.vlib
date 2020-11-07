@@ -1,0 +1,5163 @@
+`timescale 1ps/1ps
+primitive udp_xbuf (o, i, check_signal);
+  output o;
+  input i, check_signal;
+  table      
+  // i check_signal : o
+      0   1   : 0;
+      1   1   : 1;
+      x   1   : 1;
+   endtable
+endprimitive
+primitive udp_dff (q, d, clk, clr, set, notifier);
+   output q;
+   input  d, clk, clr, set, notifier;
+   reg    q;
+   table
+      ?   ?   0   ?   ? : ? : 0 ;
+      ?   ?   1   0   ? : ? : 1 ;
+      ?   ?   1   x   ? : 0 : x ;
+      0 (01)  ?   1   ? : ? : 0 ;
+      0   *   ?   1   ? : 0 : 0 ;
+      1 (01)  1   ?   ? : ? : 1 ;
+      1   *   1   ?   ? : 1 : 1 ;
+      ? (1?)  1   1   ? : ? : - ;
+      ? (?0)  1   1   ? : ? : - ;
+      ?   ? (?1)  ?   ? : ? : - ;
+      ?   ?   ? (?1)  ? : ? : - ;
+      *   ?   ?   ?   ? : ? : - ;
+      ?   ?   ?   ?   * : ? : x ;
+      x   *   ?   ?   ? : 1 : 1 ;
+      x   *   ?   ?   ? : 0 : 0 ;
+      x   *   ?   ?   ? : x : 0 ;
+      ?   ?   1   1   0 : x : 0 ;
+   endtable
+endprimitive
+primitive udp_tlat (q, d, en, clr, set, notifier);
+   output q;
+   input  d, en, clr, set, notifier;
+   reg    q;
+   table
+   1  1   1   1   ?   : ?  :  1  ;
+   0  1   1   1   ?   : ?  :  0  ;
+   0 (10) 1   1   ?   : ?  :  0  ;
+   1 (10) 1   1   ?   : ?  :  1  ;
+   *  0   ?   ?   ?   : ?  :  -  ;
+   ?  ?   ?   0   ?   : ?  :  1  ;
+   ?  0   1   *   ?   : 1  :  1  ;
+   1  ?   1   *   ?   : 1  :  1  ;
+   1  *   1   ?   ?   : 1  :  1  ;
+   ?  ?   0   1   ?   : ?  :  0  ;
+   ?  0   *   1   ?   : 0  :  0  ;
+   0  ?   *   1   ?   : 0  :  0  ;
+   0  *   ?   1   ?   : 0  :  0  ;
+   ?  ?   ?   ?   *   : ?  :  x  ;
+   endtable
+endprimitive
+primitive udp_mux2 (z, i0, i1, s);
+   output z;
+   input  i0, i1, s;
+   table
+// i0 i1 s :  z
+    1  ?  0 :  1;
+    0  ?  0 :  0;
+    ?  1  1 :  1;
+    ?  0  1 :  0;
+    0  0  x :  0;
+    1  1  x :  1;
+   endtable
+endprimitive
+`celldefine
+module GEN_AND2_D1 (a1,a2,z);
+  input a1;
+  input a2;
+  output z;
+  and (z, a1, a2);
+  specify
+    (a1 => z)=(1, 1);
+    (a2 => z)=(1, 1);
+  endspecify
+endmodule
+module GEN_AND2_D2 (a1,a2,z);
+  input a1;
+  input a2;
+  output z;
+  and (z, a1, a2);
+  specify
+    (a1 => z)=(1, 1);
+    (a2 => z)=(1, 1);
+  endspecify
+endmodule
+module GEN_AND2_D4 (a1,a2,z);
+  input a1;
+  input a2;
+  output z;
+  and (z, a1, a2);
+  specify
+    (a1 => z)=(1, 1);
+    (a2 => z)=(1, 1);
+  endspecify
+endmodule
+module GEN_AND2_D8 (a1,a2,z);
+  input a1;
+  input a2;
+  output z;
+  and (z, a1, a2);
+  specify
+    (a1 => z)=(1, 1);
+    (a2 => z)=(1, 1);
+  endspecify
+endmodule
+module GEN_AND3_D1 (a1,a2,a3,z);
+  input a1;
+  input a2;
+  input a3;
+  output z;
+  and (z, a1, a2, a3);
+  specify
+    (a1 => z)=(1, 1);
+    (a2 => z)=(1, 1);
+    (a3 => z)=(1, 1);
+  endspecify
+endmodule
+module GEN_AND3_D2 (a1,a2,a3,z);
+  input a1;
+  input a2;
+  input a3;
+  output z;
+  and (z, a1, a2, a3);
+  specify
+    (a1 => z)=(1, 1);
+    (a2 => z)=(1, 1);
+    (a3 => z)=(1, 1);
+  endspecify
+endmodule
+module GEN_AND3_D4 (a1,a2,a3,z);
+  input a1;
+  input a2;
+  input a3;
+  output z;
+  and (z, a1, a2, a3);
+  specify
+    (a1 => z)=(1, 1);
+    (a2 => z)=(1, 1);
+    (a3 => z)=(1, 1);
+  endspecify
+endmodule
+module GEN_AND3_D8 (a1,a2,a3,z);
+  input a1;
+  input a2;
+  input a3;
+  output z;
+  and (z, a1, a2, a3);
+  specify
+    (a1 => z)=(1, 1);
+    (a2 => z)=(1, 1);
+    (a3 => z)=(1, 1);
+  endspecify
+endmodule
+module GEN_AND4_D1 (a1,a2,a3,a4,z);
+  input a1;
+  input a2;
+  input a3;
+  input a4;
+  output z;
+  and (z, a1, a2, a3, a4);
+  specify
+    (a1 => z)=(1, 1);
+    (a2 => z)=(1, 1);
+    (a3 => z)=(1, 1);
+    (a4 => z)=(1, 1);
+  endspecify
+endmodule
+module GEN_AND4_D2 (a1,a2,a3,a4,z);
+  input a1;
+  input a2;
+  input a3;
+  input a4;
+  output z;
+  and (z, a1, a2, a3, a4);
+  specify
+    (a1 => z)=(1, 1);
+    (a2 => z)=(1, 1);
+    (a3 => z)=(1, 1);
+    (a4 => z)=(1, 1);
+  endspecify
+endmodule
+module GEN_AND4_D4 (a1,a2,a3,a4,z);
+  input a1;
+  input a2;
+  input a3;
+  input a4;
+  output z;
+  and (z, a1, a2, a3, a4);
+  specify
+    (a1 => z)=(1, 1);
+    (a2 => z)=(1, 1);
+    (a3 => z)=(1, 1);
+    (a4 => z)=(1, 1);
+  endspecify
+endmodule
+module GEN_AND4_D8 (a1,a2,a3,a4,z);
+  input a1;
+  input a2;
+  input a3;
+  input a4;
+  output z;
+  and (z, a1, a2, a3, a4);
+  specify
+    (a1 => z)=(1, 1);
+    (a2 => z)=(1, 1);
+    (a3 => z)=(1, 1);
+    (a4 => z)=(1, 1);
+  endspecify
+endmodule
+module GEN_AO211_D1 (a1,a2,b,c,z);
+  input a1;
+  input a2;
+  input b;
+  input c;
+  output z;
+  wire net0; 
+  and (net0, a1, a2);
+  or (z, net0, b, c);
+  specify
+    (a1 => z) = (1, 1);
+    (a2 => z) = (1, 1);
+    (b => z) = (1, 1);
+    (c => z) = (1, 1);
+  endspecify
+endmodule
+module GEN_AO211_D2 (a1,a2,b,c,z);
+  input a1;
+  input a2;
+  input b;
+  input c;
+  output z;
+  wire net0; 
+  and (net0, a1, a2);
+  or (z, net0, b, c);
+  specify
+    (a1 => z) = (1, 1);
+    (a2 => z) = (1, 1);
+    (b => z) = (1, 1);
+    (c => z) = (1, 1);
+  endspecify
+endmodule
+module GEN_AO211_D4 (a1,a2,b,c,z);
+  input a1;
+  input a2;
+  input b;
+  input c;
+  output z;
+  wire net0; 
+  and (net0, a1, a2);
+  or (z, net0, b, c);
+  specify
+    (a1 => z) = (1, 1);
+    (a2 => z) = (1, 1);
+    (b => z) = (1, 1);
+    (c => z) = (1, 1);
+  endspecify
+endmodule
+module GEN_AO21_D1 (a1,a2,b,z);
+  input a1;
+  input a2;
+  input b;
+  output z;
+  wire net0;
+  and (net0, a1, a2);
+  or (z, net0, b);
+  specify
+    (a1 => z) = (1, 1);
+    (a2 => z) = (1, 1);
+    (b => z) = (1, 1);
+  endspecify
+endmodule
+module GEN_AO21_D2 (a1,a2,b,z);
+  input a1;
+  input a2;
+  input b;
+  output z;
+  wire net0;
+  and (net0, a1, a2);
+  or (z, net0, b);
+  specify
+    (a1 => z) = (1, 1);
+    (a2 => z) = (1, 1);
+    (b => z) = (1, 1);
+  endspecify
+endmodule
+module GEN_AO21_D4 (a1,a2,b,z);
+  input a1;
+  input a2;
+  input b;
+  output z;
+  wire net0;
+  and (net0, a1, a2);
+  or (z, net0, b);
+  specify
+    (a1 => z) = (1, 1);
+    (a2 => z) = (1, 1);
+    (b => z) = (1, 1);
+  endspecify
+endmodule
+module GEN_AO221_D1 (a1,a2,b1,b2,c,z);
+  input a1;
+  input a2;
+  input b1;
+  input b2;
+  input c;
+  output z;
+  wire net0, net1; 
+  and (net0, a1, a2);
+  and (net1, b1, b2);
+  or (z, net0, net1, c);
+  specify
+    (a1 => z) = (1, 1);
+    (a2 => z) = (1, 1);
+    (b1 => z) = (1, 1);
+    (b2 => z) = (1, 1);
+    (c => z) = (1, 1);
+  endspecify
+endmodule
+module GEN_AO221_D2 (a1,a2,b1,b2,c,z);
+  input a1;
+  input a2;
+  input b1;
+  input b2;
+  input c;
+  output z;
+  wire net0, net1; 
+  and (net0, a1, a2);
+  and (net1, b1, b2);
+  or (z, net0, net1, c);
+  specify
+    (a1 => z) = (1, 1);
+    (a2 => z) = (1, 1);
+    (b1 => z) = (1, 1);
+    (b2 => z) = (1, 1);
+    (c => z) = (1, 1);
+  endspecify
+endmodule
+module GEN_AO221_D4 (a1,a2,b1,b2,c,z);
+  input a1;
+  input a2;
+  input b1;
+  input b2;
+  input c;
+  output z;
+  wire net0, net1; 
+  and (net0, a1, a2);
+  and (net1, b1, b2);
+  or (z, net0, net1, c);
+  specify
+    (a1 => z) = (1, 1);
+    (a2 => z) = (1, 1);
+    (b1 => z) = (1, 1);
+    (b2 => z) = (1, 1);
+    (c => z) = (1, 1);
+  endspecify
+endmodule
+module GEN_AO222_D1 (a1,a2,b1,b2,c1,c2,z);
+  input a1;
+  input a2;
+  input b1;
+  input b2;
+  input c1;
+  input c2;
+  output z;
+  wire net0, net1, net2; 
+  and (net0, c1, c2);
+  and (net1, a1, a2);
+  and (net2, b1, b2);
+  or  (z, net0, net1, net2);
+  specify
+    (a1 => z) = (1, 1);
+    (a2 => z) = (1, 1);
+    (b1 => z) = (1, 1);
+    (b2 => z) = (1, 1);
+    (c1 => z) = (1, 1);
+    (c2 => z) = (1, 1);
+  endspecify
+endmodule
+module GEN_AO222_D2 (a1,a2,b1,b2,c1,c2,z);
+  input a1;
+  input a2;
+  input b1;
+  input b2;
+  input c1;
+  input c2;
+  output z;
+  wire net0, net1, net2; 
+  and (net0, c1, c2);
+  and (net1, a1, a2);
+  and (net2, b1, b2);
+  or  (z, net0, net1, net2);
+  specify
+    (a1 => z) = (1, 1);
+    (a2 => z) = (1, 1);
+    (b1 => z) = (1, 1);
+    (b2 => z) = (1, 1);
+    (c1 => z) = (1, 1);
+    (c2 => z) = (1, 1);
+  endspecify
+endmodule
+module GEN_AO222_D4 (a1,a2,b1,b2,c1,c2,z);
+  input a1;
+  input a2;
+  input b1;
+  input b2;
+  input c1;
+  input c2;
+  output z;
+  wire net0, net1, net2; 
+  and (net0, c1, c2);
+  and (net1, a1, a2);
+  and (net2, b1, b2);
+  or  (z, net0, net1, net2);
+  specify
+    (a1 => z) = (1, 1);
+    (a2 => z) = (1, 1);
+    (b1 => z) = (1, 1);
+    (b2 => z) = (1, 1);
+    (c1 => z) = (1, 1);
+    (c2 => z) = (1, 1);
+  endspecify
+endmodule
+module GEN_AO22_D1 (a1,a2,b1,b2,z);
+  input a1;
+  input a2;
+  input b1;
+  input b2;
+  output z;
+  wire net0, net1;
+  and (net0, b1, b2);
+  and (net1, a1, a2);
+  or  (z, net0, net1);
+  specify
+    (a1 => z) = (1, 1);
+    (a2 => z) = (1, 1);
+    (b1 => z) = (1, 1);
+    (b2 => z) = (1, 1);
+  endspecify
+endmodule
+module GEN_AO22_D2 (a1,a2,b1,b2,z);
+  input a1;
+  input a2;
+  input b1;
+  input b2;
+  output z;
+  wire net0, net1;
+  and (net0, b1, b2);
+  and (net1, a1, a2);
+  or  (z, net0, net1);
+  specify
+    (a1 => z) = (1, 1);
+    (a2 => z) = (1, 1);
+    (b1 => z) = (1, 1);
+    (b2 => z) = (1, 1);
+  endspecify
+endmodule
+module GEN_AO22_D4 (a1,a2,b1,b2,z);
+  input a1;
+  input a2;
+  input b1;
+  input b2;
+  output z;
+  wire net0, net1;
+  and (net0, b1, b2);
+  and (net1, a1, a2);
+  or  (z, net0, net1);
+  specify
+    (a1 => z) = (1, 1);
+    (a2 => z) = (1, 1);
+    (b1 => z) = (1, 1);
+    (b2 => z) = (1, 1);
+  endspecify
+endmodule
+module GEN_AO22_D8 (a1,a2,b1,b2,z);
+  input a1;
+  input a2;
+  input b1;
+  input b2;
+  output z;
+  wire net0, net1;
+  and (net0, b1, b2);
+  and (net1, a1, a2);
+  or  (z, net0, net1);
+  specify
+    (a1 => z) = (1, 1);
+    (a2 => z) = (1, 1);
+    (b1 => z) = (1, 1);
+    (b2 => z) = (1, 1);
+  endspecify
+endmodule
+module GEN_AO31_D1 (a1,a2,a3,b,z);
+  input a1;
+  input a2;
+  input a3;
+  input b;
+  output z;
+  wire net0; 
+  and (net0, a1, a2, a3);
+  or (z, net0, b);
+  specify
+    (a1 => z) = (1, 1);
+    (a2 => z) = (1, 1);
+    (a3 => z) = (1, 1);
+    (b => z) = (1, 1);
+  endspecify
+endmodule
+module GEN_AO31_D2 (a1,a2,a3,b,z);
+  input a1;
+  input a2;
+  input a3;
+  input b;
+  output z;
+  wire net0; 
+  and (net0, a1, a2, a3);
+  or (z, net0, b);
+  specify
+    (a1 => z) = (1, 1);
+    (a2 => z) = (1, 1);
+    (a3 => z) = (1, 1);
+    (b => z) = (1, 1);
+  endspecify
+endmodule
+module GEN_AO31_D4 (a1,a2,a3,b,z);
+  input a1;
+  input a2;
+  input a3;
+  input b;
+  output z;
+  wire net0; 
+  and (net0, a1, a2, a3);
+  or (z, net0, b);
+  specify
+    (a1 => z) = (1, 1);
+    (a2 => z) = (1, 1);
+    (a3 => z) = (1, 1);
+    (b => z) = (1, 1);
+  endspecify
+endmodule
+module GEN_AO32_D1 (a1,a2,a3,b1,b2,z);
+  input a1;
+  input a2;
+  input a3;
+  input b1;
+  input b2;
+  output z;
+  wire net0, net1; 
+  and (net0, b1, b2);
+  and (net1, a1, a2, a3);
+  or (z, net0, net1);
+  specify
+    (a1 => z) = (1, 1);
+    (a2 => z) = (1, 1);
+    (a3 => z) = (1, 1);
+    (b1 => z) = (1, 1);
+    (b2 => z) = (1, 1);
+  endspecify
+endmodule
+module GEN_AO32_D2 (a1,a2,a3,b1,b2,z);
+  input a1;
+  input a2;
+  input a3;
+  input b1;
+  input b2;
+  output z;
+  wire net0, net1; 
+  and (net0, b1, b2);
+  and (net1, a1, a2, a3);
+  or (z, net0, net1);
+  specify
+    (a1 => z) = (1, 1);
+    (a2 => z) = (1, 1);
+    (a3 => z) = (1, 1);
+    (b1 => z) = (1, 1);
+    (b2 => z) = (1, 1);
+  endspecify
+endmodule
+module GEN_AO32_D4 (a1,a2,a3,b1,b2,z);
+  input a1;
+  input a2;
+  input a3;
+  input b1;
+  input b2;
+  output z;
+  wire net0, net1; 
+  and (net0, b1, b2);
+  and (net1, a1, a2, a3);
+  or (z, net0, net1);
+  specify
+    (a1 => z) = (1, 1);
+    (a2 => z) = (1, 1);
+    (a3 => z) = (1, 1);
+    (b1 => z) = (1, 1);
+    (b2 => z) = (1, 1);
+  endspecify
+endmodule
+module GEN_AO33_D1 (a1,a2,a3,b1,b2,b3,z);
+  input a1;
+  input a2;
+  input a3;
+  input b1;
+  input b2;
+  input b3;
+  output z;
+  wire net0, net1; 
+  and (net0, b1, b2, b3);
+  and (net1, a1, a2, a3);
+  or (z, net0, net1);
+  specify
+    (a1 => z) = (1, 1);
+    (a2 => z) = (1, 1);
+    (a3 => z) = (1, 1);
+    (b1 => z) = (1, 1);
+    (b2 => z) = (1, 1);
+    (b3 => z) = (1, 1);
+  endspecify
+endmodule
+module GEN_AO33_D2 (a1,a2,a3,b1,b2,b3,z);
+  input a1;
+  input a2;
+  input a3;
+  input b1;
+  input b2;
+  input b3;
+  output z;
+  wire net0, net1; 
+  and (net0, b1, b2, b3);
+  and (net1, a1, a2, a3);
+  or (z, net0, net1);
+  specify
+    (a1 => z) = (1, 1);
+    (a2 => z) = (1, 1);
+    (a3 => z) = (1, 1);
+    (b1 => z) = (1, 1);
+    (b2 => z) = (1, 1);
+    (b3 => z) = (1, 1);
+  endspecify
+endmodule
+module GEN_AO33_D4 (a1,a2,a3,b1,b2,b3,z);
+  input a1;
+  input a2;
+  input a3;
+  input b1;
+  input b2;
+  input b3;
+  output z;
+  wire net0, net1; 
+  and (net0, b1, b2, b3);
+  and (net1, a1, a2, a3);
+  or (z, net0, net1);
+  specify
+    (a1 => z) = (1, 1);
+    (a2 => z) = (1, 1);
+    (a3 => z) = (1, 1);
+    (b1 => z) = (1, 1);
+    (b2 => z) = (1, 1);
+    (b3 => z) = (1, 1);
+  endspecify
+endmodule
+module GEN_AOI211_D1 (a1,a2,b,c,zn);
+  input a1;
+  input a2;
+  input b;
+  input c;
+  output zn;
+  wire net0, net1; 
+  and (net0, a1, a2);
+  or (net1, net0, b, c);
+  not (zn, net1);
+  specify
+    (a1 => zn) = (1, 1);
+    (a2 => zn) = (1, 1);
+    (b => zn) = (1, 1);
+    (c => zn) = (1, 1);
+  endspecify
+endmodule
+module GEN_AOI211_D2 (a1,a2,b,c,zn);
+  input a1;
+  input a2;
+  input b;
+  input c;
+  output zn;
+  wire net0, net1; 
+  and (net0, a1, a2);
+  or (net1, net0, b, c);
+  not (zn, net1);
+  specify
+    (a1 => zn) = (1, 1);
+    (a2 => zn) = (1, 1);
+    (b => zn) = (1, 1);
+    (c => zn) = (1, 1);
+  endspecify
+endmodule
+module GEN_AOI211_D4 (a1,a2,b,c,zn);
+  input a1;
+  input a2;
+  input b;
+  input c;
+  output zn;
+  wire net0, net1; 
+  and (net0, a1, a2);
+  or (net1, net0, b, c);
+  not (zn, net1);
+  specify
+    (a1 => zn) = (1, 1);
+    (a2 => zn) = (1, 1);
+    (b => zn) = (1, 1);
+    (c => zn) = (1, 1);
+  endspecify
+endmodule
+module GEN_AOI21_D1 (a1,a2,b,zn);
+  input a1;
+  input a2;
+  input b;
+  output zn;
+  wire net0, net1;
+  and (net0, a1, a2);
+  or (net1, net0, b);
+  not (zn, net1);
+  specify
+    (a1 => zn) = (1, 1);
+    (a2 => zn) = (1, 1);
+    (b => zn) = (1, 1);
+  endspecify
+endmodule
+module GEN_AOI21_D2 (a1,a2,b,zn);
+  input a1;
+  input a2;
+  input b;
+  output zn;
+  wire net0, net1;
+  and (net0, a1, a2);
+  or (net1, net0, b);
+  not (zn, net1);
+  specify
+    (a1 => zn) = (1, 1);
+    (a2 => zn) = (1, 1);
+    (b => zn) = (1, 1);
+  endspecify
+endmodule
+module GEN_AOI21_D4 (a1,a2,b,zn);
+  input a1;
+  input a2;
+  input b;
+  output zn;
+  wire net0, net1;
+  and (net0, a1, a2);
+  or (net1, net0, b);
+  not (zn, net1);
+  specify
+    (a1 => zn) = (1, 1);
+    (a2 => zn) = (1, 1);
+    (b => zn) = (1, 1);
+  endspecify
+endmodule
+module GEN_AOI221_D1 (a1,a2,b1,b2,c,zn);
+  input a1;
+  input a2;
+  input b1;
+  input b2;
+  input c;
+  output zn;
+  wire net0, net1, net2; 
+  and (net0, a1, a2);
+  and (net1, b1, b2);
+  or (net2, net0, net1, c);
+  not (zn, net2);
+  specify
+    (a1 => zn) = (1, 1);
+    (a2 => zn) = (1, 1);
+    (b1 => zn) = (1, 1);
+    (b2 => zn) = (1, 1);
+    (c => zn) = (1, 1);
+  endspecify
+endmodule
+module GEN_AOI221_D2 (a1,a2,b1,b2,c,zn);
+  input a1;
+  input a2;
+  input b1;
+  input b2;
+  input c;
+  output zn;
+  wire net0, net1, net2; 
+  and (net0, a1, a2);
+  and (net1, b1, b2);
+  or (net2, net0, net1, c);
+  not (zn, net2);
+  specify
+    (a1 => zn) = (1, 1);
+    (a2 => zn) = (1, 1);
+    (b1 => zn) = (1, 1);
+    (b2 => zn) = (1, 1);
+    (c => zn) = (1, 1);
+  endspecify
+endmodule
+module GEN_AOI221_D4 (a1,a2,b1,b2,c,zn);
+  input a1;
+  input a2;
+  input b1;
+  input b2;
+  input c;
+  output zn;
+  wire net0, net1, net2; 
+  and (net0, a1, a2);
+  and (net1, b1, b2);
+  or (net2, net0, net1, c);
+  not (zn, net2);
+  specify
+    (a1 => zn) = (1, 1);
+    (a2 => zn) = (1, 1);
+    (b1 => zn) = (1, 1);
+    (b2 => zn) = (1, 1);
+    (c => zn) = (1, 1);
+  endspecify
+endmodule
+module GEN_AOI222_D1 (a1,a2,b1,b2,c1,c2,zn);
+  input a1;
+  input a2;
+  input b1;
+  input b2;
+  input c1;
+  input c2;
+  output zn;
+  wire net0, net1, net2, net3; 
+  and (net0, c1, c2);
+  and (net1, a1, a2);
+  and (net2, b1, b2);
+  or (net3, net0, net1, net2);
+  not (zn, net3);
+  specify
+    (a1 => zn) = (1, 1);
+    (a2 => zn) = (1, 1);
+    (b1 => zn) = (1, 1);
+    (b2 => zn) = (1, 1);
+    (c1 => zn) = (1, 1);
+    (c2 => zn) = (1, 1);
+  endspecify
+endmodule
+module GEN_AOI222_D2 (a1,a2,b1,b2,c1,c2,zn);
+  input a1;
+  input a2;
+  input b1;
+  input b2;
+  input c1;
+  input c2;
+  output zn;
+  wire net0, net1, net2, net3; 
+  and (net0, c1, c2);
+  and (net1, a1, a2);
+  and (net2, b1, b2);
+  or (net3, net0, net1, net2);
+  not (zn, net3);
+  specify
+    (a1 => zn) = (1, 1);
+    (a2 => zn) = (1, 1);
+    (b1 => zn) = (1, 1);
+    (b2 => zn) = (1, 1);
+    (c1 => zn) = (1, 1);
+    (c2 => zn) = (1, 1);
+  endspecify
+endmodule
+module GEN_AOI222_D4 (a1,a2,b1,b2,c1,c2,zn);
+  input a1;
+  input a2;
+  input b1;
+  input b2;
+  input c1;
+  input c2;
+  output zn;
+  wire net0, net1, net2, net3; 
+  and (net0, c1, c2);
+  and (net1, a1, a2);
+  and (net2, b1, b2);
+  or (net3, net0, net1, net2);
+  not (zn, net3);
+  specify
+    (a1 => zn) = (1, 1);
+    (a2 => zn) = (1, 1);
+    (b1 => zn) = (1, 1);
+    (b2 => zn) = (1, 1);
+    (c1 => zn) = (1, 1);
+    (c2 => zn) = (1, 1);
+  endspecify
+endmodule
+module GEN_AOI22_D1 (a1,a2,b1,b2,zn);
+  input a1;
+  input a2;
+  input b1;
+  input b2;
+  output zn;
+  wire net0, net1, net2; 
+  and (net0, a1, a2);
+  and (net1, b1, b2);
+  or (net2, net0, net1);
+  not (zn, net2);
+  specify
+    (a1 => zn) = (1, 1);
+    (a2 => zn) = (1, 1);
+    (b1 => zn) = (1, 1);
+    (b2 => zn) = (1, 1);
+  endspecify
+endmodule
+module GEN_AOI22_D2 (a1,a2,b1,b2,zn);
+  input a1;
+  input a2;
+  input b1;
+  input b2;
+  output zn;
+  wire net0, net1, net2; 
+  and (net0, a1, a2);
+  and (net1, b1, b2);
+  or (net2, net0, net1);
+  not (zn, net2);
+  specify
+    (a1 => zn) = (1, 1);
+    (a2 => zn) = (1, 1);
+    (b1 => zn) = (1, 1);
+    (b2 => zn) = (1, 1);
+  endspecify
+endmodule
+module GEN_AOI22_D4 (a1,a2,b1,b2,zn);
+  input a1;
+  input a2;
+  input b1;
+  input b2;
+  output zn;
+  wire net0, net1, net2; 
+  and (net0, a1, a2);
+  and (net1, b1, b2);
+  or (net2, net0, net1);
+  not (zn, net2);
+  specify
+    (a1 => zn) = (1, 1);
+    (a2 => zn) = (1, 1);
+    (b1 => zn) = (1, 1);
+    (b2 => zn) = (1, 1);
+  endspecify
+endmodule
+module GEN_AOI31_D1 (a1,a2,a3,b,zn);
+  input a1;
+  input a2;
+  input a3;
+  input b;
+  output zn;
+  wire net0, net1;
+  and (net0, a1, a2, a3);
+  or (net1, net0, b);
+  not (zn, net1);
+  specify
+    (a1 => zn) = (1, 1);
+    (a2 => zn) = (1, 1);
+    (a3 => zn) = (1, 1);
+    (b => zn) = (1, 1);
+  endspecify
+endmodule
+module GEN_AOI31_D2 (a1,a2,a3,b,zn);
+  input a1;
+  input a2;
+  input a3;
+  input b;
+  output zn;
+  wire net0, net1;
+  and (net0, a1, a2, a3);
+  or (net1, net0, b);
+  not (zn, net1);
+  specify
+    (a1 => zn) = (1, 1);
+    (a2 => zn) = (1, 1);
+    (a3 => zn) = (1, 1);
+    (b => zn) = (1, 1);
+  endspecify
+endmodule
+module GEN_AOI31_D4 (a1,a2,a3,b,zn);
+  input a1;
+  input a2;
+  input a3;
+  input b;
+  output zn;
+  wire net0, net1;
+  and (net0, a1, a2, a3);
+  or (net1, net0, b);
+  not (zn, net1);
+  specify
+    (a1 => zn) = (1, 1);
+    (a2 => zn) = (1, 1);
+    (a3 => zn) = (1, 1);
+    (b => zn) = (1, 1);
+  endspecify
+endmodule
+module GEN_AOI32_D1 (a1,a2,a3,b1,b2,zn);
+  input a1;
+  input a2;
+  input a3;
+  input b1;
+  input b2;
+  output zn;
+  wire net0, net1, net2; 
+  and (net0, a1, a2, a3);
+  and (net1, b1, b2);
+  or (net2, net0, net1);
+  not (zn, net2);
+  specify
+    (a1 => zn) = (1, 1);
+    (a2 => zn) = (1, 1);
+    (a3 => zn) = (1, 1);
+    (b1 => zn) = (1, 1);
+    (b2 => zn) = (1, 1);
+  endspecify
+endmodule
+module GEN_AOI32_D2 (a1,a2,a3,b1,b2,zn);
+  input a1;
+  input a2;
+  input a3;
+  input b1;
+  input b2;
+  output zn;
+  wire net0, net1, net2; 
+  and (net0, a1, a2, a3);
+  and (net1, b1, b2);
+  or (net2, net0, net1);
+  not (zn, net2);
+  specify
+    (a1 => zn) = (1, 1);
+    (a2 => zn) = (1, 1);
+    (a3 => zn) = (1, 1);
+    (b1 => zn) = (1, 1);
+    (b2 => zn) = (1, 1);
+  endspecify
+endmodule
+module GEN_AOI32_D4 (a1,a2,a3,b1,b2,zn);
+  input a1;
+  input a2;
+  input a3;
+  input b1;
+  input b2;
+  output zn;
+  wire net0, net1, net2; 
+  and (net0, a1, a2, a3);
+  and (net1, b1, b2);
+  or (net2, net0, net1);
+  not (zn, net2);
+  specify
+    (a1 => zn) = (1, 1);
+    (a2 => zn) = (1, 1);
+    (a3 => zn) = (1, 1);
+    (b1 => zn) = (1, 1);
+    (b2 => zn) = (1, 1);
+  endspecify
+endmodule
+module GEN_AOI33_D1 (a1,a2,a3,b1,b2,b3,zn);
+  input a1;
+  input a2;
+  input a3;
+  input b1;
+  input b2;
+  input b3;
+  output zn;
+  wire net0, net1, net2; 
+  and (net0, a1, a2, a3);
+  and (net1, b1, b2, b3);
+  or (net2, net0, net1);
+  not (zn, net2);
+  specify
+    (a1 => zn) = (1, 1);
+    (a2 => zn) = (1, 1);
+    (a3 => zn) = (1, 1);
+    (b1 => zn) = (1, 1);
+    (b2 => zn) = (1, 1);
+    (b3 => zn) = (1, 1);
+  endspecify
+endmodule
+module GEN_AOI33_D2 (a1,a2,a3,b1,b2,b3,zn);
+  input a1;
+  input a2;
+  input a3;
+  input b1;
+  input b2;
+  input b3;
+  output zn;
+  wire net0, net1, net2; 
+  and (net0, a1, a2, a3);
+  and (net1, b1, b2, b3);
+  or (net2, net0, net1);
+  not (zn, net2);
+  specify
+    (a1 => zn) = (1, 1);
+    (a2 => zn) = (1, 1);
+    (a3 => zn) = (1, 1);
+    (b1 => zn) = (1, 1);
+    (b2 => zn) = (1, 1);
+    (b3 => zn) = (1, 1);
+  endspecify
+endmodule
+module GEN_AOI33_D4 (a1,a2,a3,b1,b2,b3,zn);
+  input a1;
+  input a2;
+  input a3;
+  input b1;
+  input b2;
+  input b3;
+  output zn;
+  wire net0, net1, net2; 
+  and (net0, a1, a2, a3);
+  and (net1, b1, b2, b3);
+  or (net2, net0, net1);
+  not (zn, net2);
+  specify
+    (a1 => zn) = (1, 1);
+    (a2 => zn) = (1, 1);
+    (a3 => zn) = (1, 1);
+    (b1 => zn) = (1, 1);
+    (b2 => zn) = (1, 1);
+    (b3 => zn) = (1, 1);
+  endspecify
+endmodule
+module GEN_BUF_D1 (i,z);
+  input i;
+  output z;
+  buf (z, i);
+  specify
+    (i => z)=(1, 1);
+  endspecify
+endmodule
+module GEN_BUF_D2 (i,z);
+  input i;
+  output z;
+  buf (z, i);
+  specify
+    (i => z)=(1, 1);
+  endspecify
+endmodule
+module GEN_BUF_D4 (i,z);
+  input i;
+  output z;
+  buf (z, i);
+  specify
+    (i => z)=(1, 1);
+  endspecify
+endmodule
+module GEN_BUF_D8 (i,z);
+  input i;
+  output z;
+  buf (z, i);
+  specify
+    (i => z)=(1, 1);
+  endspecify
+endmodule
+module GEN_FA_D1 (a,b,ci,s,co);
+  input a;
+  input b;
+  input ci;
+  output s;
+  output co;
+  wire net0, net1, net2; 
+  xor (s, a, b, ci);
+  and (net0, a, b);
+  and (net1, a, ci);
+  and (net2, b, ci);
+  or (co, net0, net1, net2);
+  specify
+    (a => co) = (1, 1);
+    (b => co) = (1, 1);
+    (ci => co) = (1, 1);
+    (posedge a => s) = (1, 1);
+    (negedge a => s) = (1, 1);
+    (posedge b => s) = (1, 1);
+    (negedge b => s) = (1, 1);
+    (posedge ci => s) = (1, 1);
+    (negedge ci => s) = (1, 1);
+  endspecify
+endmodule
+module GEN_FA_D2 (a,b,ci,s,co);
+  input a;
+  input b;
+  input ci;
+  output s;
+  output co;
+  wire net0, net1, net2; 
+  xor (s, a, b, ci);
+  and (net0, a, b);
+  and (net1, a, ci);
+  and (net2, b, ci);
+  or (co, net0, net1, net2);
+  specify
+    (a => co) = (1, 1);
+    (b => co) = (1, 1);
+    (ci => co) = (1, 1);
+    (posedge a => s) = (1, 1);
+    (negedge a => s) = (1, 1);
+    (posedge b => s) = (1, 1);
+    (negedge b => s) = (1, 1);
+    (posedge ci => s) = (1, 1);
+    (negedge ci => s) = (1, 1);
+  endspecify
+endmodule
+module GEN_FA_D4 (a,b,ci,s,co);
+  input a;
+  input b;
+  input ci;
+  output s;
+  output co;
+  wire net0, net1, net2; 
+  xor (s, a, b, ci);
+  and (net0, a, b);
+  and (net1, a, ci);
+  and (net2, b, ci);
+  or (co, net0, net1, net2);
+  specify
+    (a => co) = (1, 1);
+    (b => co) = (1, 1);
+    (ci => co) = (1, 1);
+    (posedge a => s) = (1, 1);
+    (negedge a => s) = (1, 1);
+    (posedge b => s) = (1, 1);
+    (negedge b => s) = (1, 1);
+    (posedge ci => s) = (1, 1);
+    (negedge ci => s) = (1, 1);
+  endspecify
+endmodule
+module GEN_HA_D1 (a,b,s,co);
+  input a;
+  input b;
+  output s;
+  output co;
+  xor (s, a, b);
+  and (co, a, b);
+  specify
+    (a => co)=(1, 1);
+    (b => co)=(1, 1);
+    (posedge a => s) = (1, 1);
+    (negedge a => s) = (1, 1);
+    (posedge b => s) = (1, 1);
+    (negedge b => s) = (1, 1);
+  endspecify
+endmodule
+module GEN_HA_D2 (a,b,s,co);
+  input a;
+  input b;
+  output s;
+  output co;
+  xor (s, a, b);
+  and (co, a, b);
+  specify
+    (a => co)=(1, 1);
+    (b => co)=(1, 1);
+    (posedge a => s) = (1, 1);
+    (negedge a => s) = (1, 1);
+    (posedge b => s) = (1, 1);
+    (negedge b => s) = (1, 1);
+  endspecify
+endmodule
+module GEN_HA_D4 (a,b,s,co);
+  input a;
+  input b;
+  output s;
+  output co;
+  xor (s, a, b);
+  and (co, a, b);
+  specify
+    (a => co)=(1, 1);
+    (b => co)=(1, 1);
+    (posedge a => s) = (1, 1);
+    (negedge a => s) = (1, 1);
+    (posedge b => s) = (1, 1);
+    (negedge b => s) = (1, 1);
+  endspecify
+endmodule
+module GEN_INV_D1 (i,zn);
+  input i;
+  output zn;
+  not (zn, i);
+  specify
+    (i => zn)=(1, 1);
+  endspecify
+endmodule
+module GEN_INV_D2 (i,zn);
+  input i;
+  output zn;
+  not (zn, i);
+  specify
+    (i => zn)=(1, 1);
+  endspecify
+endmodule
+module GEN_INV_D4 (i,zn);
+  input i;
+  output zn;
+  not (zn, i);
+  specify
+    (i => zn)=(1, 1);
+  endspecify
+endmodule
+module GEN_INV_D8 (i,zn);
+  input i;
+  output zn;
+  not (zn, i);
+  specify
+    (i => zn)=(1, 1);
+  endspecify
+endmodule
+module GEN_MAJORITYAOI222_D1 (a,b,c,zn);
+  input a;
+  input b;
+  input c;
+  output zn;
+  wire net0, net1, net2, net3; 
+  and (net0, a, b);
+  and (net1, b, c);
+  and (net2, c, a);
+  or (net3, net0, net1, net2);
+  not (zn, net3);
+  specify
+    (a => zn) = (1, 1);
+    (b => zn) = (1, 1);
+    (c => zn) = (1, 1);
+  endspecify
+endmodule
+module GEN_MAJORITYAOI222_D2 (a,b,c,zn);
+  input a;
+  input b;
+  input c;
+  output zn;
+  wire net0, net1, net2, net3; 
+  and (net0, a, b);
+  and (net1, b, c);
+  and (net2, c, a);
+  or (net3, net0, net1, net2);
+  not (zn, net3);
+  specify
+    (a => zn) = (1, 1);
+    (b => zn) = (1, 1);
+    (c => zn) = (1, 1);
+  endspecify
+endmodule
+module GEN_MAJORITYAOI222_D4 (a,b,c,zn);
+  input a;
+  input b;
+  input c;
+  output zn;
+  wire net0, net1, net2, net3; 
+  and (net0, a, b);
+  and (net1, b, c);
+  and (net2, c, a);
+  or (net3, net0, net1, net2);
+  not (zn, net3);
+  specify
+    (a => zn) = (1, 1);
+    (b => zn) = (1, 1);
+    (c => zn) = (1, 1);
+  endspecify
+endmodule
+module GEN_MAJORITYAOI22_D1 (a1,a2,b1,b2,zn);
+  input a1;
+  input a2;
+  input b1;
+  input b2;
+  output zn;
+  wire net0, net1, net2; 
+  and (net0, a1, a2);
+  not (net1, net0);
+  or (net2, b1, b2);
+  and (zn, net1, net2);
+  specify
+    (a1 => zn) = (1, 1);
+    (a2 => zn) = (1, 1);
+    (b1 => zn) = (1, 1);
+    (b2 => zn) = (1, 1);
+  endspecify
+endmodule
+module GEN_MAJORITYAOI22_D2 (a1,a2,b1,b2,zn);
+  input a1;
+  input a2;
+  input b1;
+  input b2;
+  output zn;
+  wire net0, net1, net2; 
+  and (net0, a1, a2);
+  not (net1, net0);
+  or (net2, b1, b2);
+  and (zn, net1, net2);
+  specify
+    (a1 => zn) = (1, 1);
+    (a2 => zn) = (1, 1);
+    (b1 => zn) = (1, 1);
+    (b2 => zn) = (1, 1);
+  endspecify
+endmodule
+module GEN_MAJORITYAOI22_D4 (a1,a2,b1,b2,zn);
+  input a1;
+  input a2;
+  input b1;
+  input b2;
+  output zn;
+  wire net0, net1, net2; 
+  and (net0, a1, a2);
+  not (net1, net0);
+  or (net2, b1, b2);
+  and (zn, net1, net2);
+  specify
+    (a1 => zn) = (1, 1);
+    (a2 => zn) = (1, 1);
+    (b1 => zn) = (1, 1);
+    (b2 => zn) = (1, 1);
+  endspecify
+endmodule
+module GEN_MAJORITYOAI22_D1 (a1,a2,b1,b2,zn);
+  input a1;
+  input a2;
+  input b1;
+  input b2;
+  output zn;
+  wire net0, net1, net2; 
+  or  (net0, a1, a2);
+  not (net1, net0);
+  and (net2, b1, b2);
+  or (zn, net1, net2);
+  specify
+    (a1 => zn) = (1, 1);
+    (a2 => zn) = (1, 1);
+    (b1 => zn) = (1, 1);
+    (b2 => zn) = (1, 1);
+  endspecify
+endmodule
+module GEN_MAJORITYOAI22_D2 (a1,a2,b1,b2,zn);
+  input a1;
+  input a2;
+  input b1;
+  input b2;
+  output zn;
+  wire net0, net1, net2; 
+  or  (net0, a1, a2);
+  not (net1, net0);
+  and (net2, b1, b2);
+  or (zn, net1, net2);
+  specify
+    (a1 => zn) = (1, 1);
+    (a2 => zn) = (1, 1);
+    (b1 => zn) = (1, 1);
+    (b2 => zn) = (1, 1);
+  endspecify
+endmodule
+module GEN_MAJORITYOAI22_D4 (a1,a2,b1,b2,zn);
+  input a1;
+  input a2;
+  input b1;
+  input b2;
+  output zn;
+  wire net0, net1, net2; 
+  or  (net0, a1, a2);
+  not (net1, net0);
+  and (net2, b1, b2);
+  or (zn, net1, net2);
+  specify
+    (a1 => zn) = (1, 1);
+    (a2 => zn) = (1, 1);
+    (b1 => zn) = (1, 1);
+    (b2 => zn) = (1, 1);
+  endspecify
+endmodule
+module GEN_LATCH_D1 (d,e,q);
+  input d;
+  input e;
+  output q;
+  reg notifier;
+  supply1 cdn;
+  supply1 sdn;
+  udp_tlat udpi0 (q, d, e, cdn, sdn, notifier);
+  specify
+    (d => q)=(1, 1);
+    (posedge e => (q +: d))=(1, 1);
+  endspecify
+endmodule
+module GEN_LATCH_D2 (d,e,q);
+  input d;
+  input e;
+  output q;
+  reg notifier;
+  supply1 cdn;
+  supply1 sdn;
+  udp_tlat udpi0 (q, d, e, cdn, sdn, notifier);
+  specify
+    (d => q)=(1, 1);
+    (posedge e => (q +: d))=(1, 1);
+  endspecify
+endmodule
+module GEN_LATCH_D4 (d,e,q);
+  input d;
+  input e;
+  output q;
+  reg notifier;
+  supply1 cdn;
+  supply1 sdn;
+  udp_tlat udpi0 (q, d, e, cdn, sdn, notifier);
+  specify
+    (d => q)=(1, 1);
+    (posedge e => (q +: d))=(1, 1);
+  endspecify
+endmodule
+module GEN_DFCLR_D1 (d,cp,cdn,q);
+  input d;
+  input cp;
+  input cdn;
+  output q;
+  reg notifier;
+  supply1 sdn;
+  udp_dff udpi0 (q, d, cp, cdn, sdn, notifier);
+  specify
+    (posedge cp => (q +: d))=(1, 1);
+    (negedge cdn => (q +: 1'b0))=(1, 1);
+  endspecify
+endmodule
+module GEN_DFCLR_D2 (d,cp,cdn,q);
+  input d;
+  input cp;
+  input cdn;
+  output q;
+  reg notifier;
+  supply1 sdn;
+  udp_dff udpi0 (q, d, cp, cdn, sdn, notifier);
+  specify
+    (posedge cp => (q +: d))=(1, 1);
+    (negedge cdn => (q +: 1'b0))=(1, 1);
+  endspecify
+endmodule
+module GEN_DFCLR_D4 (d,cp,cdn,q);
+  input d;
+  input cp;
+  input cdn;
+  output q;
+  reg notifier;
+  supply1 sdn;
+  udp_dff udpi0 (q, d, cp, cdn, sdn, notifier);
+  specify
+    (posedge cp => (q +: d))=(1, 1);
+    (negedge cdn => (q +: 1'b0))=(1, 1);
+  endspecify
+endmodule
+module GEN_DFCLR_D8 (d,cp,cdn,q);
+  input d;
+  input cp;
+  input cdn;
+  output q;
+  reg notifier;
+  supply1 sdn;
+  udp_dff udpi0 (q, d, cp, cdn, sdn, notifier);
+  specify
+    (posedge cp => (q +: d))=(1, 1);
+    (negedge cdn => (q +: 1'b0))=(1, 1);
+  endspecify
+endmodule
+module GEN_DF_D1 (d,cp,q);
+  input d;
+  input cp;
+  output q;
+  reg notifier;
+  supply1 cdn;
+  supply1 sdn;
+  udp_dff udpi0 (q, d, cp, cdn, sdn, notifier);
+  specify
+    (posedge cp => (q +: d))=(1, 1);
+  endspecify
+endmodule
+module GEN_DF_D2 (d,cp,q);
+  input d;
+  input cp;
+  output q;
+  reg notifier;
+  supply1 cdn;
+  supply1 sdn;
+  udp_dff udpi0 (q, d, cp, cdn, sdn, notifier);
+  specify
+    (posedge cp => (q +: d))=(1, 1);
+  endspecify
+endmodule
+module GEN_DF_D4 (d,cp,q);
+  input d;
+  input cp;
+  output q;
+  reg notifier;
+  supply1 cdn;
+  supply1 sdn;
+  udp_dff udpi0 (q, d, cp, cdn, sdn, notifier);
+  specify
+    (posedge cp => (q +: d))=(1, 1);
+  endspecify
+endmodule
+module GEN_DF_D8 (d,cp,q);
+  input d;
+  input cp;
+  output q;
+  reg notifier;
+  supply1 cdn;
+  supply1 sdn;
+  udp_dff udpi0 (q, d, cp, cdn, sdn, notifier);
+  specify
+    (posedge cp => (q +: d))=(1, 1);
+  endspecify
+endmodule
+module GEN_DFSET_D1 (d,cp,sdn,q);
+  input d;
+  input cp;
+  input sdn;
+  output q;
+  reg notifier;
+  supply1 cdn;
+  udp_dff udpi0 (q, d, cp, cdn, sdn, notifier);
+  specify
+    (posedge cp => (q +: d))=(1, 1);
+    (negedge sdn => (q +: 1'b1))=(1, 1);
+endspecify
+endmodule
+module GEN_DFSET_D2 (d,cp,sdn,q);
+  input d;
+  input cp;
+  input sdn;
+  output q;
+  reg notifier;
+  supply1 cdn;
+  udp_dff udpi0 (q, d, cp, cdn, sdn, notifier);
+  specify
+    (posedge cp => (q +: d))=(1, 1);
+    (negedge sdn => (q +: 1'b1))=(1, 1);
+endspecify
+endmodule
+module GEN_DFSET_D4 (d,cp,sdn,q);
+  input d;
+  input cp;
+  input sdn;
+  output q;
+  reg notifier;
+  supply1 cdn;
+  udp_dff udpi0 (q, d, cp, cdn, sdn, notifier);
+  specify
+    (posedge cp => (q +: d))=(1, 1);
+    (negedge sdn => (q +: 1'b1))=(1, 1);
+endspecify
+endmodule
+module GEN_DFSET_D8 (d,cp,sdn,q);
+  input d;
+  input cp;
+  input sdn;
+  output q;
+  reg notifier;
+  supply1 cdn;
+  udp_dff udpi0 (q, d, cp, cdn, sdn, notifier);
+  specify
+    (posedge cp => (q +: d))=(1, 1);
+    (negedge sdn => (q +: 1'b1))=(1, 1);
+endspecify
+endmodule
+module GEN_MUX2_D1 (i0,i1,s,z);
+  input i0;
+  input i1;
+  input s;
+  output z;
+  udp_mux2 udpi0 (z, i0, i1, s);
+  specify
+    (i0 => z)=(1, 1);
+    (i1 => z)=(1, 1);
+    (posedge s => z) = (1, 1);
+    (negedge s => z) = (1, 1);
+  endspecify
+endmodule
+module GEN_MUX2_D2 (i0,i1,s,z);
+  input i0;
+  input i1;
+  input s;
+  output z;
+  udp_mux2 udpi0 (z, i0, i1, s);
+  specify
+    (i0 => z)=(1, 1);
+    (i1 => z)=(1, 1);
+    (posedge s => z) = (1, 1);
+    (negedge s => z) = (1, 1);
+  endspecify
+endmodule
+module GEN_MUX2_D4 (i0,i1,s,z);
+  input i0;
+  input i1;
+  input s;
+  output z;
+  udp_mux2 udpi0 (z, i0, i1, s);
+  specify
+    (i0 => z)=(1, 1);
+    (i1 => z)=(1, 1);
+    (posedge s => z) = (1, 1);
+    (negedge s => z) = (1, 1);
+  endspecify
+endmodule
+module GEN_MUX2N_D1 (i0,i1,s,zn);
+  input i0;
+  input i1;
+  input s;
+  output zn;
+  wire z; 
+  udp_mux2 udpi0 (z, i0, i1, s);
+  not (zn, z);
+  specify
+    (i0 => zn)=(1, 1);
+    (i1 => zn)=(1, 1);
+    (posedge s => zn) = (1, 1);
+    (negedge s => zn) = (1, 1);
+  endspecify
+endmodule
+module GEN_MUX2N_D2 (i0,i1,s,zn);
+  input i0;
+  input i1;
+  input s;
+  output zn;
+  wire z; 
+  udp_mux2 udpi0 (z, i0, i1, s);
+  not (zn, z);
+  specify
+    (i0 => zn)=(1, 1);
+    (i1 => zn)=(1, 1);
+    (posedge s => zn) = (1, 1);
+    (negedge s => zn) = (1, 1);
+  endspecify
+endmodule
+module GEN_MUX2N_D4 (i0,i1,s,zn);
+  input i0;
+  input i1;
+  input s;
+  output zn;
+  wire z; 
+  udp_mux2 udpi0 (z, i0, i1, s);
+  not (zn, z);
+  specify
+    (i0 => zn)=(1, 1);
+    (i1 => zn)=(1, 1);
+    (posedge s => zn) = (1, 1);
+    (negedge s => zn) = (1, 1);
+  endspecify
+endmodule
+module GEN_MUX3_D1 (i0,i1,i2,s0,s1,z);
+  input i0;
+  input i1;
+  input i2;
+  input s0;
+  input s1;
+  output z;
+  wire net0; 
+  udp_mux2 udpi0 (net0, i0, i1, s0);
+  udp_mux2 udpi1 (z, net0, i2, s1);
+  specify
+    (i0 => z) = (1, 1);
+    (i1 => z) = (1, 1);
+    (i2 => z) = (1, 1);
+    (posedge s0 => z) = (1, 1);
+    (negedge s0 => z) = (1, 1);
+    (posedge s1 => z) = (1, 1);
+    (negedge s1 => z) = (1, 1);
+  endspecify
+endmodule
+module GEN_MUX3_D2 (i0,i1,i2,s0,s1,z);
+  input i0;
+  input i1;
+  input i2;
+  input s0;
+  input s1;
+  output z;
+  wire net0; 
+  udp_mux2 udpi0 (net0, i0, i1, s0);
+  udp_mux2 udpi1 (z, net0, i2, s1);
+  specify
+    (i0 => z) = (1, 1);
+    (i1 => z) = (1, 1);
+    (i2 => z) = (1, 1);
+    (posedge s0 => z) = (1, 1);
+    (negedge s0 => z) = (1, 1);
+    (posedge s1 => z) = (1, 1);
+    (negedge s1 => z) = (1, 1);
+  endspecify
+endmodule
+module GEN_MUX3_D4 (i0,i1,i2,s0,s1,z);
+  input i0;
+  input i1;
+  input i2;
+  input s0;
+  input s1;
+  output z;
+  wire net0; 
+  udp_mux2 udpi0 (net0, i0, i1, s0);
+  udp_mux2 udpi1 (z, net0, i2, s1);
+  specify
+    (i0 => z) = (1, 1);
+    (i1 => z) = (1, 1);
+    (i2 => z) = (1, 1);
+    (posedge s0 => z) = (1, 1);
+    (negedge s0 => z) = (1, 1);
+    (posedge s1 => z) = (1, 1);
+    (negedge s1 => z) = (1, 1);
+  endspecify
+endmodule
+module GEN_MUX3N_D1 (i0,i1,i2,s0,s1,zn);
+  input i0;
+  input i1;
+  input i2;
+  input s0;
+  input s1;
+  output zn;
+  wire net0, net1; 
+  udp_mux2 udpi0 (net0, i0, i1, s0);
+  udp_mux2 udpi1 (net1, net0, i2, s1);
+  not (zn, net1);
+  specify
+    (i0 => zn) = (1, 1);
+    (i1 => zn) = (1, 1);
+    (i2 => zn) = (1, 1);
+    (posedge s0 => zn) = (1, 1);
+    (negedge s0 => zn) = (1, 1);
+    (posedge s1 => zn) = (1, 1);
+    (negedge s1 => zn) = (1, 1);
+  endspecify
+endmodule
+module GEN_MUX3N_D2 (i0,i1,i2,s0,s1,zn);
+  input i0;
+  input i1;
+  input i2;
+  input s0;
+  input s1;
+  output zn;
+  wire net0, net1; 
+  udp_mux2 udpi0 (net0, i0, i1, s0);
+  udp_mux2 udpi1 (net1, net0, i2, s1);
+  not (zn, net1);
+  specify
+    (i0 => zn) = (1, 1);
+    (i1 => zn) = (1, 1);
+    (i2 => zn) = (1, 1);
+    (posedge s0 => zn) = (1, 1);
+    (negedge s0 => zn) = (1, 1);
+    (posedge s1 => zn) = (1, 1);
+    (negedge s1 => zn) = (1, 1);
+  endspecify
+endmodule
+module GEN_MUX3N_D4 (i0,i1,i2,s0,s1,zn);
+  input i0;
+  input i1;
+  input i2;
+  input s0;
+  input s1;
+  output zn;
+  wire net0, net1; 
+  udp_mux2 udpi0 (net0, i0, i1, s0);
+  udp_mux2 udpi1 (net1, net0, i2, s1);
+  not (zn, net1);
+  specify
+    (i0 => zn) = (1, 1);
+    (i1 => zn) = (1, 1);
+    (i2 => zn) = (1, 1);
+    (posedge s0 => zn) = (1, 1);
+    (negedge s0 => zn) = (1, 1);
+    (posedge s1 => zn) = (1, 1);
+    (negedge s1 => zn) = (1, 1);
+  endspecify
+endmodule
+module GEN_MUX4_D1 (i0,i1,i2,i3,s0,s1,z);
+  input i0;
+  input i1;
+  input i2;
+  input i3;
+  input s0;
+  input s1;
+  output z;
+  wire net0, net1; 
+  udp_mux2 udpi0 (net0, i2, i3, s0);
+  udp_mux2 udpi1 (net1, i0, i1, s0);
+  udp_mux2 udpi2 (z, net1, net0, s1);
+  specify
+    (i0 => z) = (1, 1);
+    (i1 => z) = (1, 1);
+    (i2 => z) = (1, 1);
+    (i3 => z) = (1, 1);
+    (posedge s0 => z) = (1, 1);
+    (negedge s0 => z) = (1, 1);
+    (posedge s1 => z) = (1, 1);
+    (negedge s1 => z) = (1, 1);
+  endspecify
+endmodule
+module GEN_MUX4_D2 (i0,i1,i2,i3,s0,s1,z);
+  input i0;
+  input i1;
+  input i2;
+  input i3;
+  input s0;
+  input s1;
+  output z;
+  wire net0, net1; 
+  udp_mux2 udpi0 (net0, i2, i3, s0);
+  udp_mux2 udpi1 (net1, i0, i1, s0);
+  udp_mux2 udpi2 (z, net1, net0, s1);
+  specify
+    (i0 => z) = (1, 1);
+    (i1 => z) = (1, 1);
+    (i2 => z) = (1, 1);
+    (i3 => z) = (1, 1);
+    (posedge s0 => z) = (1, 1);
+    (negedge s0 => z) = (1, 1);
+    (posedge s1 => z) = (1, 1);
+    (negedge s1 => z) = (1, 1);
+  endspecify
+endmodule
+module GEN_MUX4_D4 (i0,i1,i2,i3,s0,s1,z);
+  input i0;
+  input i1;
+  input i2;
+  input i3;
+  input s0;
+  input s1;
+  output z;
+  wire net0, net1; 
+  udp_mux2 udpi0 (net0, i2, i3, s0);
+  udp_mux2 udpi1 (net1, i0, i1, s0);
+  udp_mux2 udpi2 (z, net1, net0, s1);
+  specify
+    (i0 => z) = (1, 1);
+    (i1 => z) = (1, 1);
+    (i2 => z) = (1, 1);
+    (i3 => z) = (1, 1);
+    (posedge s0 => z) = (1, 1);
+    (negedge s0 => z) = (1, 1);
+    (posedge s1 => z) = (1, 1);
+    (negedge s1 => z) = (1, 1);
+  endspecify
+endmodule
+module GEN_MUX4N_D1 (i0,i1,i2,i3,s0,s1,zn);
+  input i0;
+  input i1;
+  input i2;
+  input i3;
+  input s0;
+  input s1;
+  output zn;
+  wire net0, net1, net2; 
+  udp_mux2 udpi0 (net0, i2, i3, s0);
+  udp_mux2 udpi1 (net1, i0, i1, s0);
+  udp_mux2 udpi2 (net2, net1, net0, s1);
+  not (zn, net2);
+  specify
+    (i0 => zn) = (1, 1);
+    (i1 => zn) = (1, 1);
+    (i2 => zn) = (1, 1);
+    (i3 => zn) = (1, 1);
+    (posedge s0 => zn) = (1, 1);
+    (negedge s0 => zn) = (1, 1);
+    (posedge s1 => zn) = (1, 1);
+    (negedge s1 => zn) = (1, 1);
+  endspecify
+endmodule
+module GEN_MUX4N_D2 (i0,i1,i2,i3,s0,s1,zn);
+  input i0;
+  input i1;
+  input i2;
+  input i3;
+  input s0;
+  input s1;
+  output zn;
+  wire net0, net1, net2; 
+  udp_mux2 udpi0 (net0, i2, i3, s0);
+  udp_mux2 udpi1 (net1, i0, i1, s0);
+  udp_mux2 udpi2 (net2, net1, net0, s1);
+  not (zn, net2);
+  specify
+    (i0 => zn) = (1, 1);
+    (i1 => zn) = (1, 1);
+    (i2 => zn) = (1, 1);
+    (i3 => zn) = (1, 1);
+    (posedge s0 => zn) = (1, 1);
+    (negedge s0 => zn) = (1, 1);
+    (posedge s1 => zn) = (1, 1);
+    (negedge s1 => zn) = (1, 1);
+  endspecify
+endmodule
+module GEN_MUX4N_D4 (i0,i1,i2,i3,s0,s1,zn);
+  input i0;
+  input i1;
+  input i2;
+  input i3;
+  input s0;
+  input s1;
+  output zn;
+  wire net0, net1, net2; 
+  udp_mux2 udpi0 (net0, i2, i3, s0);
+  udp_mux2 udpi1 (net1, i0, i1, s0);
+  udp_mux2 udpi2 (net2, net1, net0, s1);
+  not (zn, net2);
+  specify
+    (i0 => zn) = (1, 1);
+    (i1 => zn) = (1, 1);
+    (i2 => zn) = (1, 1);
+    (i3 => zn) = (1, 1);
+    (posedge s0 => zn) = (1, 1);
+    (negedge s0 => zn) = (1, 1);
+    (posedge s1 => zn) = (1, 1);
+    (negedge s1 => zn) = (1, 1);
+  endspecify
+endmodule
+module GEN_NAND2_D1 (a1,a2,zn);
+  input a1;
+  input a2;
+  output zn;
+  nand (zn, a1, a2);
+  specify
+    (a1 => zn)=(1, 1);
+    (a2 => zn)=(1, 1);
+  endspecify
+endmodule
+module GEN_NAND2_D2 (a1,a2,zn);
+  input a1;
+  input a2;
+  output zn;
+  nand (zn, a1, a2);
+  specify
+    (a1 => zn)=(1, 1);
+    (a2 => zn)=(1, 1);
+  endspecify
+endmodule
+module GEN_NAND2_D4 (a1,a2,zn);
+  input a1;
+  input a2;
+  output zn;
+  nand (zn, a1, a2);
+  specify
+    (a1 => zn)=(1, 1);
+    (a2 => zn)=(1, 1);
+  endspecify
+endmodule
+module GEN_NAND2_D8 (a1,a2,zn);
+  input a1;
+  input a2;
+  output zn;
+  nand (zn, a1, a2);
+  specify
+    (a1 => zn)=(1, 1);
+    (a2 => zn)=(1, 1);
+  endspecify
+endmodule
+module GEN_NAND3_D1 (a1,a2,a3,zn);
+  input a1;
+  input a2;
+  input a3;
+  output zn;
+  nand (zn, a1, a2, a3);
+  specify
+    (a1 => zn)=(1, 1);
+    (a2 => zn)=(1, 1);
+    (a3 => zn)=(1, 1);
+  endspecify
+endmodule
+module GEN_NAND3_D2 (a1,a2,a3,zn);
+  input a1;
+  input a2;
+  input a3;
+  output zn;
+  nand (zn, a1, a2, a3);
+  specify
+    (a1 => zn)=(1, 1);
+    (a2 => zn)=(1, 1);
+    (a3 => zn)=(1, 1);
+  endspecify
+endmodule
+module GEN_NAND3_D4 (a1,a2,a3,zn);
+  input a1;
+  input a2;
+  input a3;
+  output zn;
+  nand (zn, a1, a2, a3);
+  specify
+    (a1 => zn)=(1, 1);
+    (a2 => zn)=(1, 1);
+    (a3 => zn)=(1, 1);
+  endspecify
+endmodule
+module GEN_NAND3_D8 (a1,a2,a3,zn);
+  input a1;
+  input a2;
+  input a3;
+  output zn;
+  nand (zn, a1, a2, a3);
+  specify
+    (a1 => zn)=(1, 1);
+    (a2 => zn)=(1, 1);
+    (a3 => zn)=(1, 1);
+  endspecify
+endmodule
+module GEN_NAND4_D1 (a1,a2,a3,a4,zn);
+  input a1;
+  input a2;
+  input a3;
+  input a4;
+  output zn;
+  nand (zn, a1, a2, a3, a4);
+  specify
+    (a1 => zn)=(1, 1);
+    (a2 => zn)=(1, 1);
+    (a3 => zn)=(1, 1);
+    (a4 => zn)=(1, 1);
+  endspecify
+endmodule
+module GEN_NAND4_D2 (a1,a2,a3,a4,zn);
+  input a1;
+  input a2;
+  input a3;
+  input a4;
+  output zn;
+  nand (zn, a1, a2, a3, a4);
+  specify
+    (a1 => zn)=(1, 1);
+    (a2 => zn)=(1, 1);
+    (a3 => zn)=(1, 1);
+    (a4 => zn)=(1, 1);
+  endspecify
+endmodule
+module GEN_NAND4_D4 (a1,a2,a3,a4,zn);
+  input a1;
+  input a2;
+  input a3;
+  input a4;
+  output zn;
+  nand (zn, a1, a2, a3, a4);
+  specify
+    (a1 => zn)=(1, 1);
+    (a2 => zn)=(1, 1);
+    (a3 => zn)=(1, 1);
+    (a4 => zn)=(1, 1);
+  endspecify
+endmodule
+module GEN_NAND4_D8 (a1,a2,a3,a4,zn);
+  input a1;
+  input a2;
+  input a3;
+  input a4;
+  output zn;
+  nand (zn, a1, a2, a3, a4);
+  specify
+    (a1 => zn)=(1, 1);
+    (a2 => zn)=(1, 1);
+    (a3 => zn)=(1, 1);
+    (a4 => zn)=(1, 1);
+  endspecify
+endmodule
+module GEN_NOR2_D1 (a1,a2,zn);
+  input a1;
+  input a2;
+  output zn;
+  nor (zn, a1, a2);
+  specify
+    (a1 => zn)=(1, 1);
+    (a2 => zn)=(1, 1);
+  endspecify
+endmodule
+module GEN_NOR2_D2 (a1,a2,zn);
+  input a1;
+  input a2;
+  output zn;
+  nor (zn, a1, a2);
+  specify
+    (a1 => zn)=(1, 1);
+    (a2 => zn)=(1, 1);
+  endspecify
+endmodule
+module GEN_NOR2_D4 (a1,a2,zn);
+  input a1;
+  input a2;
+  output zn;
+  nor (zn, a1, a2);
+  specify
+    (a1 => zn)=(1, 1);
+    (a2 => zn)=(1, 1);
+  endspecify
+endmodule
+module GEN_NOR2_D8 (a1,a2,zn);
+  input a1;
+  input a2;
+  output zn;
+  nor (zn, a1, a2);
+  specify
+    (a1 => zn)=(1, 1);
+    (a2 => zn)=(1, 1);
+  endspecify
+endmodule
+module GEN_NOR3_D1 (a1,a2,a3,zn);
+  input a1;
+  input a2;
+  input a3;
+  output zn;
+  nor (zn, a1, a2, a3);
+  specify
+    (a1 => zn)=(1, 1);
+    (a2 => zn)=(1, 1);
+    (a3 => zn)=(1, 1);
+  endspecify
+endmodule
+module GEN_NOR3_D2 (a1,a2,a3,zn);
+  input a1;
+  input a2;
+  input a3;
+  output zn;
+  nor (zn, a1, a2, a3);
+  specify
+    (a1 => zn)=(1, 1);
+    (a2 => zn)=(1, 1);
+    (a3 => zn)=(1, 1);
+  endspecify
+endmodule
+module GEN_NOR3_D4 (a1,a2,a3,zn);
+  input a1;
+  input a2;
+  input a3;
+  output zn;
+  nor (zn, a1, a2, a3);
+  specify
+    (a1 => zn)=(1, 1);
+    (a2 => zn)=(1, 1);
+    (a3 => zn)=(1, 1);
+  endspecify
+endmodule
+module GEN_NOR3_D8 (a1,a2,a3,zn);
+  input a1;
+  input a2;
+  input a3;
+  output zn;
+  nor (zn, a1, a2, a3);
+  specify
+    (a1 => zn)=(1, 1);
+    (a2 => zn)=(1, 1);
+    (a3 => zn)=(1, 1);
+  endspecify
+endmodule
+module GEN_NOR4_D1 (a1,a2,a3,a4,zn);
+  input a1;
+  input a2;
+  input a3;
+  input a4;
+  output zn;
+  nor (zn, a1, a2, a3, a4);
+  specify
+    (a1 => zn)=(1, 1);
+    (a2 => zn)=(1, 1);
+    (a3 => zn)=(1, 1);
+    (a4 => zn)=(1, 1);
+  endspecify
+endmodule
+module GEN_NOR4_D2 (a1,a2,a3,a4,zn);
+  input a1;
+  input a2;
+  input a3;
+  input a4;
+  output zn;
+  nor (zn, a1, a2, a3, a4);
+  specify
+    (a1 => zn)=(1, 1);
+    (a2 => zn)=(1, 1);
+    (a3 => zn)=(1, 1);
+    (a4 => zn)=(1, 1);
+  endspecify
+endmodule
+module GEN_NOR4_D4 (a1,a2,a3,a4,zn);
+  input a1;
+  input a2;
+  input a3;
+  input a4;
+  output zn;
+  nor (zn, a1, a2, a3, a4);
+  specify
+    (a1 => zn)=(1, 1);
+    (a2 => zn)=(1, 1);
+    (a3 => zn)=(1, 1);
+    (a4 => zn)=(1, 1);
+  endspecify
+endmodule
+module GEN_NOR4_D8 (a1,a2,a3,a4,zn);
+  input a1;
+  input a2;
+  input a3;
+  input a4;
+  output zn;
+  nor (zn, a1, a2, a3, a4);
+  specify
+    (a1 => zn)=(1, 1);
+    (a2 => zn)=(1, 1);
+    (a3 => zn)=(1, 1);
+    (a4 => zn)=(1, 1);
+  endspecify
+endmodule
+module GEN_OA211_D1 (a1,a2,b,c,z);
+  input a1;
+  input a2;
+  input b;
+  input c;
+  output z;
+  wire net0; 
+  or (net0, a1, a2);
+  and (z, net0, b, c);
+  specify
+    (a1 => z) = (1, 1);
+    (a2 => z) = (1, 1);
+    (b => z) = (1, 1);
+    (c => z) = (1, 1);
+  endspecify
+endmodule
+module GEN_OA211_D2 (a1,a2,b,c,z);
+  input a1;
+  input a2;
+  input b;
+  input c;
+  output z;
+  wire net0; 
+  or (net0, a1, a2);
+  and (z, net0, b, c);
+  specify
+    (a1 => z) = (1, 1);
+    (a2 => z) = (1, 1);
+    (b => z) = (1, 1);
+    (c => z) = (1, 1);
+  endspecify
+endmodule
+module GEN_OA211_D4 (a1,a2,b,c,z);
+  input a1;
+  input a2;
+  input b;
+  input c;
+  output z;
+  wire net0; 
+  or (net0, a1, a2);
+  and (z, net0, b, c);
+  specify
+    (a1 => z) = (1, 1);
+    (a2 => z) = (1, 1);
+    (b => z) = (1, 1);
+    (c => z) = (1, 1);
+  endspecify
+endmodule
+module GEN_OA21_D1 ( a1,a2,b,z);
+  input a1;
+  input a2;
+  input b;
+  output z;
+  wire net0; 
+  or (net0, a1, a2);
+  and (z, net0, b);
+  specify
+    (a1 => z) = (1, 1);
+    (a2 => z) = (1, 1);
+    (b => z) = (1, 1);
+  endspecify
+endmodule
+module GEN_OA21_D2 ( a1,a2,b,z);
+  input a1;
+  input a2;
+  input b;
+  output z;
+  wire net0; 
+  or (net0, a1, a2);
+  and (z, net0, b);
+  specify
+    (a1 => z) = (1, 1);
+    (a2 => z) = (1, 1);
+    (b => z) = (1, 1);
+  endspecify
+endmodule
+module GEN_OA21_D4 ( a1,a2,b,z);
+  input a1;
+  input a2;
+  input b;
+  output z;
+  wire net0; 
+  or (net0, a1, a2);
+  and (z, net0, b);
+  specify
+    (a1 => z) = (1, 1);
+    (a2 => z) = (1, 1);
+    (b => z) = (1, 1);
+  endspecify
+endmodule
+module GEN_OA221_D1 (a1,a2,b1,b2,c,z);
+  input a1;
+  input a2;
+  input b1;
+  input b2;
+  input c;
+  output z;
+  wire net0, net1; 
+  or (net0, b1, b2);
+  or (net1, a1, a2);
+  and (z, net0, net1, c);
+  specify
+    (a1 => z) = (1, 1);
+    (a2 => z) = (1, 1);
+    (b1 => z) = (1, 1);
+    (b2 => z) = (1, 1);
+    (c => z) = (1, 1);
+  endspecify
+endmodule
+module GEN_OA221_D2 (a1,a2,b1,b2,c,z);
+  input a1;
+  input a2;
+  input b1;
+  input b2;
+  input c;
+  output z;
+  wire net0, net1; 
+  or (net0, b1, b2);
+  or (net1, a1, a2);
+  and (z, net0, net1, c);
+  specify
+    (a1 => z) = (1, 1);
+    (a2 => z) = (1, 1);
+    (b1 => z) = (1, 1);
+    (b2 => z) = (1, 1);
+    (c => z) = (1, 1);
+  endspecify
+endmodule
+module GEN_OA221_D4 (a1,a2,b1,b2,c,z);
+  input a1;
+  input a2;
+  input b1;
+  input b2;
+  input c;
+  output z;
+  wire net0, net1; 
+  or (net0, b1, b2);
+  or (net1, a1, a2);
+  and (z, net0, net1, c);
+  specify
+    (a1 => z) = (1, 1);
+    (a2 => z) = (1, 1);
+    (b1 => z) = (1, 1);
+    (b2 => z) = (1, 1);
+    (c => z) = (1, 1);
+  endspecify
+endmodule
+module GEN_OA222_D1 (a1,a2,b1,b2,c1,c2,z);
+  input a1;
+  input a2;
+  input b1;
+  input b2;
+  input c1;
+  input c2;
+  output z;
+  wire net0, net1, net2; 
+  or (net0, a1, a2);
+  or (net1, c1, c2);
+  or (net2, b1, b2);
+  and (z, net0, net1, net2);
+  specify
+    (a1 => z) = (1, 1);
+    (a2 => z) = (1, 1);
+    (b1 => z) = (1, 1);
+    (b2 => z) = (1, 1);
+    (c1 => z) = (1, 1);
+    (c2 => z) = (1, 1);
+  endspecify
+endmodule
+module GEN_OA222_D2 (a1,a2,b1,b2,c1,c2,z);
+  input a1;
+  input a2;
+  input b1;
+  input b2;
+  input c1;
+  input c2;
+  output z;
+  wire net0, net1, net2; 
+  or (net0, a1, a2);
+  or (net1, c1, c2);
+  or (net2, b1, b2);
+  and (z, net0, net1, net2);
+  specify
+    (a1 => z) = (1, 1);
+    (a2 => z) = (1, 1);
+    (b1 => z) = (1, 1);
+    (b2 => z) = (1, 1);
+    (c1 => z) = (1, 1);
+    (c2 => z) = (1, 1);
+  endspecify
+endmodule
+module GEN_OA222_D4 (a1,a2,b1,b2,c1,c2,z);
+  input a1;
+  input a2;
+  input b1;
+  input b2;
+  input c1;
+  input c2;
+  output z;
+  wire net0, net1, net2; 
+  or (net0, a1, a2);
+  or (net1, c1, c2);
+  or (net2, b1, b2);
+  and (z, net0, net1, net2);
+  specify
+    (a1 => z) = (1, 1);
+    (a2 => z) = (1, 1);
+    (b1 => z) = (1, 1);
+    (b2 => z) = (1, 1);
+    (c1 => z) = (1, 1);
+    (c2 => z) = (1, 1);
+  endspecify
+endmodule
+module GEN_OA22_D1 (a1,a2,b1,b2,z);
+  input a1;
+  input a2;
+  input b1;
+  input b2;
+  output z;
+  wire net0, net1; 
+  or (net0, b1, b2);
+  or (net1, a1, a2);
+  and (z, net0, net1);
+  specify
+    (a1 => z) = (1, 1);
+    (a2 => z) = (1, 1);
+    (b1 => z) = (1, 1);
+    (b2 => z) = (1, 1);
+  endspecify
+endmodule
+module GEN_OA22_D2 (a1,a2,b1,b2,z);
+  input a1;
+  input a2;
+  input b1;
+  input b2;
+  output z;
+  wire net0, net1; 
+  or (net0, b1, b2);
+  or (net1, a1, a2);
+  and (z, net0, net1);
+  specify
+    (a1 => z) = (1, 1);
+    (a2 => z) = (1, 1);
+    (b1 => z) = (1, 1);
+    (b2 => z) = (1, 1);
+  endspecify
+endmodule
+module GEN_OA22_D4 (a1,a2,b1,b2,z);
+  input a1;
+  input a2;
+  input b1;
+  input b2;
+  output z;
+  wire net0, net1; 
+  or (net0, b1, b2);
+  or (net1, a1, a2);
+  and (z, net0, net1);
+  specify
+    (a1 => z) = (1, 1);
+    (a2 => z) = (1, 1);
+    (b1 => z) = (1, 1);
+    (b2 => z) = (1, 1);
+  endspecify
+endmodule
+module GEN_OA31_D1 (a1,a2,a3,b,z);
+  input a1;
+  input a2;
+  input a3;
+  input b;
+  output z;
+  wire net0; 
+  or (net0, a1, a2, a3);
+  and (z, net0, b);
+  specify
+    (a1 => z) = (1, 1);
+    (a2 => z) = (1, 1);
+    (a3 => z) = (1, 1);
+    (b => z) = (1, 1);
+  endspecify
+endmodule
+module GEN_OA31_D2 (a1,a2,a3,b,z);
+  input a1;
+  input a2;
+  input a3;
+  input b;
+  output z;
+  wire net0; 
+  or (net0, a1, a2, a3);
+  and (z, net0, b);
+  specify
+    (a1 => z) = (1, 1);
+    (a2 => z) = (1, 1);
+    (a3 => z) = (1, 1);
+    (b => z) = (1, 1);
+  endspecify
+endmodule
+module GEN_OA31_D4 (a1,a2,a3,b,z);
+  input a1;
+  input a2;
+  input a3;
+  input b;
+  output z;
+  wire net0; 
+  or (net0, a1, a2, a3);
+  and (z, net0, b);
+  specify
+    (a1 => z) = (1, 1);
+    (a2 => z) = (1, 1);
+    (a3 => z) = (1, 1);
+    (b => z) = (1, 1);
+  endspecify
+endmodule
+module GEN_OA32_D1 (a1,a2,a3,b1,b2,z);
+  input a1;
+  input a2;
+  input a3;
+  input b1;
+  input b2;
+  output z;
+  wire net0, net1; 
+  or (net0, b1, b2);
+  or (net1, a1, a2, a3);
+  and (z, net0, net1);
+  specify
+    (a1 => z) = (1, 1);
+    (a2 => z) = (1, 1);
+    (a3 => z) = (1, 1);
+    (b1 => z) = (1, 1);
+    (b2 => z) = (1, 1);
+  endspecify
+endmodule
+module GEN_OA32_D2 (a1,a2,a3,b1,b2,z);
+  input a1;
+  input a2;
+  input a3;
+  input b1;
+  input b2;
+  output z;
+  wire net0, net1; 
+  or (net0, b1, b2);
+  or (net1, a1, a2, a3);
+  and (z, net0, net1);
+  specify
+    (a1 => z) = (1, 1);
+    (a2 => z) = (1, 1);
+    (a3 => z) = (1, 1);
+    (b1 => z) = (1, 1);
+    (b2 => z) = (1, 1);
+  endspecify
+endmodule
+module GEN_OA32_D4 (a1,a2,a3,b1,b2,z);
+  input a1;
+  input a2;
+  input a3;
+  input b1;
+  input b2;
+  output z;
+  wire net0, net1; 
+  or (net0, b1, b2);
+  or (net1, a1, a2, a3);
+  and (z, net0, net1);
+  specify
+    (a1 => z) = (1, 1);
+    (a2 => z) = (1, 1);
+    (a3 => z) = (1, 1);
+    (b1 => z) = (1, 1);
+    (b2 => z) = (1, 1);
+  endspecify
+endmodule
+module GEN_OA33_D1 (a1,a2,a3,b1,b2,b3,z);
+  input a1;
+  input a2;
+  input a3;
+  input b1;
+  input b2;
+  input b3;
+  output z;
+  wire net0, net1; 
+  or (net0, b1, b2, b3);
+  or (net1, a1, a2, a3);
+  and (z, net0, net1);
+  specify
+    (a1 => z) = (1, 1);
+    (a2 => z) = (1, 1);
+    (a3 => z) = (1, 1);
+    (b1 => z) = (1, 1);
+    (b2 => z) = (1, 1);
+    (b3 => z) = (1, 1);
+  endspecify
+endmodule
+module GEN_OA33_D2 (a1,a2,a3,b1,b2,b3,z);
+  input a1;
+  input a2;
+  input a3;
+  input b1;
+  input b2;
+  input b3;
+  output z;
+  wire net0, net1; 
+  or (net0, b1, b2, b3);
+  or (net1, a1, a2, a3);
+  and (z, net0, net1);
+  specify
+    (a1 => z) = (1, 1);
+    (a2 => z) = (1, 1);
+    (a3 => z) = (1, 1);
+    (b1 => z) = (1, 1);
+    (b2 => z) = (1, 1);
+    (b3 => z) = (1, 1);
+  endspecify
+endmodule
+module GEN_OA33_D4 (a1,a2,a3,b1,b2,b3,z);
+  input a1;
+  input a2;
+  input a3;
+  input b1;
+  input b2;
+  input b3;
+  output z;
+  wire net0, net1; 
+  or (net0, b1, b2, b3);
+  or (net1, a1, a2, a3);
+  and (z, net0, net1);
+  specify
+    (a1 => z) = (1, 1);
+    (a2 => z) = (1, 1);
+    (a3 => z) = (1, 1);
+    (b1 => z) = (1, 1);
+    (b2 => z) = (1, 1);
+    (b3 => z) = (1, 1);
+  endspecify
+endmodule
+module GEN_OAI211_D1 (a1,a2,b,c,zn);
+  input a1;
+  input a2;
+  input b;
+  input c;
+  output zn;
+  wire net0, net1; 
+  or (net0, a1, a2);
+  and (net1, net0, b, c);
+  not (zn, net1);
+  specify
+    (a1 => zn) = (1, 1);
+    (a2 => zn) = (1, 1);
+    (b => zn) = (1, 1);
+    (c => zn) = (1, 1);
+  endspecify
+endmodule
+module GEN_OAI211_D2 (a1,a2,b,c,zn);
+  input a1;
+  input a2;
+  input b;
+  input c;
+  output zn;
+  wire net0, net1; 
+  or (net0, a1, a2);
+  and (net1, net0, b, c);
+  not (zn, net1);
+  specify
+    (a1 => zn) = (1, 1);
+    (a2 => zn) = (1, 1);
+    (b => zn) = (1, 1);
+    (c => zn) = (1, 1);
+  endspecify
+endmodule
+module GEN_OAI211_D4 (a1,a2,b,c,zn);
+  input a1;
+  input a2;
+  input b;
+  input c;
+  output zn;
+  wire net0, net1; 
+  or (net0, a1, a2);
+  and (net1, net0, b, c);
+  not (zn, net1);
+  specify
+    (a1 => zn) = (1, 1);
+    (a2 => zn) = (1, 1);
+    (b => zn) = (1, 1);
+    (c => zn) = (1, 1);
+  endspecify
+endmodule
+module GEN_OAI21_D1 (a1,a2,b,zn);
+  input a1;
+  input a2;
+  input b;
+  output zn;
+  wire net0, net1; 
+  or (net0, a1, a2);
+  and (net1, net0, b);
+  not (zn, net1);
+  specify
+    (a1 => zn) = (1, 1);
+    (a2 => zn) = (1, 1);
+    (b => zn) = (1, 1);
+  endspecify
+endmodule
+module GEN_OAI21_D2 (a1,a2,b,zn);
+  input a1;
+  input a2;
+  input b;
+  output zn;
+  wire net0, net1; 
+  or (net0, a1, a2);
+  and (net1, net0, b);
+  not (zn, net1);
+  specify
+    (a1 => zn) = (1, 1);
+    (a2 => zn) = (1, 1);
+    (b => zn) = (1, 1);
+  endspecify
+endmodule
+module GEN_OAI21_D4 (a1,a2,b,zn);
+  input a1;
+  input a2;
+  input b;
+  output zn;
+  wire net0, net1; 
+  or (net0, a1, a2);
+  and (net1, net0, b);
+  not (zn, net1);
+  specify
+    (a1 => zn) = (1, 1);
+    (a2 => zn) = (1, 1);
+    (b => zn) = (1, 1);
+  endspecify
+endmodule
+module GEN_OAI221_D1 (a1,a2,b1,b2,c,zn);
+  input a1;
+  input a2;
+  input b1;
+  input b2;
+  input c;
+  output zn;
+  wire net0, net1, net2; 
+  or (net0, a1, a2);
+  or (net1, b1, b2);
+  and (net2, net0, net1, c);
+  not (zn, net2);
+  specify
+    (a1 => zn) = (1, 1);
+    (a2 => zn) = (1, 1);
+    (b1 => zn) = (1, 1);
+    (b2 => zn) = (1, 1);
+    (c => zn) = (1, 1);
+  endspecify
+endmodule
+module GEN_OAI221_D2 (a1,a2,b1,b2,c,zn);
+  input a1;
+  input a2;
+  input b1;
+  input b2;
+  input c;
+  output zn;
+  wire net0, net1, net2; 
+  or (net0, a1, a2);
+  or (net1, b1, b2);
+  and (net2, net0, net1, c);
+  not (zn, net2);
+  specify
+    (a1 => zn) = (1, 1);
+    (a2 => zn) = (1, 1);
+    (b1 => zn) = (1, 1);
+    (b2 => zn) = (1, 1);
+    (c => zn) = (1, 1);
+  endspecify
+endmodule
+module GEN_OAI221_D4 (a1,a2,b1,b2,c,zn);
+  input a1;
+  input a2;
+  input b1;
+  input b2;
+  input c;
+  output zn;
+  wire net0, net1, net2; 
+  or (net0, a1, a2);
+  or (net1, b1, b2);
+  and (net2, net0, net1, c);
+  not (zn, net2);
+  specify
+    (a1 => zn) = (1, 1);
+    (a2 => zn) = (1, 1);
+    (b1 => zn) = (1, 1);
+    (b2 => zn) = (1, 1);
+    (c => zn) = (1, 1);
+  endspecify
+endmodule
+module GEN_OAI222_D1 (a1,a2,b1,b2,c1,c2,zn);
+  input a1;
+  input a2;
+  input b1;
+  input b2;
+  input c1;
+  input c2;
+  output zn;
+  wire net0, net1, net2, net3; 
+  or (net0, c1, c2);
+  or (net1, a1, a2);
+  or (net2, b1, b2);
+  and (net3, net0, net1, net2);
+  not (zn, net3);
+  specify
+    (a1 => zn) = (1, 1);
+    (a2 => zn) = (1, 1);
+    (b1 => zn) = (1, 1);
+    (b2 => zn) = (1, 1);
+    (c1 => zn) = (1, 1);
+    (c2 => zn) = (1, 1);
+  endspecify
+endmodule
+module GEN_OAI222_D2 (a1,a2,b1,b2,c1,c2,zn);
+  input a1;
+  input a2;
+  input b1;
+  input b2;
+  input c1;
+  input c2;
+  output zn;
+  wire net0, net1, net2, net3; 
+  or (net0, c1, c2);
+  or (net1, a1, a2);
+  or (net2, b1, b2);
+  and (net3, net0, net1, net2);
+  not (zn, net3);
+  specify
+    (a1 => zn) = (1, 1);
+    (a2 => zn) = (1, 1);
+    (b1 => zn) = (1, 1);
+    (b2 => zn) = (1, 1);
+    (c1 => zn) = (1, 1);
+    (c2 => zn) = (1, 1);
+  endspecify
+endmodule
+module GEN_OAI222_D4 (a1,a2,b1,b2,c1,c2,zn);
+  input a1;
+  input a2;
+  input b1;
+  input b2;
+  input c1;
+  input c2;
+  output zn;
+  wire net0, net1, net2, net3; 
+  or (net0, c1, c2);
+  or (net1, a1, a2);
+  or (net2, b1, b2);
+  and (net3, net0, net1, net2);
+  not (zn, net3);
+  specify
+    (a1 => zn) = (1, 1);
+    (a2 => zn) = (1, 1);
+    (b1 => zn) = (1, 1);
+    (b2 => zn) = (1, 1);
+    (c1 => zn) = (1, 1);
+    (c2 => zn) = (1, 1);
+  endspecify
+endmodule
+module GEN_OAI22_D1 (a1,a2,b1,b2,zn);
+  input a1;
+  input a2;
+  input b1;
+  input b2;
+  output zn;
+  wire net0, net1, net2; 
+  or (net0, a1, a2);
+  or (net1, b1, b2);
+  and (net2, net0, net1);
+  not (zn, net2);
+  specify
+    (a1 => zn) = (1, 1);
+    (a2 => zn) = (1, 1);
+    (b1 => zn) = (1, 1);
+    (b2 => zn) = (1, 1);
+  endspecify
+endmodule
+module GEN_OAI22_D2 (a1,a2,b1,b2,zn);
+  input a1;
+  input a2;
+  input b1;
+  input b2;
+  output zn;
+  wire net0, net1, net2; 
+  or (net0, a1, a2);
+  or (net1, b1, b2);
+  and (net2, net0, net1);
+  not (zn, net2);
+  specify
+    (a1 => zn) = (1, 1);
+    (a2 => zn) = (1, 1);
+    (b1 => zn) = (1, 1);
+    (b2 => zn) = (1, 1);
+  endspecify
+endmodule
+module GEN_OAI22_D4 (a1,a2,b1,b2,zn);
+  input a1;
+  input a2;
+  input b1;
+  input b2;
+  output zn;
+  wire net0, net1, net2; 
+  or (net0, a1, a2);
+  or (net1, b1, b2);
+  and (net2, net0, net1);
+  not (zn, net2);
+  specify
+    (a1 => zn) = (1, 1);
+    (a2 => zn) = (1, 1);
+    (b1 => zn) = (1, 1);
+    (b2 => zn) = (1, 1);
+  endspecify
+endmodule
+module GEN_OAI31_D1 (a1,a2,a3,b,zn);
+  input a1;
+  input a2;
+  input a3;
+  input b;
+  output zn;
+  wire net0, net1; 
+  or (net0, a1, a2, a3);
+  and (net1, net0, b);
+  not (zn, net1);
+  specify
+    (a1 => zn) = (1, 1);
+    (a2 => zn) = (1, 1);
+    (a3 => zn) = (1, 1);
+    (b => zn) = (1, 1);
+  endspecify
+endmodule
+module GEN_OAI31_D2 (a1,a2,a3,b,zn);
+  input a1;
+  input a2;
+  input a3;
+  input b;
+  output zn;
+  wire net0, net1; 
+  or (net0, a1, a2, a3);
+  and (net1, net0, b);
+  not (zn, net1);
+  specify
+    (a1 => zn) = (1, 1);
+    (a2 => zn) = (1, 1);
+    (a3 => zn) = (1, 1);
+    (b => zn) = (1, 1);
+  endspecify
+endmodule
+module GEN_OAI31_D4 (a1,a2,a3,b,zn);
+  input a1;
+  input a2;
+  input a3;
+  input b;
+  output zn;
+  wire net0, net1; 
+  or (net0, a1, a2, a3);
+  and (net1, net0, b);
+  not (zn, net1);
+  specify
+    (a1 => zn) = (1, 1);
+    (a2 => zn) = (1, 1);
+    (a3 => zn) = (1, 1);
+    (b => zn) = (1, 1);
+  endspecify
+endmodule
+module GEN_OAI32_D1 (a1,a2,a3,b1,b2,zn);
+  input a1;
+  input a2;
+  input a3;
+  input b1;
+  input b2;
+  output zn;
+  wire net0, net1, net2; 
+  or (net0, a1, a2, a3);
+  or (net1, b1, b2);
+  and (net2, net0, net1);
+  not (zn, net2);
+  specify
+    (a1 => zn) = (1, 1);
+    (a2 => zn) = (1, 1);
+    (a3 => zn) = (1, 1);
+    (b1 => zn) = (1, 1);
+    (b2 => zn) = (1, 1);
+  endspecify
+endmodule
+module GEN_OAI32_D2 (a1,a2,a3,b1,b2,zn);
+  input a1;
+  input a2;
+  input a3;
+  input b1;
+  input b2;
+  output zn;
+  wire net0, net1, net2; 
+  or (net0, a1, a2, a3);
+  or (net1, b1, b2);
+  and (net2, net0, net1);
+  not (zn, net2);
+  specify
+    (a1 => zn) = (1, 1);
+    (a2 => zn) = (1, 1);
+    (a3 => zn) = (1, 1);
+    (b1 => zn) = (1, 1);
+    (b2 => zn) = (1, 1);
+  endspecify
+endmodule
+module GEN_OAI32_D4 (a1,a2,a3,b1,b2,zn);
+  input a1;
+  input a2;
+  input a3;
+  input b1;
+  input b2;
+  output zn;
+  wire net0, net1, net2; 
+  or (net0, a1, a2, a3);
+  or (net1, b1, b2);
+  and (net2, net0, net1);
+  not (zn, net2);
+  specify
+    (a1 => zn) = (1, 1);
+    (a2 => zn) = (1, 1);
+    (a3 => zn) = (1, 1);
+    (b1 => zn) = (1, 1);
+    (b2 => zn) = (1, 1);
+  endspecify
+endmodule
+module GEN_OAI33_D1 (a1,a2,a3,b1,b2,b3,zn);
+  input a1;
+  input a2;
+  input a3;
+  input b1;
+  input b2;
+  input b3;
+  output zn;
+  wire net0, net1, net2; 
+  or (net0, a1, a2, a3);
+  or (net1, b1, b2, b3);
+  and (net2, net0, net1);
+  not (zn, net2);
+  specify
+    (a1 => zn) = (1, 1);
+    (a2 => zn) = (1, 1);
+    (a3 => zn) = (1, 1);
+    (b1 => zn) = (1, 1);
+    (b2 => zn) = (1, 1);
+    (b3 => zn) = (1, 1);
+  endspecify
+endmodule
+module GEN_OAI33_D2 (a1,a2,a3,b1,b2,b3,zn);
+  input a1;
+  input a2;
+  input a3;
+  input b1;
+  input b2;
+  input b3;
+  output zn;
+  wire net0, net1, net2; 
+  or (net0, a1, a2, a3);
+  or (net1, b1, b2, b3);
+  and (net2, net0, net1);
+  not (zn, net2);
+  specify
+    (a1 => zn) = (1, 1);
+    (a2 => zn) = (1, 1);
+    (a3 => zn) = (1, 1);
+    (b1 => zn) = (1, 1);
+    (b2 => zn) = (1, 1);
+    (b3 => zn) = (1, 1);
+  endspecify
+endmodule
+module GEN_OAI33_D4 (a1,a2,a3,b1,b2,b3,zn);
+  input a1;
+  input a2;
+  input a3;
+  input b1;
+  input b2;
+  input b3;
+  output zn;
+  wire net0, net1, net2; 
+  or (net0, a1, a2, a3);
+  or (net1, b1, b2, b3);
+  and (net2, net0, net1);
+  not (zn, net2);
+  specify
+    (a1 => zn) = (1, 1);
+    (a2 => zn) = (1, 1);
+    (a3 => zn) = (1, 1);
+    (b1 => zn) = (1, 1);
+    (b2 => zn) = (1, 1);
+    (b3 => zn) = (1, 1);
+  endspecify
+endmodule
+module GEN_OR2_D1 (a1,a2,z);
+  input a1;
+  input a2;
+  output z;
+  or (z, a1, a2);
+  specify
+    (a1 => z)=(1, 1);
+    (a2 => z)=(1, 1);
+  endspecify
+endmodule
+module GEN_OR2_D2 (a1,a2,z);
+  input a1;
+  input a2;
+  output z;
+  or (z, a1, a2);
+  specify
+    (a1 => z)=(1, 1);
+    (a2 => z)=(1, 1);
+  endspecify
+endmodule
+module GEN_OR2_D4 (a1,a2,z);
+  input a1;
+  input a2;
+  output z;
+  or (z, a1, a2);
+  specify
+    (a1 => z)=(1, 1);
+    (a2 => z)=(1, 1);
+  endspecify
+endmodule
+module GEN_OR2_D8 (a1,a2,z);
+  input a1;
+  input a2;
+  output z;
+  or (z, a1, a2);
+  specify
+    (a1 => z)=(1, 1);
+    (a2 => z)=(1, 1);
+  endspecify
+endmodule
+module GEN_OR3_D1 (a1,a2,a3,z);
+  input a1;
+  input a2;
+  input a3;
+  output z;
+  or (z, a1, a2, a3);
+  specify
+    (a1 => z)=(1, 1);
+    (a2 => z)=(1, 1);
+    (a3 => z)=(1, 1);
+  endspecify
+endmodule
+module GEN_OR3_D2 (a1,a2,a3,z);
+  input a1;
+  input a2;
+  input a3;
+  output z;
+  or (z, a1, a2, a3);
+  specify
+    (a1 => z)=(1, 1);
+    (a2 => z)=(1, 1);
+    (a3 => z)=(1, 1);
+  endspecify
+endmodule
+module GEN_OR3_D4 (a1,a2,a3,z);
+  input a1;
+  input a2;
+  input a3;
+  output z;
+  or (z, a1, a2, a3);
+  specify
+    (a1 => z)=(1, 1);
+    (a2 => z)=(1, 1);
+    (a3 => z)=(1, 1);
+  endspecify
+endmodule
+module GEN_OR3_D8 (a1,a2,a3,z);
+  input a1;
+  input a2;
+  input a3;
+  output z;
+  or (z, a1, a2, a3);
+  specify
+    (a1 => z)=(1, 1);
+    (a2 => z)=(1, 1);
+    (a3 => z)=(1, 1);
+  endspecify
+endmodule
+module GEN_OR4_D1 (a1,a2,a3,a4,z);
+  input a1;
+  input a2;
+  input a3;
+  input a4;
+  output z;
+  or (z, a1, a2, a3, a4);
+  specify
+    (a1 => z)=(1, 1);
+    (a2 => z)=(1, 1);
+    (a3 => z)=(1, 1);
+    (a4 => z)=(1, 1);
+  endspecify
+endmodule
+module GEN_OR4_D2 (a1,a2,a3,a4,z);
+  input a1;
+  input a2;
+  input a3;
+  input a4;
+  output z;
+  or (z, a1, a2, a3, a4);
+  specify
+    (a1 => z)=(1, 1);
+    (a2 => z)=(1, 1);
+    (a3 => z)=(1, 1);
+    (a4 => z)=(1, 1);
+  endspecify
+endmodule
+module GEN_OR4_D4 (a1,a2,a3,a4,z);
+  input a1;
+  input a2;
+  input a3;
+  input a4;
+  output z;
+  or (z, a1, a2, a3, a4);
+  specify
+    (a1 => z)=(1, 1);
+    (a2 => z)=(1, 1);
+    (a3 => z)=(1, 1);
+    (a4 => z)=(1, 1);
+  endspecify
+endmodule
+module GEN_OR4_D8 (a1,a2,a3,a4,z);
+  input a1;
+  input a2;
+  input a3;
+  input a4;
+  output z;
+  or (z, a1, a2, a3, a4);
+  specify
+    (a1 => z)=(1, 1);
+    (a2 => z)=(1, 1);
+    (a3 => z)=(1, 1);
+    (a4 => z)=(1, 1);
+  endspecify
+endmodule
+module GEN_SCAN_DFCLR_D1 (si,d,se,cp,cdn,q);
+  input si;
+  input d;
+  input se;
+  input cp;
+  input cdn;
+  output q;
+  wire cdn_i, d_i, q_buf, sd, si_check, d_check, se1, se_check, xsi_check, xd_check, xcdn_i; 
+  reg notifier;
+  buf (cdn_i, cdn);
+  supply1 sdn;
+  udp_mux2 udpi0 (d_i, d, si, se);
+  udp_dff udpi1 (q_buf, d_i, cp, cdn_i, sdn, notifier);
+  buf (q, q_buf);
+  not (sd, se);
+  and (si_check, cdn_i, se);
+  and (d_check, cdn_i, sd);
+  xor (se1, si, d);
+  and (se_check, se1, cdn_i);
+  udp_xbuf udpi2 (xsi_check, si_check, 1'b1);
+  udp_xbuf udpi3 (xd_check, d_check, 1'b1);
+  udp_xbuf udpi4 (xcdn_i, cdn_i, 1'b1);  
+  specify
+    (posedge cp => (q +: d))=(1, 1);
+    (negedge cdn => (q +: 1'b0))=(1, 1);
+    $width(posedge cp &&& xcdn_i, 0, 0, notifier);
+    $width(negedge cp &&& xcdn_i, 0, 0, notifier);
+    $width(posedge cdn, 0, 0, notifier);
+    $width(negedge cdn, 0, 0, notifier);
+    $recovery(posedge cdn,  posedge cp, 0, notifier);
+    $setuphold(posedge cp &&& xsi_check,  posedge si, 0, 0, notifier);
+    $setuphold(posedge cp &&& xd_check,  negedge d, 0, 0, notifier);
+    $setuphold(posedge cp &&& xcdn_i,  negedge se, 0, 0, notifier);
+    $setuphold(posedge cp &&& xsi_check,  negedge si, 0, 0, notifier);
+    $setuphold(posedge cp &&& xd_check,  posedge d, 0, 0, notifier);
+    $setuphold(posedge cp &&& xcdn_i,  posedge se, 0, 0, notifier);
+    $hold(posedge cp, posedge cdn, 0, notifier);
+  endspecify
+endmodule
+module GEN_SCAN_DFCLR_D2 (si,d,se,cp,cdn,q);
+  input si;
+  input d;
+  input se;
+  input cp;
+  input cdn;
+  output q;
+  wire cdn_i, d_i, q_buf, sd, si_check, d_check, se1, se_check, xsi_check, xd_check, xcdn_i; 
+  reg notifier;
+  buf (cdn_i, cdn);
+  supply1 sdn;
+  udp_mux2 udpi0 (d_i, d, si, se);
+  udp_dff udpi1 (q_buf, d_i, cp, cdn_i, sdn, notifier);
+  buf (q, q_buf);
+  not (sd, se);
+  and (si_check, cdn_i, se);
+  and (d_check, cdn_i, sd);
+  xor (se1, si, d);
+  and (se_check, se1, cdn_i);
+  udp_xbuf udpi2 (xsi_check, si_check, 1'b1);
+  udp_xbuf udpi3 (xd_check, d_check, 1'b1);
+  udp_xbuf udpi4 (xcdn_i, cdn_i, 1'b1);  
+  specify
+    (posedge cp => (q +: d))=(1, 1);
+    (negedge cdn => (q +: 1'b0))=(1, 1);
+    $width(posedge cp &&& xcdn_i, 0, 0, notifier);
+    $width(negedge cp &&& xcdn_i, 0, 0, notifier);
+    $width(posedge cdn, 0, 0, notifier);
+    $width(negedge cdn, 0, 0, notifier);
+    $recovery(posedge cdn,  posedge cp, 0, notifier);
+    $setuphold(posedge cp &&& xsi_check,  posedge si, 0, 0, notifier);
+    $setuphold(posedge cp &&& xd_check,  negedge d, 0, 0, notifier);
+    $setuphold(posedge cp &&& xcdn_i,  negedge se, 0, 0, notifier);
+    $setuphold(posedge cp &&& xsi_check,  negedge si, 0, 0, notifier);
+    $setuphold(posedge cp &&& xd_check,  posedge d, 0, 0, notifier);
+    $setuphold(posedge cp &&& xcdn_i,  posedge se, 0, 0, notifier);
+    $hold(posedge cp, posedge cdn, 0, notifier);
+  endspecify
+endmodule
+module GEN_SCAN_DFCLR_D4 (si,d,se,cp,cdn,q);
+  input si;
+  input d;
+  input se;
+  input cp;
+  input cdn;
+  output q;
+  wire cdn_i, d_i, q_buf, sd, si_check, d_check, se1, se_check, xsi_check, xd_check, xcdn_i; 
+  reg notifier;
+  buf (cdn_i, cdn);
+  supply1 sdn;
+  udp_mux2 udpi0 (d_i, d, si, se);
+  udp_dff udpi1 (q_buf, d_i, cp, cdn_i, sdn, notifier);
+  buf (q, q_buf);
+  not (sd, se);
+  and (si_check, cdn_i, se);
+  and (d_check, cdn_i, sd);
+  xor (se1, si, d);
+  and (se_check, se1, cdn_i);
+  udp_xbuf udpi2 (xsi_check, si_check, 1'b1);
+  udp_xbuf udpi3 (xd_check, d_check, 1'b1);
+  udp_xbuf udpi4 (xcdn_i, cdn_i, 1'b1);  
+  specify
+    (posedge cp => (q +: d))=(1, 1);
+    (negedge cdn => (q +: 1'b0))=(1, 1);
+    $width(posedge cp &&& xcdn_i, 0, 0, notifier);
+    $width(negedge cp &&& xcdn_i, 0, 0, notifier);
+    $width(posedge cdn, 0, 0, notifier);
+    $width(negedge cdn, 0, 0, notifier);
+    $recovery(posedge cdn,  posedge cp, 0, notifier);
+    $setuphold(posedge cp &&& xsi_check,  posedge si, 0, 0, notifier);
+    $setuphold(posedge cp &&& xd_check,  negedge d, 0, 0, notifier);
+    $setuphold(posedge cp &&& xcdn_i,  negedge se, 0, 0, notifier);
+    $setuphold(posedge cp &&& xsi_check,  negedge si, 0, 0, notifier);
+    $setuphold(posedge cp &&& xd_check,  posedge d, 0, 0, notifier);
+    $setuphold(posedge cp &&& xcdn_i,  posedge se, 0, 0, notifier);
+    $hold(posedge cp, posedge cdn, 0, notifier);
+  endspecify
+endmodule
+module GEN_SCAN_DFCLR_D8 (si,d,se,cp,cdn,q);
+  input si;
+  input d;
+  input se;
+  input cp;
+  input cdn;
+  output q;
+  wire cdn_i, d_i, q_buf, sd, si_check, d_check, se1, se_check, xsi_check, xd_check, xcdn_i; 
+  reg notifier;
+  buf (cdn_i, cdn);
+  supply1 sdn;
+  udp_mux2 udpi0 (d_i, d, si, se);
+  udp_dff udpi1 (q_buf, d_i, cp, cdn_i, sdn, notifier);
+  buf (q, q_buf);
+  not (sd, se);
+  and (si_check, cdn_i, se);
+  and (d_check, cdn_i, sd);
+  xor (se1, si, d);
+  and (se_check, se1, cdn_i);
+  udp_xbuf udpi2 (xsi_check, si_check, 1'b1);
+  udp_xbuf udpi3 (xd_check, d_check, 1'b1);
+  udp_xbuf udpi4 (xcdn_i, cdn_i, 1'b1);  
+  specify
+    (posedge cp => (q +: d))=(1, 1);
+    (negedge cdn => (q +: 1'b0))=(1, 1);
+    $width(posedge cp &&& xcdn_i, 0, 0, notifier);
+    $width(negedge cp &&& xcdn_i, 0, 0, notifier);
+    $width(posedge cdn, 0, 0, notifier);
+    $width(negedge cdn, 0, 0, notifier);
+    $recovery(posedge cdn,  posedge cp, 0, notifier);
+    $setuphold(posedge cp &&& xsi_check,  posedge si, 0, 0, notifier);
+    $setuphold(posedge cp &&& xd_check,  negedge d, 0, 0, notifier);
+    $setuphold(posedge cp &&& xcdn_i,  negedge se, 0, 0, notifier);
+    $setuphold(posedge cp &&& xsi_check,  negedge si, 0, 0, notifier);
+    $setuphold(posedge cp &&& xd_check,  posedge d, 0, 0, notifier);
+    $setuphold(posedge cp &&& xcdn_i,  posedge se, 0, 0, notifier);
+    $hold(posedge cp, posedge cdn, 0, notifier);
+  endspecify
+endmodule
+module GEN_SCAN_DF_D1 (si,d,se,cp,q);
+  input si;
+  input d;
+  input se;
+  input cp;
+  output q;
+  wire d_i, q_buf, sd, xse, xsd; 
+  reg notifier;
+  supply1 cdn;
+  supply1 sdn;
+  udp_mux2 udpi0 (d_i, d, si, se);
+  udp_dff udpi1 (q_buf, d_i, cp, cdn, sdn, notifier);
+  buf (q, q_buf);
+  not (sd, se);
+  udp_xbuf udpi2 (xse, se, 1'b1);
+  udp_xbuf udpi3 (xsd, sd, 1'b1);
+  specify
+    (posedge cp => (q +: d))=(1, 1);
+    $width(posedge cp, 0, 0, notifier);
+    $width(negedge cp, 0, 0, notifier);
+    $setuphold(posedge cp &&& xse,  posedge si, 0, 0, notifier);
+    $setuphold(posedge cp &&& xsd,  negedge d, 0, 0, notifier);
+    $setuphold(posedge cp,  negedge se, 0, 0, notifier);
+    $setuphold(posedge cp &&& xse,  negedge si, 0, 0, notifier);
+    $setuphold(posedge cp &&& xsd,  posedge d, 0, 0, notifier);
+    $setuphold(posedge cp,  posedge se, 0, 0, notifier);
+  endspecify
+endmodule
+module GEN_SCAN_DF_D2 (si,d,se,cp,q);
+  input si;
+  input d;
+  input se;
+  input cp;
+  output q;
+  wire d_i, q_buf, sd, xse, xsd; 
+  reg notifier;
+  supply1 cdn;
+  supply1 sdn;
+  udp_mux2 udpi0 (d_i, d, si, se);
+  udp_dff udpi1 (q_buf, d_i, cp, cdn, sdn, notifier);
+  buf (q, q_buf);
+  not (sd, se);
+  udp_xbuf udpi2 (xse, se, 1'b1);
+  udp_xbuf udpi3 (xsd, sd, 1'b1);
+  specify
+    (posedge cp => (q +: d))=(1, 1);
+    $width(posedge cp, 0, 0, notifier);
+    $width(negedge cp, 0, 0, notifier);
+    $setuphold(posedge cp &&& xse,  posedge si, 0, 0, notifier);
+    $setuphold(posedge cp &&& xsd,  negedge d, 0, 0, notifier);
+    $setuphold(posedge cp,  negedge se, 0, 0, notifier);
+    $setuphold(posedge cp &&& xse,  negedge si, 0, 0, notifier);
+    $setuphold(posedge cp &&& xsd,  posedge d, 0, 0, notifier);
+    $setuphold(posedge cp,  posedge se, 0, 0, notifier);
+  endspecify
+endmodule
+module GEN_SCAN_DF_D4 (si,d,se,cp,q);
+  input si;
+  input d;
+  input se;
+  input cp;
+  output q;
+  wire d_i, q_buf, sd, xse, xsd; 
+  reg notifier;
+  supply1 cdn;
+  supply1 sdn;
+  udp_mux2 udpi0 (d_i, d, si, se);
+  udp_dff udpi1 (q_buf, d_i, cp, cdn, sdn, notifier);
+  buf (q, q_buf);
+  not (sd, se);
+  udp_xbuf udpi2 (xse, se, 1'b1);
+  udp_xbuf udpi3 (xsd, sd, 1'b1);
+  specify
+    (posedge cp => (q +: d))=(1, 1);
+    $width(posedge cp, 0, 0, notifier);
+    $width(negedge cp, 0, 0, notifier);
+    $setuphold(posedge cp &&& xse,  posedge si, 0, 0, notifier);
+    $setuphold(posedge cp &&& xsd,  negedge d, 0, 0, notifier);
+    $setuphold(posedge cp,  negedge se, 0, 0, notifier);
+    $setuphold(posedge cp &&& xse,  negedge si, 0, 0, notifier);
+    $setuphold(posedge cp &&& xsd,  posedge d, 0, 0, notifier);
+    $setuphold(posedge cp,  posedge se, 0, 0, notifier);
+  endspecify
+endmodule
+module GEN_SCAN_DF_D8 (si,d,se,cp,q);
+  input si;
+  input d;
+  input se;
+  input cp;
+  output q;
+  wire d_i, q_buf, sd, xse, xsd; 
+  reg notifier;
+  supply1 cdn;
+  supply1 sdn;
+  udp_mux2 udpi0 (d_i, d, si, se);
+  udp_dff udpi1 (q_buf, d_i, cp, cdn, sdn, notifier);
+  buf (q, q_buf);
+  not (sd, se);
+  udp_xbuf udpi2 (xse, se, 1'b1);
+  udp_xbuf udpi3 (xsd, sd, 1'b1);
+  specify
+    (posedge cp => (q +: d))=(1, 1);
+    $width(posedge cp, 0, 0, notifier);
+    $width(negedge cp, 0, 0, notifier);
+    $setuphold(posedge cp &&& xse,  posedge si, 0, 0, notifier);
+    $setuphold(posedge cp &&& xsd,  negedge d, 0, 0, notifier);
+    $setuphold(posedge cp,  negedge se, 0, 0, notifier);
+    $setuphold(posedge cp &&& xse,  negedge si, 0, 0, notifier);
+    $setuphold(posedge cp &&& xsd,  posedge d, 0, 0, notifier);
+    $setuphold(posedge cp,  posedge se, 0, 0, notifier);
+  endspecify
+endmodule
+module GEN_SCAN_DFSET_D1 (si,d,se,cp,sdn,q);
+  input si;
+  input d;
+  input se;
+  input cp;
+  input sdn;
+  output q;
+  wire sdn_i, d_i, q_buf, sd, si_check, d_check, xsi_check, xd_check, xsdn_i;
+  reg notifier;
+  buf (sdn_i, sdn);
+  supply1 cdn;
+  udp_mux2 udpi0 (d_i, d, si, se);
+  udp_dff udpi1 (q_buf, d_i, cp, cdn, sdn_i, notifier);
+  buf (q, q_buf);
+  not (sd, se);
+  and (si_check, sdn_i, se);
+  and (d_check, sdn_i, sd);
+  udp_xbuf udpi2 (xsi_check, si_check, 1'b1);
+  udp_xbuf udpi3 (xd_check, d_check, 1'b1);
+  udp_xbuf udpi4 (xsdn_i, sdn_i, 1'b1);
+  specify
+    (posedge cp => (q +: d))=(1, 1);
+    (negedge sdn => (q +: 1'b1))=(1, 1);
+    $width(posedge cp &&& xsdn_i, 0, 0, notifier);
+    $width(negedge cp &&& xsdn_i, 0, 0, notifier);
+    $width(posedge sdn, 0, 0, notifier);
+    $width(negedge sdn, 0, 0, notifier);
+    $recovery(posedge sdn,  posedge cp, 0, notifier);
+    $setuphold(posedge cp &&& xsi_check,  posedge si, 0, 0, notifier);
+    $setuphold(posedge cp &&& xd_check,  negedge d, 0, 0, notifier);
+    $setuphold(posedge cp &&& xsdn_i,  negedge se, 0, 0, notifier);
+    $setuphold(posedge cp &&& xsi_check,  negedge si, 0, 0, notifier);
+    $setuphold(posedge cp &&& xd_check,  posedge d, 0, 0, notifier);
+    $setuphold(posedge cp &&& xsdn_i,  posedge se, 0, 0, notifier);
+    $hold(posedge cp , posedge sdn, 0, notifier);
+  endspecify
+endmodule
+module GEN_SCAN_DFSET_D2 (si,d,se,cp,sdn,q);
+  input si;
+  input d;
+  input se;
+  input cp;
+  input sdn;
+  output q;
+  wire sdn_i, d_i, q_buf, sd, si_check, d_check, xsi_check, xd_check, xsdn_i;
+  reg notifier;
+  buf (sdn_i, sdn);
+  supply1 cdn;
+  udp_mux2 udpi0 (d_i, d, si, se);
+  udp_dff udpi1 (q_buf, d_i, cp, cdn, sdn_i, notifier);
+  buf (q, q_buf);
+  not (sd, se);
+  and (si_check, sdn_i, se);
+  and (d_check, sdn_i, sd);
+  udp_xbuf udpi2 (xsi_check, si_check, 1'b1);
+  udp_xbuf udpi3 (xd_check, d_check, 1'b1);
+  udp_xbuf udpi4 (xsdn_i, sdn_i, 1'b1);
+  specify
+    (posedge cp => (q +: d))=(1, 1);
+    (negedge sdn => (q +: 1'b1))=(1, 1);
+    $width(posedge cp &&& xsdn_i, 0, 0, notifier);
+    $width(negedge cp &&& xsdn_i, 0, 0, notifier);
+    $width(posedge sdn, 0, 0, notifier);
+    $width(negedge sdn, 0, 0, notifier);
+    $recovery(posedge sdn,  posedge cp, 0, notifier);
+    $setuphold(posedge cp &&& xsi_check,  posedge si, 0, 0, notifier);
+    $setuphold(posedge cp &&& xd_check,  negedge d, 0, 0, notifier);
+    $setuphold(posedge cp &&& xsdn_i,  negedge se, 0, 0, notifier);
+    $setuphold(posedge cp &&& xsi_check,  negedge si, 0, 0, notifier);
+    $setuphold(posedge cp &&& xd_check,  posedge d, 0, 0, notifier);
+    $setuphold(posedge cp &&& xsdn_i,  posedge se, 0, 0, notifier);
+    $hold(posedge cp , posedge sdn, 0, notifier);
+  endspecify
+endmodule
+module GEN_SCAN_DFSET_D4 (si,d,se,cp,sdn,q);
+  input si;
+  input d;
+  input se;
+  input cp;
+  input sdn;
+  output q;
+  wire sdn_i, d_i, q_buf, sd, si_check, d_check, xsi_check, xd_check, xsdn_i;
+  reg notifier;
+  buf (sdn_i, sdn);
+  supply1 cdn;
+  udp_mux2 udpi0 (d_i, d, si, se);
+  udp_dff udpi1 (q_buf, d_i, cp, cdn, sdn_i, notifier);
+  buf (q, q_buf);
+  not (sd, se);
+  and (si_check, sdn_i, se);
+  and (d_check, sdn_i, sd);
+  udp_xbuf udpi2 (xsi_check, si_check, 1'b1);
+  udp_xbuf udpi3 (xd_check, d_check, 1'b1);
+  udp_xbuf udpi4 (xsdn_i, sdn_i, 1'b1);
+  specify
+    (posedge cp => (q +: d))=(1, 1);
+    (negedge sdn => (q +: 1'b1))=(1, 1);
+    $width(posedge cp &&& xsdn_i, 0, 0, notifier);
+    $width(negedge cp &&& xsdn_i, 0, 0, notifier);
+    $width(posedge sdn, 0, 0, notifier);
+    $width(negedge sdn, 0, 0, notifier);
+    $recovery(posedge sdn,  posedge cp, 0, notifier);
+    $setuphold(posedge cp &&& xsi_check,  posedge si, 0, 0, notifier);
+    $setuphold(posedge cp &&& xd_check,  negedge d, 0, 0, notifier);
+    $setuphold(posedge cp &&& xsdn_i,  negedge se, 0, 0, notifier);
+    $setuphold(posedge cp &&& xsi_check,  negedge si, 0, 0, notifier);
+    $setuphold(posedge cp &&& xd_check,  posedge d, 0, 0, notifier);
+    $setuphold(posedge cp &&& xsdn_i,  posedge se, 0, 0, notifier);
+    $hold(posedge cp , posedge sdn, 0, notifier);
+  endspecify
+endmodule
+module GEN_SCAN_DFSET_D8 (si,d,se,cp,sdn,q);
+  input si;
+  input d;
+  input se;
+  input cp;
+  input sdn;
+  output q;
+  wire sdn_i, d_i, q_buf, sd, si_check, d_check, xsi_check, xd_check, xsdn_i;
+  reg notifier;
+  buf (sdn_i, sdn);
+  supply1 cdn;
+  udp_mux2 udpi0 (d_i, d, si, se);
+  udp_dff udpi1 (q_buf, d_i, cp, cdn, sdn_i, notifier);
+  buf (q, q_buf);
+  not (sd, se);
+  and (si_check, sdn_i, se);
+  and (d_check, sdn_i, sd);
+  udp_xbuf udpi2 (xsi_check, si_check, 1'b1);
+  udp_xbuf udpi3 (xd_check, d_check, 1'b1);
+  udp_xbuf udpi4 (xsdn_i, sdn_i, 1'b1);
+  specify
+    (posedge cp => (q +: d))=(1, 1);
+    (negedge sdn => (q +: 1'b1))=(1, 1);
+    $width(posedge cp &&& xsdn_i, 0, 0, notifier);
+    $width(negedge cp &&& xsdn_i, 0, 0, notifier);
+    $width(posedge sdn, 0, 0, notifier);
+    $width(negedge sdn, 0, 0, notifier);
+    $recovery(posedge sdn,  posedge cp, 0, notifier);
+    $setuphold(posedge cp &&& xsi_check,  posedge si, 0, 0, notifier);
+    $setuphold(posedge cp &&& xd_check,  negedge d, 0, 0, notifier);
+    $setuphold(posedge cp &&& xsdn_i,  negedge se, 0, 0, notifier);
+    $setuphold(posedge cp &&& xsi_check,  negedge si, 0, 0, notifier);
+    $setuphold(posedge cp &&& xd_check,  posedge d, 0, 0, notifier);
+    $setuphold(posedge cp &&& xsdn_i,  posedge se, 0, 0, notifier);
+    $hold(posedge cp , posedge sdn, 0, notifier);
+  endspecify
+endmodule
+module GEN_XNOR2_D1 (a1,a2,zn);
+  input a1;
+  input a2;
+  output zn;
+  xnor (zn, a1, a2);
+  specify
+    (posedge a1 => zn) = (1, 1);
+    (negedge a1 => zn) = (1, 1);
+    (posedge a2 => zn) = (1, 1);
+    (negedge a2 => zn) = (1, 1);
+  endspecify
+endmodule
+module GEN_XNOR2_D2 (a1,a2,zn);
+  input a1;
+  input a2;
+  output zn;
+  xnor (zn, a1, a2);
+  specify
+    (posedge a1 => zn) = (1, 1);
+    (negedge a1 => zn) = (1, 1);
+    (posedge a2 => zn) = (1, 1);
+    (negedge a2 => zn) = (1, 1);
+  endspecify
+endmodule
+module GEN_XNOR2_D4 (a1,a2,zn);
+  input a1;
+  input a2;
+  output zn;
+  xnor (zn, a1, a2);
+  specify
+    (posedge a1 => zn) = (1, 1);
+    (negedge a1 => zn) = (1, 1);
+    (posedge a2 => zn) = (1, 1);
+    (negedge a2 => zn) = (1, 1);
+  endspecify
+endmodule
+module GEN_XNOR2_D8 (a1,a2,zn);
+  input a1;
+  input a2;
+  output zn;
+  xnor (zn, a1, a2);
+  specify
+    (posedge a1 => zn) = (1, 1);
+    (negedge a1 => zn) = (1, 1);
+    (posedge a2 => zn) = (1, 1);
+    (negedge a2 => zn) = (1, 1);
+  endspecify
+endmodule
+module GEN_XNOR3_D1 (a1,a2,a3,zn);
+  input a1;
+  input a2;
+  input a3;
+  output zn;
+  xnor (zn, a1, a2, a3);
+  specify
+    (posedge a1 => zn) = (1, 1);
+    (negedge a1 => zn) = (1, 1);
+    (posedge a2 => zn) = (1, 1);
+    (negedge a2 => zn) = (1, 1);
+    (posedge a3 => zn) = (1, 1);
+    (negedge a3 => zn) = (1, 1);
+  endspecify
+endmodule
+module GEN_XNOR3_D2 (a1,a2,a3,zn);
+  input a1;
+  input a2;
+  input a3;
+  output zn;
+  xnor (zn, a1, a2, a3);
+  specify
+    (posedge a1 => zn) = (1, 1);
+    (negedge a1 => zn) = (1, 1);
+    (posedge a2 => zn) = (1, 1);
+    (negedge a2 => zn) = (1, 1);
+    (posedge a3 => zn) = (1, 1);
+    (negedge a3 => zn) = (1, 1);
+  endspecify
+endmodule
+module GEN_XNOR3_D4 (a1,a2,a3,zn);
+  input a1;
+  input a2;
+  input a3;
+  output zn;
+  xnor (zn, a1, a2, a3);
+  specify
+    (posedge a1 => zn) = (1, 1);
+    (negedge a1 => zn) = (1, 1);
+    (posedge a2 => zn) = (1, 1);
+    (negedge a2 => zn) = (1, 1);
+    (posedge a3 => zn) = (1, 1);
+    (negedge a3 => zn) = (1, 1);
+  endspecify
+endmodule
+module GEN_XOR2_D1 (a1,a2,z);
+  input a1;
+  input a2;
+  output z;
+  xor (z, a1, a2);
+  specify
+    (posedge a1 => z) = (1, 1);
+    (negedge a1 => z) = (1, 1);
+    (posedge a2 => z) = (1, 1);
+    (negedge a2 => z) = (1, 1);
+  endspecify
+endmodule
+module GEN_XOR2_D2 (a1,a2,z);
+  input a1;
+  input a2;
+  output z;
+  xor (z, a1, a2);
+  specify
+    (posedge a1 => z) = (1, 1);
+    (negedge a1 => z) = (1, 1);
+    (posedge a2 => z) = (1, 1);
+    (negedge a2 => z) = (1, 1);
+  endspecify
+endmodule
+module GEN_XOR2_D4 (a1,a2,z);
+  input a1;
+  input a2;
+  output z;
+  xor (z, a1, a2);
+  specify
+    (posedge a1 => z) = (1, 1);
+    (negedge a1 => z) = (1, 1);
+    (posedge a2 => z) = (1, 1);
+    (negedge a2 => z) = (1, 1);
+  endspecify
+endmodule
+module GEN_XOR2_D8 (a1,a2,z);
+  input a1;
+  input a2;
+  output z;
+  xor (z, a1, a2);
+  specify
+    (posedge a1 => z) = (1, 1);
+    (negedge a1 => z) = (1, 1);
+    (posedge a2 => z) = (1, 1);
+    (negedge a2 => z) = (1, 1);
+  endspecify
+endmodule
+module GEN_XOR3_D1 (a1,a2,a3,z);
+  input a1;
+  input a2;
+  input a3;
+  output z;
+  xor (z, a1, a2, a3);
+  specify
+    (posedge a1 => z) = (1, 1);
+    (negedge a1 => z) = (1, 1);
+    (posedge a2 => z) = (1, 1);
+    (negedge a2 => z) = (1, 1);
+    (posedge a3 => z) = (1, 1);
+    (negedge a3 => z) = (1, 1);
+  endspecify
+endmodule
+module GEN_XOR3_D2 (a1,a2,a3,z);
+  input a1;
+  input a2;
+  input a3;
+  output z;
+  xor (z, a1, a2, a3);
+  specify
+    (posedge a1 => z) = (1, 1);
+    (negedge a1 => z) = (1, 1);
+    (posedge a2 => z) = (1, 1);
+    (negedge a2 => z) = (1, 1);
+    (posedge a3 => z) = (1, 1);
+    (negedge a3 => z) = (1, 1);
+  endspecify
+endmodule
+module GEN_XOR3_D4 (a1,a2,a3,z);
+  input a1;
+  input a2;
+  input a3;
+  output z;
+  xor (z, a1, a2, a3);
+  specify
+    (posedge a1 => z) = (1, 1);
+    (negedge a1 => z) = (1, 1);
+    (posedge a2 => z) = (1, 1);
+    (negedge a2 => z) = (1, 1);
+    (posedge a3 => z) = (1, 1);
+    (negedge a3 => z) = (1, 1);
+  endspecify
+endmodule
+module GEN_CLKGATE_D1 (te,e,cp,q);
+  input te;
+  input e;
+  input cp;
+  output q;
+  reg qd;
+  always @(negedge cp)
+    qd <= te | e;
+  assign q = cp & qd;
+endmodule
+module GEN_SYNC2C_D1 (clk,d,clr_,q);
+  input clk;
+  input d;
+  input clr_;
+  output q;
+  reg q,d0;
+  always @(posedge clk or negedge clr_)
+    begin
+      if(~clr_)
+        {q,d0} <= 2'd0;
+      else
+        {q,d0} <= {d0,d};
+    end
+  specify
+    (posedge clk => (q +: d))=(1, 1);
+    (negedge clr_ => (q +: 1'b0))=(1, 1);
+endspecify
+endmodule
+module GEN_SYNC3_D1 (clk,d,q);
+  input clk;
+  input d;
+  output q;
+  reg q, d1, d0;
+  always @(posedge clk)
+    begin
+      {q,d1,d0} <= {d1,d0,d};
+    end
+  specify
+    (posedge clk => (q +: d))=(1, 1);
+endspecify
+endmodule
+module GEN_SYNC3S_D1 (clk,d,set_,q);
+  input clk;
+  input d;
+  input set_;
+  output q;
+  reg q,d1,d0;
+  always @(posedge clk or negedge set_)
+    begin
+      if(~set_)
+        {q,d1,d0} <= 3'b111;
+      else
+        {q,d1,d0} <= {d1,d0,d};
+    end
+  specify
+    (posedge clk => (q +: d))=(1, 1);
+    (negedge set_ => (q +: 1'b1))=(1, 1);
+endspecify
+endmodule
+module GEN_RAMS_16X272 (clk,ra,re,dout,wa,we,di);
+  input clk;
+  input [3:0] ra;
+  input re;
+  output [271:0] dout;
+  input [3:0] wa;
+  input we;
+  input [271:0] di;
+  reg [3:0] ra_d;
+  wire [271:0] dout;
+  reg [271:0] M [15:0];
+  always @( posedge clk ) begin
+    if (we)
+      M[wa] <= di;
+    end
+  always @( posedge clk ) begin
+    if (re) 
+      ra_d <= ra;
+    end
+  assign dout = M[ra_d];
+endmodule
+module GEN_RAMS_16X256 (clk,ra,re,dout,wa,we,di);
+  input clk;
+  input [3:0] ra;
+  input re;
+  output [255:0] dout;
+  input [3:0] wa;
+  input we;
+  input [255:0] di;
+  reg [3:0] ra_d;
+  wire [255:0] dout;
+  reg [255:0] M [15:0];
+  always @( posedge clk ) begin
+    if (we)
+      M[wa] <= di;
+    end
+  always @( posedge clk ) begin
+    if (re) 
+      ra_d <= ra;
+    end
+  assign  dout = M[ra_d];
+endmodule
+module GEN_RAMS_OLAT_80x14 (clk,ra,re,ore,dout,wa,we,di);
+  input clk;
+  input [6:0] ra;
+  input re;
+  input ore;
+  output [13:0] dout;
+  input [6:0] wa;
+  input we;
+  input [13:0] di;
+  reg [6:0] ra_d;
+  wire [13:0] dout;
+  reg [13:0] M [79:0];
+  always @( posedge clk ) begin
+    if (we)
+      M[wa] <= di;
+  end
+  always @( posedge clk ) begin
+    if (re)
+      ra_d <= ra;
+  end
+  wire [13:0] dout_ram = M[ra_d];
+  reg [13:0] dout_r;
+  always @( posedge clk ) begin
+   if (ore)
+     dout_r <= dout_ram;
+  end
+  assign dout = dout_r;
+endmodule
+module GEN_RAMS_OLAT_80x65 (clk,ra,re,ore,dout,wa,we,di);
+  input clk;
+  input [6:0] ra;
+  input re;
+  input ore;
+  output [64:0] dout;
+  input [6:0] wa;
+  input we;
+  input [64:0] di;
+  reg [6:0] ra_d;
+  wire [64:0] dout;
+  reg [64:0] M [79:0];
+  always @( posedge clk ) begin
+    if (we)
+      M[wa] <= di;
+  end
+  always @( posedge clk ) begin
+    if (re)
+      ra_d <= ra;
+  end
+  wire [64:0] dout_ram = M[ra_d];
+  reg [64:0] dout_r;
+  always @( posedge clk ) begin
+    if (ore)
+      dout_r <= dout_ram;
+  end
+  assign dout = dout_r;
+endmodule
+module GEN_RAMS_OLAT_160x16 (clk,ra,re,ore,dout,wa,we,di);
+  input clk;
+  input [7:0] ra;
+  input re;
+  input ore;
+  output [15:0] dout;
+  input [7:0] wa;
+  input we;
+  input [15:0] di;
+  reg [7:0] ra_d;
+  wire [15:0] dout;
+  reg [15:0] M [159:0];
+  always @( posedge clk ) begin
+    if (we)
+      M[wa] <= di;
+  end
+  always @( posedge clk ) begin
+    if (re)
+      ra_d <= ra;
+  end
+  wire [15:0] dout_ram = M[ra_d];
+  reg [15:0] dout_r;
+  always @( posedge clk ) begin
+    if (ore)
+      dout_r <= dout_ram;
+  end
+  assign dout = dout_r;
+endmodule
+module GEN_RAMS_OLAT_160x65 (clk,ra,re,ore,dout,wa,we,di);
+  input clk;
+  input [7:0] ra;
+  input re;
+  input ore;
+  output [64:0] dout;
+  input [7:0] wa;
+  input we;
+  input [64:0] di;
+  reg [7:0] ra_d;
+  wire [64:0] dout;
+  reg [64:0] M [159:0];
+  always @( posedge clk ) begin
+    if (we)
+      M[wa] <= di;
+  end
+  always @( posedge clk ) begin
+    if (re)
+      ra_d <= ra;
+  end
+  wire [64:0] dout_ram = M[ra_d];
+  reg [64:0] dout_r;
+  always @( posedge clk ) begin
+    if (ore)
+      dout_r <= dout_ram;
+  end
+  assign dout = dout_r;
+endmodule
+module GEN_RAMS_OLAT_8x65 (clk,ra,re,ore,dout,wa,we,di);
+  input clk;
+  input [2:0] ra;
+  input re;
+  input ore;
+  output [64:0] dout;
+  input [2:0] wa;
+  input we;
+  input [64:0] di;
+  reg [2:0] ra_d;
+  wire [64:0] dout;
+  reg [64:0] M [7:0];
+  always @( posedge clk ) begin
+    if (we)
+      M[wa] <= di;
+  end
+  always @( posedge clk ) begin
+    if (re)
+      ra_d <= ra;
+  end
+  wire [64:0] dout_ram = M[ra_d];
+  reg [64:0] dout_r;
+  always @( posedge clk ) begin
+    if (ore)
+      dout_r <= dout_ram;
+  end
+  assign dout = dout_r;
+endmodule
+module GEN_RAMS_OLAT_128x6 (clk,ra,re,ore,dout,wa,we,di);
+  input clk;
+  input [6:0] ra;
+  input re;
+  input ore;
+  output [5:0] dout;
+  input [6:0] wa;
+  input we;
+  input [5:0] di;
+  reg [6:0] ra_d;
+  wire [5:0] dout;
+  reg [5:0] M [127:0];
+  always @( posedge clk ) begin
+    if (we)
+      M[wa] <= di;
+  end
+  always @( posedge clk ) begin
+    if (re)
+      ra_d <= ra;
+  end
+  wire [5:0] dout_ram = M[ra_d];
+  reg [5:0] dout_r;
+  always @( posedge clk ) begin
+    if (ore)
+      dout_r <= dout_ram;
+  end
+  assign dout = dout_r;
+endmodule
+module GEN_RAMS_256x64 (clk,ra,re,dout,wa,we,di);
+  input clk;
+  input [7:0] ra;
+  input re;
+  output [63:0] dout;
+  input [7:0] wa;
+  input we;
+  input [63:0] di;
+  reg [7:0] ra_d;
+  wire [63:0] dout;
+  reg [63:0] M [255:0];
+  always @( posedge clk ) begin
+    if (we)
+      M[wa] <= di;
+  end
+  always @( posedge clk ) begin
+    if (re)
+      ra_d <= ra;
+  end
+  assign dout = M[ra_d];
+endmodule
+module GEN_RAMS_16x64 (clk,ra,re,dout,wa,we,di);
+  input clk;
+  input [3:0] ra;
+  input re;
+  output [63:0] dout;
+  input [3:0] wa;
+  input we;
+  input [63:0] di;
+  reg [3:0] ra_d;
+  wire [63:0] dout;
+  reg [63:0] M [15:0];
+  always @( posedge clk ) begin
+    if (we)
+      M[wa] <= di;
+  end
+  always @( posedge clk ) begin
+    if (re)
+      ra_d <= ra;
+  end
+  assign dout = M[ra_d];
+endmodule
+module GEN_RAMS_OLAT_128x11 (clk,ra,re,ore,dout,wa,we,di);
+  input clk;
+  input [6:0] ra;
+  input re;
+  input ore;
+  output [10:0] dout;
+  input [6:0] wa;
+  input we;
+  input [10:0] di;
+  reg [6:0] ra_d;
+  wire [10:0] dout;
+  reg [10:0] M [127:0];
+  always @( posedge clk ) begin
+    if (we)
+      M[wa] <= di;
+  end
+  always @( posedge clk ) begin
+    if (re)
+      ra_d <= ra;
+  end
+  wire [10:0] dout_ram = M[ra_d];
+  reg [10:0] dout_r;
+  always @( posedge clk ) begin
+    if (ore)
+      dout_r <= dout_ram;
+  end
+  assign dout = dout_r;
+endmodule
+module GEN_RAMS_OLAT_61x65 (clk,ra,re,ore,dout,wa,we,di);
+  input clk;
+  input [5:0] ra;
+  input re;
+  input ore;
+  output [64:0] dout;
+  input [5:0] wa;
+  input we;
+  input [64:0] di;
+  reg [5:0] ra_d;
+  wire [64:0] dout;
+  reg [64:0] M [60:0];
+  always @( posedge clk ) begin
+    if (we)
+      M[wa] <= di;
+  end
+  always @( posedge clk ) begin
+    if (re)
+      ra_d <= ra;
+  end
+  wire [64:0] dout_ram = M[ra_d];
+  reg [64:0] dout_r;
+  always @( posedge clk ) begin
+    if (ore)
+      dout_r <= dout_ram;
+  end
+  assign dout = dout_r;
+endmodule
+module GEN_RAMS_WT_IPASS_OLAT_80x9 (clk,ra,re,ore,dout,wa,we,di,byp_sel,dbyp);
+  input clk;
+  input [6:0] ra;
+  input re;
+  input ore;
+  output [8:0] dout;
+  input [6:0] wa;
+  input we;
+  input [8:0] di;
+  input byp_sel;
+  input [8:0] dbyp;
+  reg [6:0] ra_d;
+  wire [8:0] dout;
+  reg [8:0] M [79:0];
+  always @( posedge clk ) begin
+    if (we)
+      M[wa] <= di;
+  end
+  always @( posedge clk ) begin
+    if (re)
+      ra_d <= ra;
+  end
+  wire [8:0] dout_ram = M[ra_d];
+  wire [8:0] fbypass_dout_ram = (byp_sel ? dbyp : dout_ram);
+  reg [8:0] dout_r;
+  always @( posedge clk ) begin
+    if (ore)
+      dout_r <= fbypass_dout_ram;
+  end
+  assign dout = dout_r;
+endmodule
+module GEN_RAMS_WT_IPASS_OLAT_80x15 (clk,ra,re,ore,dout,wa,we,di,byp_sel,dbyp);
+  input clk;
+  input [6:0] ra;
+  input re;
+  input ore;
+  output [14:0] dout;
+  input [6:0] wa;
+  input we;
+  input [14:0] di;
+  input byp_sel;
+  input [14:0] dbyp;
+  reg [6:0] ra_d;
+  wire [14:0] dout;
+  reg [14:0] M [79:0];
+  always @( posedge clk ) begin
+    if (we)
+      M[wa] <= di;
+  end
+  always @( posedge clk ) begin
+    if (re)
+      ra_d <= ra;
+  end
+  wire [14:0] dout_ram = M[ra_d];
+  wire [14:0] fbypass_dout_ram = (byp_sel ? dbyp : dout_ram);
+  reg [14:0] dout_r;
+  always @( posedge clk ) begin
+    if (ore)
+      dout_r <= fbypass_dout_ram;
+  end
+  assign dout = dout_r;
+endmodule
+module GEN_RAMS_WT_IPASS_OLAT_60x21 (clk,ra,re,ore,dout,wa,we,di,byp_sel,dbyp);
+  input clk;
+  input [5:0] ra;
+  input re;
+  input ore;
+  output [20:0] dout;
+  input [5:0] wa;
+  input we;
+  input [20:0] di;
+  input byp_sel;
+  input [20:0] dbyp;
+  reg [5:0] ra_d;
+  wire [20:0] dout;
+  reg [20:0] M [59:0];
+  always @( posedge clk ) begin
+    if (we)
+      M[wa] <= di;
+  end
+  always @( posedge clk ) begin
+    if (re)
+      ra_d <= ra;
+  end
+  wire [20:0] dout_ram = M[ra_d];
+  wire [20:0] fbypass_dout_ram = (byp_sel ? dbyp : dout_ram);
+  reg [20:0] dout_r;
+  always @( posedge clk ) begin
+    if (ore)
+      dout_r <= fbypass_dout_ram;
+  end
+  assign dout = dout_r;
+endmodule
+module GEN_RAMS_WT_256x8 (clk,ra,re,dout,wa,we,di);
+  input clk;
+  input [7:0] ra;
+  input re;
+  output [7:0] dout;
+  input [7:0] wa;
+  input we;
+  input [7:0] di;
+  reg [7:0] ra_d;
+  wire [7:0] dout;
+  reg [7:0] M [255:0];
+  always @( posedge clk ) begin
+    if (we)
+      M[wa] <= di;
+  end
+  always @( posedge clk ) begin
+    if (re)
+      ra_d <= ra;
+  end
+  assign dout = M[ra_d];
+endmodule
+module GEN_RAMS_256x7 (clk,ra,re,dout,wa,we,di);
+  input clk;
+  input [7:0] ra;
+  input re;
+  output [6:0] dout;
+  input [7:0] wa;
+  input we;
+  input [6:0] di;
+  reg [7:0] ra_d;
+  wire [6:0] dout;
+  reg [6:0] M [255:0];
+  always @( posedge clk ) begin
+    if (we)
+      M[wa] <= di;
+  end
+  always @( posedge clk ) begin
+    if (re)
+      ra_d <= ra;
+  end
+  assign dout = M[ra_d];
+endmodule
+module GEN_RAMS_256x3 (clk,ra,re,dout,wa,we,di);
+  input clk;
+  input [7:0] ra;
+  input re;
+  output [2:0] dout;
+  input [7:0] wa;
+  input we;
+  input [2:0] di;
+  reg [7:0] ra_d;
+  wire [2:0] dout;
+  reg [2:0] M [255:0];
+  always @( posedge clk ) begin
+    if (we)
+      M[wa] <= di;
+  end
+  always @( posedge clk ) begin
+    if (re)
+      ra_d <= ra;
+  end
+  assign dout = M[ra_d];
+endmodule
+module GEN_RAMS_WT_IPASS_OLAT_19x4 (clk,ra,re,ore,dout,wa,we,di,byp_sel,dbyp);
+  input clk;
+  input [4:0] ra;
+  input re;
+  input ore;
+  output [3:0] dout;
+  input [4:0] wa;
+  input we;
+  input [3:0] di;
+  input byp_sel;
+  input [3:0] dbyp;
+  reg [4:0] ra_d;
+  wire [3:0] dout;
+  reg [3:0] M [18:0];
+  always @( posedge clk ) begin
+    if (we)
+      M[wa] <= di;
+  end
+  always @( posedge clk ) begin
+    if (re)
+      ra_d <= ra;
+  end
+  wire [3:0] dout_ram = M[ra_d];
+  wire [3:0] fbypass_dout_ram = (byp_sel ? dbyp : dout_ram);
+  reg [3:0] dout_r;
+  always @( posedge clk ) begin
+    if (ore)
+      dout_r <= fbypass_dout_ram;
+  end
+  assign dout = dout_r;
+endmodule
+module GEN_RAMS_128x18 (clk,ra,re,dout,wa,we,di);
+  input clk;
+  input [6:0] ra;
+  input re;
+  output [17:0] dout;
+  input [6:0] wa;
+  input we;
+  input [17:0] di;
+  reg [6:0] ra_d;
+  wire [17:0] dout;
+  reg [17:0] M [127:0];
+  always @( posedge clk ) begin
+    if (we)
+      M[wa] <= di;
+  end
+  always @( posedge clk ) begin
+    if (re)
+      ra_d <= ra;
+  end
+  assign dout = M[ra_d];
+endmodule
+module GEN_SYNC3C_D1 (clk,d,clr_,q);
+  input clk ;
+  input d ;
+  input clr_ ;
+  output q ;
+  reg q,d1,d0;
+  always @(posedge clk or negedge clr_)
+  begin
+    if(~clr_)
+      {q,d1,d0} <= 3'd0;
+    else
+      {q,d1,d0} <= {d1,d0,d};
+  end
+endmodule
+module GEN_SYNC3C_STRICT_D1 (src_d_next,src_clk,src_clrn,dst_clk,dst_clrn,src_d,dst_q,atpg_ctl,test_mode);
+  input src_d_next ;
+  input src_clk ;
+  input src_clrn ;
+  input dst_clk ;
+  input dst_clrn ;
+  output src_d ;
+  output dst_q ;
+  input atpg_ctl ;
+  input test_mode ;
+  wire src_sel,dst_sel;
+  reg  src_d_f;
+  assign src_sel = src_d_next;
+  always @(posedge src_clk or negedge src_clrn)
+  begin
+    if(~src_clrn)
+      src_d_f <= 1'b0;
+    else
+      src_d_f <= src_sel;
+  end
+  assign src_d = src_d_f;
+  assign dst_sel = src_d_f;
+GEN_SYNC3C_D1 sync3d(.clk (dst_clk),.d (dst_sel), .clr_ (dst_clrn)	,.q(dst_q));
+endmodule
+module GEN_RAMS_512x256 (clk,ra,re,dout,wa,we,di);
+input clk;
+input [8:0] ra;
+input re;
+output [255:0] dout;
+input [8:0] wa;
+input we;
+input [255:0] di;
+reg [8:0] ra_d;
+wire [255:0] dout;
+reg [255:0] M [511:0];
+  always @( posedge clk ) begin
+    if (we)
+      M[wa] <= di;
+  end
+  always @( posedge clk ) begin
+    if (re)
+      ra_d <= ra;
+  end
+  assign dout = M[ra_d];
+endmodule
+module GEN_RAMS_64x116 (clk,ra,re,dout,wa,we,di);
+input clk;
+input [5:0] ra;
+input re;
+output [115:0] dout;
+input [5:0] wa;
+input we;
+input [115:0] di;
+reg [5:0] ra_d;
+wire [115:0] dout;
+reg [115:0] M [63:0];
+  always @( posedge clk ) begin
+    if (we)
+      M[wa] <= di;
+  end
+  always @( posedge clk ) begin
+    if (re)
+      ra_d <= ra;
+  end
+  assign dout = M[ra_d];
+endmodule
+module GEN_RAMS_64x1088(clk,ra,re,dout,wa,we,di);
+input clk;
+input [5:0] ra;
+input re;
+output [1087:0] dout;
+input [5:0] wa;
+input we;
+input [1087:0] di;
+reg [5:0] ra_d;
+wire [1087:0] dout;
+reg [1087:0] M [63:0];
+  always @( posedge clk ) begin
+    if (we)
+      M[wa] <= di;
+  end
+  always @( posedge clk ) begin
+    if (re)
+      ra_d <= ra;
+  end
+  assign dout = M[ra_d];
+endmodule
+module GEN_RAMS_64x1024(clk,ra,re,dout,wa,we,di);
+input clk;
+input [5:0] ra;
+input re;
+output [1023:0] dout;
+input [5:0] wa;
+input we;
+input [1023:0] di;
+reg [5:0] ra_d;
+wire [1023:0] dout;
+reg [1023:0] M [63:0];
+  always @( posedge clk ) begin
+    if (we)
+      M[wa] <= di;
+  end
+  always @( posedge clk ) begin
+    if (re)
+      ra_d <= ra;
+  end
+  assign dout = M[ra_d];
+endmodule
+module GEN_RAMS_OLAT_256x14 (clk,ra,re,ore,dout,wa,we,di);
+input clk;
+input [7:0] ra;
+input re;
+input ore;
+output [13:0] dout;
+input [7:0] wa;
+input we;
+input [13:0] di;
+reg [7:0] ra_d;
+wire [13:0] dout;
+reg [13:0] M [255:0];
+  always @( posedge clk ) begin
+    if (we)
+      M[wa] <= di;
+  end
+  always @( posedge clk ) begin
+    if (re)
+      ra_d <= ra;
+  end
+  wire [13:0] dout_ram = M[ra_d];
+  reg [13:0] dout_r;
+  always @( posedge clk ) begin
+   if (ore)
+     dout_r <= dout_ram;
+  end
+  assign dout = dout_r;
+endmodule
+module GEN_RAMS_OLAT_256x16 (clk,ra,re,ore,dout,wa,we,di);
+input clk;
+input [7:0] ra;
+input re;
+input ore;
+output [15:0] dout;
+input [7:0] wa;
+input we;
+input [15:0] di;
+reg [7:0] ra_d;
+wire [15:0] dout;
+reg [15:0] M [255:0];
+  always @( posedge clk ) begin
+    if (we)
+      M[wa] <= di;
+  end
+  always @( posedge clk ) begin
+    if (re)
+      ra_d <= ra;
+  end
+  wire [15:0] dout_ram = M[ra_d];
+  reg [15:0] dout_r;
+  always @( posedge clk ) begin
+   if (ore)
+     dout_r <= dout_ram;
+  end
+  assign dout = dout_r;
+endmodule
+module GEN_RAMS_OLAT_256x257 (clk,ra,re,ore,dout,wa,we,di);
+input clk;
+input [7:0] ra;
+input re;
+input ore;
+output [256:0] dout;
+input [7:0] wa;
+input we;
+input [256:0] di;
+reg [7:0] ra_d;
+wire [256:0] dout;
+reg [256:0] M [255:0];
+  always @( posedge clk ) begin
+    if (we)
+      M[wa] <= di;
+  end
+  always @( posedge clk ) begin
+    if (re)
+      ra_d <= ra;
+  end
+  wire [256:0] dout_ram = M[ra_d];
+  reg [256:0] dout_r;
+  always @( posedge clk ) begin
+   if (ore)
+     dout_r <= dout_ram;
+  end
+  assign dout = dout_r;
+endmodule
+module GEN_RAMS_OLAT_8x257 (clk,ra,re,ore,dout,wa,we,di);
+input clk;
+input [2:0] ra;
+input re;
+input ore;
+output [256:0] dout;
+input [2:0] wa;
+input we;
+input [256:0] di;
+reg [2:0] ra_d;
+wire [256:0] dout;
+reg [256:0] M [7:0];
+  always @( posedge clk ) begin
+    if (we)
+      M[wa] <= di;
+  end
+  always @( posedge clk ) begin
+    if (re)
+      ra_d <= ra;
+  end
+  wire [256:0] dout_ram = M[ra_d];
+  reg [256:0] dout_r;
+  always @( posedge clk ) begin
+   if (ore)
+     dout_r <= dout_ram;
+  end
+  assign dout = dout_r;
+endmodule
+module GEN_RAMS_WT_IPASS_OLAT_80x72 (clk,ra,re,ore,dout,wa,we,di,byp_sel,dbyp);
+input clk;
+input [6:0] ra;
+input re;
+input ore;
+output [71:0] dout;
+input [6:0] wa;
+input we;
+input [71:0] di;
+input byp_sel;
+input [71:0] dbyp;
+reg [6:0] ra_d;
+wire [71:0] dout;
+reg [71:0] M [79:0];
+  always @( posedge clk ) begin
+    if (we)
+      M[wa] <= di;
+  end
+  always @( posedge clk ) begin
+    if (re)
+      ra_d <= ra;
+  end
+  wire [71:0] dout_ram = M[ra_d];
+  wire [71:0] fbypass_dout_ram = (byp_sel ? dbyp : dout_ram);
+  reg [71:0] dout_r;
+  always @( posedge clk ) begin
+    if (ore)
+      dout_r <= fbypass_dout_ram;
+  end
+  assign dout = dout_r;
+endmodule
+module GEN_RAMS_WT_IPASS_OLAT_80x17 (clk,ra,re,ore,dout,wa,we,di,byp_sel,dbyp);
+input clk;
+input [6:0] ra;
+input re;
+input ore;
+output [16:0] dout;
+input [6:0] wa;
+input we;
+input [16:0] di;
+input byp_sel;
+input [16:0] dbyp;
+reg [6:0] ra_d;
+wire [16:0] dout;
+reg [16:0] M [79:0];
+  always @( posedge clk ) begin
+    if (we)
+      M[wa] <= di;
+  end
+  always @( posedge clk ) begin
+    if (re)
+      ra_d <= ra;
+  end
+  wire [16:0] dout_ram = M[ra_d];
+  wire [16:0] fbypass_dout_ram = (byp_sel ? dbyp : dout_ram);
+  reg [16:0] dout_r;
+  always @( posedge clk ) begin
+    if (ore)
+      dout_r <= fbypass_dout_ram;
+  end
+  assign dout = dout_r;
+endmodule
+module GEN_RAMS_WT_IPASS_OLAT_60x168 (clk,ra,re,ore,dout,wa,we,di,byp_sel,dbyp);
+input clk;
+input [5:0] ra;
+input re;
+input ore;
+output [167:0] dout;
+input [5:0] wa;
+input we;
+input [167:0] di;
+input byp_sel;
+input [167:0] dbyp;
+reg [5:0] ra_d;
+wire [167:0] dout;
+reg [167:0] M [59:0];
+  always @( posedge clk ) begin
+    if (we)
+      M[wa] <= di;
+  end
+  always @( posedge clk ) begin
+    if (re)
+      ra_d <= ra;
+  end
+  wire [167:0] dout_ram = M[ra_d];
+  wire [167:0] fbypass_dout_ram = (byp_sel ? dbyp : dout_ram);
+  reg [167:0] dout_r;
+  always @( posedge clk ) begin
+    if (ore)
+      dout_r <= fbypass_dout_ram;
+  end
+  assign dout = dout_r;
+endmodule
+module GEN_RAMS_WT_IPASS_OLAT_20x32 (clk,ra,re,ore,dout,wa,we,di,byp_sel,dbyp);
+input clk;
+input [4:0] ra;
+input re;
+input ore;
+output [31:0] dout;
+input [4:0] wa;
+input we;
+input [31:0] di;
+input byp_sel;
+input [31:0] dbyp;
+reg [4:0] ra_d;
+wire [31:0] dout;
+reg [31:0] M [19:0];
+  always @( posedge clk ) begin
+    if (we)
+      M[wa] <= di;
+  end
+  always @( posedge clk ) begin
+    if (re)
+      ra_d <= ra;
+  end
+  wire [31:0] dout_ram = M[ra_d];
+  wire [31:0] fbypass_dout_ram = (byp_sel ? dbyp : dout_ram);
+  reg [31:0] dout_r;
+  always @( posedge clk ) begin
+    if (ore)
+      dout_r <= fbypass_dout_ram;
+  end
+  assign dout = dout_r;
+endmodule
+module GEN_RAMS_SP_WENABLE21_64x21 (clk,a,we,wce,re,di,dout);
+input clk;
+input [5:0] a;
+input we;
+input wce;
+input re;
+input [20:0] di;
+output [20:0] dout;
+
+reg    [20:0] M[63:0];
+
+reg [5:0] ra_d;
+
+always @( posedge clk ) begin
+
+  if ( ( we & wce ) == 1'b1 ) begin
+    M[a] <= di; 
+  end
+
+  if ( re == 1'b1 ) begin 
+    ra_d <= a;
+  end
+end
+
+assign dout = M[ra_d];
+endmodule
+module GEN_RAMS_SP_WENABLE32_1024x32 (clk,a,we,wce,re,di,dout);
+input clk;
+input [9:0] a;
+input we;
+input wce;
+input re;
+input [31:0] di;
+output [31:0] dout;
+
+reg    [31:0] M[1023:0];
+
+reg [9:0] ra_d;
+
+always @( posedge clk ) begin
+
+  if ( ( we & wce ) == 1'b1 ) begin
+    M[a] <= di; 
+  end
+
+  if ( re == 1'b1 ) begin 
+    ra_d <= a;
+  end
+end
+
+assign dout = M[ra_d];
+endmodule
+module GEN_RAMS_SP_WENABLE8_4096x32 (clk,a,we,wce,re,di,dout);
+input clk;
+input [11:0] a;
+input [3:0] we;
+input wce;
+input re;
+input [31:0] di;
+output [31:0] dout;
+
+reg    [31:0] M[4095:0];
+
+reg [11:0] ra_d;
+
+always @( posedge clk ) begin
+
+  if ( ( we[0] & wce ) == 1'b1 ) begin
+    M[a][7:0] <= di[7:0]; 
+  end
+  if ( ( we[1] & wce ) == 1'b1 ) begin
+    M[a][15:8] <= di[15:8]; 
+  end
+  if ( ( we[2] & wce ) == 1'b1 ) begin
+    M[a][23:16] <= di[23:16]; 
+  end
+  if ( ( we[3] & wce ) == 1'b1 ) begin
+    M[a][31:24] <= di[31:24]; 
+  end
+  if ( re == 1'b1 ) begin 
+    ra_d <= a;
+  end
+end
+
+assign dout = M[ra_d];
+endmodule
+module GEN_RAMS_SP_WENABLE22_64x88 (clk,a,we,wce,re,di,dout);
+input clk;
+input [5:0] a;
+input [3:0] we;
+input wce;
+input re;
+input [87:0] di;
+output [87:0] dout;
+
+reg    [87:0] M[63:0];
+
+reg [5:0] ra_d;
+
+always @( posedge clk ) begin
+
+  if ( ( we[0] & wce ) == 1'b1 ) begin
+    M[a][21:0] <= di[21:0]; 
+  end
+  if ( ( we[1] & wce ) == 1'b1 ) begin
+    M[a][43:22] <= di[43:22]; 
+  end
+  if ( ( we[2] & wce ) == 1'b1 ) begin
+    M[a][65:44] <= di[65:44]; 
+  end
+  if ( ( we[3] & wce ) == 1'b1 ) begin
+    M[a][87:66] <= di[87:66]; 
+  end
+  if ( re == 1'b1 ) begin 
+    ra_d <= a;
+  end
+end
+
+assign dout = M[ra_d];
+endmodule
+module GEN_RAMS_SP_WENABLE8_512x256 (clk,a,we,wce,re,di,dout);
+input clk;
+input [8:0] a;
+input [31:0] we;
+input wce;
+input re;
+input [255:0] di;
+output [255:0] dout;
+
+reg    [255:0] M[511:0];
+
+reg [8:0] ra_d;
+
+always @( posedge clk ) begin
+
+  if ( ( we[0] & wce ) == 1'b1 ) begin
+    M[a][7:0] <= di[7:0]; 
+  end
+  if ( ( we[1] & wce ) == 1'b1 ) begin
+    M[a][15:8] <= di[15:8]; 
+  end
+  if ( ( we[2] & wce ) == 1'b1 ) begin
+    M[a][23:16] <= di[23:16]; 
+  end
+  if ( ( we[3] & wce ) == 1'b1 ) begin
+    M[a][31:24] <= di[31:24]; 
+  end
+  if ( ( we[4] & wce ) == 1'b1 ) begin
+    M[a][39:32] <= di[39:32]; 
+  end
+  if ( ( we[5] & wce ) == 1'b1 ) begin
+    M[a][47:40] <= di[47:40]; 
+  end
+  if ( ( we[6] & wce ) == 1'b1 ) begin
+    M[a][55:48] <= di[55:48]; 
+  end
+  if ( ( we[7] & wce ) == 1'b1 ) begin
+    M[a][63:56] <= di[63:56]; 
+  end
+  if ( ( we[8] & wce ) == 1'b1 ) begin
+    M[a][71:64] <= di[71:64]; 
+  end
+  if ( ( we[9] & wce ) == 1'b1 ) begin
+    M[a][79:72] <= di[79:72]; 
+  end
+  if ( ( we[10] & wce ) == 1'b1 ) begin
+    M[a][87:80] <= di[87:80]; 
+  end
+  if ( ( we[11] & wce ) == 1'b1 ) begin
+    M[a][95:88] <= di[95:88]; 
+  end
+  if ( ( we[12] & wce ) == 1'b1 ) begin
+    M[a][103:96] <= di[103:96]; 
+  end
+  if ( ( we[13] & wce ) == 1'b1 ) begin
+    M[a][111:104] <= di[111:104]; 
+  end
+  if ( ( we[14] & wce ) == 1'b1 ) begin
+    M[a][119:112] <= di[119:112]; 
+  end
+  if ( ( we[15] & wce ) == 1'b1 ) begin
+    M[a][127:120] <= di[127:120]; 
+  end
+  if ( ( we[16] & wce ) == 1'b1 ) begin
+    M[a][135:128] <= di[135:128]; 
+  end
+  if ( ( we[17] & wce ) == 1'b1 ) begin
+    M[a][143:136] <= di[143:136]; 
+  end
+  if ( ( we[18] & wce ) == 1'b1 ) begin
+    M[a][151:144] <= di[151:144]; 
+  end
+  if ( ( we[19] & wce ) == 1'b1 ) begin
+    M[a][159:152] <= di[159:152]; 
+  end
+  if ( ( we[20] & wce ) == 1'b1 ) begin
+    M[a][167:160] <= di[167:160]; 
+  end
+  if ( ( we[21] & wce ) == 1'b1 ) begin
+    M[a][175:168] <= di[175:168]; 
+  end
+  if ( ( we[22] & wce ) == 1'b1 ) begin
+    M[a][183:176] <= di[183:176]; 
+  end
+  if ( ( we[23] & wce ) == 1'b1 ) begin
+    M[a][191:184] <= di[191:184]; 
+  end
+  if ( ( we[24] & wce ) == 1'b1 ) begin
+    M[a][199:192] <= di[199:192]; 
+  end
+  if ( ( we[25] & wce ) == 1'b1 ) begin
+    M[a][207:200] <= di[207:200]; 
+  end
+  if ( ( we[26] & wce ) == 1'b1 ) begin
+    M[a][215:208] <= di[215:208]; 
+  end
+  if ( ( we[27] & wce ) == 1'b1 ) begin
+    M[a][223:216] <= di[223:216]; 
+  end
+  if ( ( we[28] & wce ) == 1'b1 ) begin
+    M[a][231:224] <= di[231:224]; 
+  end
+  if ( ( we[29] & wce ) == 1'b1 ) begin
+    M[a][239:232] <= di[239:232]; 
+  end
+  if ( ( we[30] & wce ) == 1'b1 ) begin
+    M[a][247:240] <= di[247:240]; 
+  end
+  if ( ( we[31] & wce ) == 1'b1 ) begin
+    M[a][255:248] <= di[255:248]; 
+  end
+  if ( re == 1'b1 ) begin 
+    ra_d <= a;
+  end
+end
+
+assign dout = M[ra_d];
+endmodule
+module GEN_RAMS_SP_WENABLE21_64x84 (clk,a,we,wce,re,di,dout);
+input clk;
+input [5:0] a;
+input [3:0] we;
+input wce;
+input re;
+input [83:0] di;
+output [83:0] dout;
+
+reg    [83:0] M[63:0];
+
+reg [5:0] ra_d;
+
+always @( posedge clk ) begin
+
+  if ( ( we[0] & wce ) == 1'b1 ) begin
+    M[a][20:0] <= di[20:0]; 
+  end
+  if ( ( we[1] & wce ) == 1'b1 ) begin
+    M[a][41:21] <= di[41:21]; 
+  end
+  if ( ( we[2] & wce ) == 1'b1 ) begin
+    M[a][62:42] <= di[62:42]; 
+  end
+  if ( ( we[3] & wce ) == 1'b1 ) begin
+    M[a][83:63] <= di[83:63]; 
+  end
+  if ( re == 1'b1 ) begin 
+    ra_d <= a;
+  end
+end
+
+assign dout = M[ra_d];
+endmodule
+module GEN_RAMS_SP_WENABLE32_512x128 (clk,a,we,wce,re,di,dout);
+input clk;
+input [8:0] a;
+input [3:0] we;
+input wce;
+input re;
+input [127:0] di;
+output [127:0] dout;
+
+reg    [127:0] M[511:0];
+
+reg [8:0] ra_d;
+
+always @( posedge clk ) begin
+
+  if ( ( we[0] & wce ) == 1'b1 ) begin
+    M[a][31:0] <= di[31:0]; 
+  end
+  if ( ( we[1] & wce ) == 1'b1 ) begin
+    M[a][63:32] <= di[63:32]; 
+  end
+  if ( ( we[2] & wce ) == 1'b1 ) begin
+    M[a][95:64] <= di[95:64]; 
+  end
+  if ( ( we[3] & wce ) == 1'b1 ) begin
+    M[a][127:96] <= di[127:96]; 
+  end
+  if ( re == 1'b1 ) begin 
+    ra_d <= a;
+  end
+end
+
+assign dout = M[ra_d];
+endmodule
+`endcelldefine

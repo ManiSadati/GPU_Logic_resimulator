@@ -1,0 +1,42 @@
+$date
+   Date text. For example: November 11, 2009.
+$end
+$version
+   VCD generator tool version info text.
+$end
+$comment
+   Any comment text.
+$end
+$timescale 1ps $end
+$scope module logic $end
+$var wire 5 # test_e [4:0] $end
+$var wire 1 $ test_a $end
+$var wire 1 % test_b $end
+$var wire 1 & test_c $end
+$upscope $end
+$enddefinitions $end
+$dumpvars
+bxxxxx #
+x$
+0%
+x&
+#6
+b11111 #
+1$
+1%
+1&
+
+#12
+b10001 #
+0$
+1%
+0&
+#22
+0%
+#29
+b00011 #
+1$
+#55
+0$
+#64
+1%
