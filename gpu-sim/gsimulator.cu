@@ -174,7 +174,7 @@ void input_init(){
 		int sz = signall.vaweform.size();
 		int ptr1 = tree.t_allocate(sz);
 		int ptr2 = ptr1 + sz;
-		if(ptr1 > gpu_size / 8 || ptr2 > gpu_size){
+		if(ptr1 > gpu_size - gpu_size / 8 || ptr2 > gpu_size){
 			cout<<"sdfsdfsdfsdfsdf "<<signall.name<<" "<<ptr1<<" "<<ptr2<<endl;
 		}
 		signall.alloc_ptr_first = ptr1;
@@ -1236,7 +1236,7 @@ void gpusimultaion(){
 	max_part_number = 40000;
 	sig_part_number = 64;
 	thread_number = 128;
-	gpu_size = 1300*1000*1000;
+	gpu_size = 1000*1000*1000;
 	cout<<"boom"<<endl;
 	input_init();
 	cout<<"bam"<<endl;
