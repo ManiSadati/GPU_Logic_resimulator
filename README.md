@@ -13,7 +13,7 @@ PALANG is developed based on the paper below but it has some diffrences and inno
 ["High-Throughput Logic Timing Simulation on GPGPUs"](https://dl.acm.org/doi/abs/10.1145/2714564)
 
 (PALANG supports ICCAD2020 [benchmarks](https://drive.google.com/drive/u/0/folders/1IrWXkHEED_gVsLPUGrIKNIOAE6BIp0WY)).
-This version of code is consistent with the one submitted to contest.
+This version of code is consistent with the one submitted to contest. So it may have some issues with your designs. If you faced any problems ask us in the issues!
 
 ## 1. How to Build
 
