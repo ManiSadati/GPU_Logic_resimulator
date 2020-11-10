@@ -43,7 +43,7 @@ This version of the code also doesn't work for GPU cards with less than 16GB mem
 
 ## 2. How to Run
 
-### 2.1. Toy Test
+### Sample Test
 
 #### Run Preprocess Binary File
 
@@ -72,9 +72,9 @@ after that there is 3 numbers. The first 2 are saif_start_time saif_end_time. Th
 `sample_test.saif` can be the name of the output file you want. It gives A SAIF file as an output (right now this version doesn't support vcd output).
 
 
-## 2. License
+## 3. License
 
-###BSD 3-Clause License
+### BSD 3-Clause License
 
 Copyright (c) 2020, ManiSadati,MohammadShahidzade
 All rights reserved.
