@@ -1,3 +1,11 @@
+/*
+ * Copyright (c) 2020, ManiSadati, MohammadShahidzade All rights reserved.
+ *
+ * https://github.com/ManiSadati/GPU_Logic_resimulator/blob/master/LICENSE
+ *
+ */
+
+
 #include<bits/stdc++.h>
 using namespace std;
 
