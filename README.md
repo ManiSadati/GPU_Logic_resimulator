@@ -76,7 +76,7 @@ after that there is 3 numbers. The first 2 are saif_start_time saif_end_time. Th
 
 ### BSD 3-Clause License
 
-Copyright (c) 2020, ManiSadati,MohammadShahidzade
+Copyright (c) 2020, ManiSadati, MohammadShahidzade
 All rights reserved.
 
 Redistribution and use in source and binary forms, with or without
