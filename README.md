@@ -1,6 +1,6 @@
 GPU Accelerated Logic Re-simulator
 ======================================
-PALANG is a logic resimulation tool accelerated by GPGPU developed by the research team Seyed Mani Sadati and Mohammad Shahidzade supervised by Prf. Behnam Ghavami at Shahid Bahonar University of kerman (SBUK).
+PALANG is a logic resimulation tool accelerated by GPGPU developed by the research team Seyed Mani Sadati and Mohammad Shahidzade supervised by Prf. Behnam Ghavami at Shahid Bahonar University of kerman (SBUK) and first place of ICCAD-Contest 2020 problem C.
 PALANG is the best open-source tool for logic resimulation based on GPU which is parallelized by 2 dimensions.
 In particular, our tool solves a problem in the industry, which is described in the following link:
 
